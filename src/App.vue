@@ -3,7 +3,7 @@
         <Home v-if="isHomeShown" @convert="$refs.file_input.click()" />
         <Files v-if="isFilesShown" v-model="files" @convert_more="$refs.file_input.click()" />
         <footer>
-            <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de#privacy" target="_balnk" rel="noreferrer">Privacy Policy</a>
+            <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de#privacy" target="_blank" rel="noreferrer">Privacy Policy</a>
             <a href="https://www.gruppe-adler.de" target="_blank" rel="noreferrer" style="opacity: 1;">www.gruppe-adler.de</a>
             <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de/issues/new" target="_blank" rel="noreferrer">
                 <i class="material-icons">bug_report</i>
@@ -92,8 +92,9 @@ footer {
     box-sizing: border-box;
     background-color: var(--color-footer);
     color: var(--color-background);
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: .3fr .4fr .3fr;
+    justify-items: center;
     align-items: center;
     padding: 0 1.5rem;
 
@@ -104,6 +105,14 @@ footer {
         align-items: center;
         color: var(--color-background);
         opacity: 0.5;
+
+        &:first-child {
+            justify-self: flex-start;
+        }
+
+        &:last-child {
+            justify-self: flex-end;
+        }
 
         &:hover {
             text-decoration: underline;
