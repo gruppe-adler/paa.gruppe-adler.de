@@ -1,0 +1,61 @@
+@import './colors.scss';
+
+body, html, #app {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Oswald', sans-serif;
+}
+
+::selection,
+::-moz-selection {
+    background: #d18d1f;
+    color: white;
+}
+
+#app {
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: inherit;
+    transition: inherit;
+
+    &:hover {
+        color: inherit;
+    }
+}
+
+button {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    grid-column-gap: .25rem;
+    padding: .5rem 1rem;
+    color: var(--color-primary);
+    background-color: var(--color-container);
+    border: none;
+    border-radius: 1.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    user-select: none;
+
+    &:hover {
+        color: var(--color-container);
+        background-color: var(--color-primary)
+    }
+}
