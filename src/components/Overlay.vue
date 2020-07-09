@@ -27,7 +27,21 @@ export default class OverlayVue extends Vue {
         document.body.removeEventListener('dragover', this.onDrag);
     }
 
-    private onDrag () {
+    private containsFiles (event: DragEvent): boolean {
+        if (event.dataTransfer && event.dataTransfer.types) {
+            for (let i = 0; i < event.dataTransfer.types.length; i++) {
+                if (event.dataTransfer.types[i] === 'Files') {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private onDrag (event: DragEvent) {
+        if (!this.containsFiles(event)) return;
+
         this.isDragging = true;
         if (this.dragTimeOut !== null) clearTimeout(this.dragTimeOut);
         this.dragTimeOut = window.setTimeout(() => { this.isDragging = false; }, 100);
@@ -36,6 +50,9 @@ export default class OverlayVue extends Vue {
     private onDrop (event: DragEvent) {
         event.preventDefault();
         event.stopPropagation();
+
+        if (!this.containsFiles(event)) return;
+
         if (!event.dataTransfer) return;
         this.$emit('input', event.dataTransfer.files);
     }
