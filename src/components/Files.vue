@@ -8,7 +8,7 @@
                 @remove="value.splice(value.indexOf(f), 1)"
             />
         </ul>
-        <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
             <button @click="$emit('convert_more')">
                 <i class="material-icons">add</i>
                 <span>Convert more Files</span>

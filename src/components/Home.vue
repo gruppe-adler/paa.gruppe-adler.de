@@ -3,9 +3,8 @@
         <img src="@/assets/logo.svg" alt="logo" />
         <h1>ARMA 3 PAA CONVERTER</h1>
         <section>
-            This free image to PAA - PAA to PNG Converter works in just the browser.
-            <br />Just drag your image or .paa files into this window or click the button below to start converting files to the corresponding format.
-            <br />
+            This free image to PAA - PAA to PNG Converter works in just the browser.<br/>
+            Just drag your image or .paa files into this window or click the button below to start converting files to the corresponding format.<br/>
             <b>Your files wont be uploaded anwhere. Everything is processed on your machine.</b>
         </section>
         <button @click="$emit('convert')">
@@ -25,13 +24,14 @@ export default class HomeVue extends Vue {}
 
 <style scoped lang="scss">
 .grad-home {
-    display: grid;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    align-content: center;
-    grid-row-gap: 1.5rem;
+    justify-self: stretch;
+    align-self: center;
     overflow-y: auto;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     > * {
         max-width: calc(100vw - 2rem);
@@ -39,15 +39,13 @@ export default class HomeVue extends Vue {}
     }
 
     > img {
-        max-height: 30vh;
-    }
-
-    > h1 {
-        margin: 0;
+        margin-top: 2rem;
+        height: 30vh;
     }
 
     > section {
         padding: 0.75rem 1rem;
+        margin: 1.5rem 0;
         background-color: var(--color-container);
         border-radius: .5rem;
         width: 37rem;
@@ -55,6 +53,7 @@ export default class HomeVue extends Vue {}
 
     > span:last-child {
         opacity: 0.5;
+        margin-bottom: 2rem;
         margin-top: 3rem;
     }
 }
