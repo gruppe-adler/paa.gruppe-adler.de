@@ -5,7 +5,7 @@
         <footer>
             <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de#privacy" target="_blank" rel="noreferrer">Privacy Policy</a>
             <a href="https://www.gruppe-adler.de" target="_blank" rel="noreferrer" style="opacity: 1;">www.gruppe-adler.de</a>
-            <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de/issues/new" target="_blank" rel="noreferrer">
+            <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de/issues/new/choose" target="_blank" rel="noreferrer">
                 <i class="material-icons">bug_report</i>
                 <span>Having Issues?</span>
             </a>
