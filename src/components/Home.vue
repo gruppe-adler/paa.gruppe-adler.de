@@ -3,7 +3,7 @@
         <img src="@/assets/logo.svg" alt="logo" />
         <h1>ARMA 3 PAA CONVERTER</h1>
         <section>
-            This free image to PAA - PAA to PNG Converter works in just the browser.<br/>
+            This free image to PAA - PAA to PNG Converter works 100% in the browser.<br/>
             Just drag your image or .paa files into this window or click the button below to start converting files to the corresponding format.<br/>
             <b>Your files wont be uploaded anwhere. Everything is processed on your machine.</b>
         </section>
