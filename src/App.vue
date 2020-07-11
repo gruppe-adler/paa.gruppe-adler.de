@@ -3,7 +3,10 @@
         <Home v-if="isHomeShown" @convert="$refs.file_input.click()" />
         <Files v-if="isFilesShown" v-model="files" @convert_more="$refs.file_input.click()" />
         <footer>
-            <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de#privacy" target="_blank" rel="noreferrer">Privacy Policy</a>
+            <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de#privacy" target="_blank" rel="noreferrer">
+                <i class="material-icons">privacy_tip</i>
+                Privacy Policy
+            </a>
             <a href="https://www.gruppe-adler.de" target="_blank" rel="noreferrer" style="opacity: 1;">www.gruppe-adler.de</a>
             <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de/issues/new/choose" target="_blank" rel="noreferrer">
                 <i class="material-icons">bug_report</i>
