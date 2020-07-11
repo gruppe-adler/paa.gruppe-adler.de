@@ -16,7 +16,7 @@
             style="display: none"
             type="file"
             multiple
-            accept="image/*,.paa"
+            accept="image/png,image/svg+xml,image/jpeg,.paa"
             @input="onFileInput"
         />
     </div>
