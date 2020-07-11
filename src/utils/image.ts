@@ -1,9 +1,12 @@
 /**
- * Return data url from imageData
+ * Return data url from imageData.
+ * For further details on type and quality param see the [HTMLCanvasElement.toDataURL() documentation](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL#Parameters)
  * @param {ImageData} data image data
+ * @param {string} [type] image format (default: 'image/png')
+ * @param {number} [quality] Number between 0 and 1 indicating the image quality for image formats with lossy compression
  * @returns {string} url
  */
-export function imageDataToUrl (data: ImageData): string {
+export function imageDataToUrl (data: ImageData, type = 'image/png', quality = 1): string {
     const canvas = document.createElement('canvas');
     canvas.width = data.width;
     canvas.height = data.height;
@@ -12,7 +15,7 @@ export function imageDataToUrl (data: ImageData): string {
     if (ctx === null) throw new Error('Couldn`t get context of canvas.');
 
     ctx.putImageData(data, 0, 0);
-    const url = canvas.toDataURL();
+    const url = canvas.toDataURL(type, quality);
 
     canvas.remove();
 
