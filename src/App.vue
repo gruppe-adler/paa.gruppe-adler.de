@@ -91,7 +91,7 @@ footer {
     width: 100%;
     box-sizing: border-box;
     background-color: var(--color-footer);
-    color: var(--color-background);
+    color: #FFFFFF;
     display: grid;
     grid-template-columns: .3fr .4fr .3fr;
     justify-items: center;
@@ -103,7 +103,6 @@ footer {
         grid-column-gap: .25rem;
         grid-auto-flow: column;
         align-items: center;
-        color: var(--color-background);
         opacity: 0.5;
 
         &:first-child {

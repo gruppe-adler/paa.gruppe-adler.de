@@ -49,6 +49,8 @@ export default class HomeVue extends Vue {}
         background-color: var(--color-container);
         border-radius: .5rem;
         width: 37rem;
+        line-height: 1.5em;
+        letter-spacing: 0.03em;
     }
 
     > span:last-child {

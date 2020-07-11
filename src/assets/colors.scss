@@ -7,3 +7,15 @@
     --color-warning: #D18D1F;
     --color-error: #9A0900;
 }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-background: #222222;
+        --color-footer: #010103;
+        --color-container: #2D2D2D;
+        --color-text: #F0EEEC;
+        --color-primary: #2F80ED;
+        --color-warning: #D18D1F;
+        --color-error: #9A0900;
+    }
+}
