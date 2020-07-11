@@ -31,6 +31,9 @@ import OverlayVue from '@/components/Overlay.vue';
 
 import { isSupportedFile } from '@/utils/file';
 
+const suportedFormats = ['.png', '.jpg/.jpeg', '.svg', '.paa'];
+const supportedHint = `\n\nWe support the following file formats:\n- ${suportedFormats.join('\n- ')}`;
+
 @Component({
     components: {
         Home: HomeVue,
@@ -61,10 +64,14 @@ export default class AppVue extends Vue {
 
         if (newFiles.length === 0) {
             if (input.files.length === 1) {
-                alert('The file you uploaded is not in a supported format.\n\nWe support the following file formats:\n- .png\n- .jpg/.jpeg\n- .paa');
+                alert(`The file you uploaded is not in a supported format.${supportedHint}`);
             } else {
-                alert('None of the files you uploaded are in a supported format.\n\nWe support the following file formats:\n- .png\n- .jpg / .jpeg\n- .paa');
+                alert(`None of the files you uploaded are in a supported format.${supportedHint}`);
             }
+        }
+
+        if (newFiles.length < input.files.length) {
+            alert(`Some of the files you uploaded are not in a supported format.${supportedHint}`);
         }
 
         this.files.push(...newFiles);

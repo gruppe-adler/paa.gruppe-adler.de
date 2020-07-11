@@ -4,7 +4,7 @@
  * @returns {boolean} File is supported?
  */
 export function isSupportedFile (file: File): boolean {
-    return (file.type === 'image/png' || file.type === 'image/jpeg' || /\.paa$/i.test(file.name));
+    return (file.type === 'image/png' || file.type === 'image/svg+xml' || file.type === 'image/jpeg' || /\.paa$/i.test(file.name));
 }
 
 /**
