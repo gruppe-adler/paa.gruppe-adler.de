@@ -9,7 +9,7 @@ module.exports = {
     },
     pwa: {
         name: 'PAA Converter - Gruppe Adler',
-        themeColor: '#d18d1f',
+        themeColor: '#000000',
         manifestOptions: {
             short_name: 'GRAD PAA'
         },
