@@ -98,6 +98,10 @@ export default class FileItemVue extends Vue {
             this.worker = new ConvertWorker();
         }
 
+        let imageWidth: number;
+        let imageHeight: number;
+        const t0 = performance.now();
+
         if (this.extension === 'paa') {
             // convert paa to png
             const data = await this.worker.convertPaaToImage(this.inputFile);
@@ -105,6 +109,8 @@ export default class FileItemVue extends Vue {
             const blob = dataURItoBlob(imageDataToUrl(data));
 
             this.result = new File([blob], this.newName);
+            imageWidth = data.width;
+            imageHeight = data.height;
         } else {
             const data = await imageDataFromFile(this.inputFile);
 
@@ -121,7 +127,26 @@ export default class FileItemVue extends Vue {
 
             const file = new File([blob], this.newName);
             this.result = file;
+            imageWidth = data.width;
+            imageHeight = data.height;
         }
+
+        const t1 = performance.now();
+
+        // log on google analytics
+        this.$gtag.event('conversion', {
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            event_category: 'conversion',
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            non_interaction: true,
+            inputSize: Math.floor(this.inputFile.size),
+            outputSize: Math.floor(this.result.size),
+            imageWidth,
+            imageHeight,
+            conversionTime: t1 - t0,
+            inputType: this.inputFile.type,
+            outputType: this.result.type
+        });
 
         this.worker.terminate();
     }
