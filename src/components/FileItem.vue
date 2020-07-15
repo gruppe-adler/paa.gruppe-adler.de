@@ -4,7 +4,7 @@
             <i class="material-icons grad-file-item__close" @click="$emit('remove')">clear</i>
             <span class="grad-file-item__name">
                 <span>{{newName}}</span>
-                <span style="opacity: 0.5; margin-left: .5rem;">from {{value.name}}</span>
+                <span style="opacity: 0.5; margin-left: .5rem;">from {{inputFile.name}}</span>
             </span>
             <div
                 v-if="state === 'warning'"
@@ -44,9 +44,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { imageDataToUrl, imageDataFromFile } from '@/utils/image';
-import { getFileExtension, getFileNameWithoutExtension } from '@/utils/file';
+import { getFileExtension, getFileNameWithoutExtension, dataURItoBlob, download } from '@/utils/file';
 
 import ConvertWorker from '@/assets/convert.worker.js';
 
@@ -57,12 +57,12 @@ interface Warning {
 
 @Component
 export default class FileItemVue extends Vue {
-    @Prop({ type: File, required: true }) private value!: File;
+    @Prop({ type: File, required: true }) private inputFile!: File;
 
     private warning: null|Warning = null;
     private worker: ConvertWorker|null = null;
     private error: unknown|null = null;
-    private result: string|null = null;
+    private result: File|null = null;
 
     private created () {
         this.convert().catch(e => { console.error(e); this.error = e; });
@@ -70,20 +70,17 @@ export default class FileItemVue extends Vue {
 
     private destroyed () {
         if (this.worker !== null) this.worker.terminate();
+    }
 
-        if (this.result !== null) URL.revokeObjectURL(this.result);
+    @Watch('result')
+    private emitResult () {
+        this.$emit('result', this.result);
     }
 
     private download () {
         if (this.result === null) return;
 
-        const link = document.createElement('a');
-        link.download = this.newName;
-        link.href = this.result;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        link.remove();
+        download(this.result);
     }
 
     private showError () {
@@ -103,11 +100,13 @@ export default class FileItemVue extends Vue {
 
         if (this.extension === 'paa') {
             // convert paa to png
-            const data = await this.worker.convertPaaToImage(this.value);
+            const data = await this.worker.convertPaaToImage(this.inputFile);
 
-            this.result = imageDataToUrl(data);
+            const blob = dataURItoBlob(imageDataToUrl(data));
+
+            this.result = new File([blob], this.newName);
         } else {
-            const data = await imageDataFromFile(this.value);
+            const data = await imageDataFromFile(this.inputFile);
 
             // check wether both dimensions are powers of two
             if (Math.log2(data.width) % 1 !== 0 || Math.log2(data.width) % 1 !== 0) {
@@ -119,18 +118,20 @@ export default class FileItemVue extends Vue {
             }
 
             const blob = await this.worker.convertImageToPaa(data);
-            this.result = URL.createObjectURL(blob);
+
+            const file = new File([blob], this.newName);
+            this.result = file;
         }
 
         this.worker.terminate();
     }
 
     private get extension () {
-        return getFileExtension(this.value);
+        return getFileExtension(this.inputFile);
     }
 
     private get newName () {
-        const nameWithoutExtension = getFileNameWithoutExtension(this.value);
+        const nameWithoutExtension = getFileNameWithoutExtension(this.inputFile);
 
         return `${nameWithoutExtension}.${this.extension === 'paa' ? 'png' : 'paa'}`;
     }

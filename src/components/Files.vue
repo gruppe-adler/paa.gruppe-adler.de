@@ -3,9 +3,10 @@
         <ul style="padding: 0; margin: 0;">
             <FileItem
                 v-for="f in value"
-                :value="f"
+                :inputFile="f"
                 :key="f"
-                @remove="value.splice(value.indexOf(f), 1)"
+                @remove="remove(f)"
+                @result="setResult(f, $event)"
             />
         </ul>
         <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
@@ -26,6 +27,9 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import FileItemVue from '@/components/FileItem.vue';
 
+import JSZip from 'jszip';
+import { download } from '@/utils/file';
+
 @Component({
     components: {
         FileItem: FileItemVue
@@ -34,8 +38,32 @@ import FileItemVue from '@/components/FileItem.vue';
 export default class FilesVue extends Vue {
     @Prop({ type: Array, required: true }) private value!: File[];
 
-    private downloadAll () {
-        alert('This shit not implemented yo.');
+    private results: Map<File, File> = new Map();
+
+    private remove (file: File) {
+        const index = this.value.indexOf(file);
+
+        this.value.splice(index, 1);
+
+        // remove from result list
+        this.results.delete(file);
+    }
+
+    private setResult (inputFile: File, resultFile: File) {
+        this.results.set(inputFile, resultFile);
+    }
+
+    private async downloadAll () {
+        const zip = new JSZip();
+        for (const file of Array.from(this.results.values())) {
+            zip.file(file.name, file);
+        }
+
+        const blob = await zip.generateAsync({ type: 'blob' });
+
+        const file = new File([blob], 'grad-paa.zip');
+
+        download(file);
     }
 }
 </script>
