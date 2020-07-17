@@ -46,7 +46,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { imageDataToUrl, imageDataFromFile } from '@/utils/image';
-import { getFileExtension, getFileNameWithoutExtension, dataURItoBlob, download } from '@/utils/file';
+import { getFileExtension, getFileNameWithoutExtension, dataURItoBlob, download, fileFormatIndex } from '@/utils/file';
 
 import ConvertWorker from '@/assets/convert.worker.js';
 
@@ -133,19 +133,19 @@ export default class FileItemVue extends Vue {
 
         const t1 = performance.now();
 
-        // log on google analytics
+        // log google analytics
         this.$gtag.event('conversion', {
             // eslint-disable-next-line @typescript-eslint/camelcase
             event_category: 'conversion',
             // eslint-disable-next-line @typescript-eslint/camelcase
             non_interaction: true,
-            inputSize: Math.floor(this.inputFile.size),
-            outputSize: Math.floor(this.result.size),
-            imageWidth,
-            imageHeight,
-            conversionTime: t1 - t0,
-            inputType: this.inputFile.type,
-            outputType: this.result.type
+            metric1: Math.floor(this.inputFile.size / 1000), // Input File Size (in kB)
+            metric2: Math.floor(this.result.size / 1000), // Output File Size (in kB)
+            metric3: imageWidth, // Image Width (in px)
+            metric4: imageHeight, // Image Height (in px)
+            metric5: Math.floor(t1 - t0), // Conversion Time (in ms)
+            metric6: fileFormatIndex(this.result.type), // Output File Format
+            metric7: fileFormatIndex(this.inputFile.type) // Input File Format
         });
 
         this.worker.terminate();
