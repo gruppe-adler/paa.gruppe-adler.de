@@ -139,13 +139,13 @@ export default class FileItemVue extends Vue {
             event_category: 'conversion',
             // eslint-disable-next-line @typescript-eslint/camelcase
             non_interaction: true,
-            metric1: Math.floor(this.inputFile.size / 1000), // Input File Size (in kB)
-            metric2: Math.floor(this.result.size / 1000), // Output File Size (in kB)
-            metric3: imageWidth, // Image Width (in px)
-            metric4: imageHeight, // Image Height (in px)
-            metric5: Math.floor(t1 - t0), // Conversion Time (in ms)
-            metric6: fileFormatIndex(this.result.type), // Output File Format
-            metric7: fileFormatIndex(this.inputFile.type) // Input File Format
+            inputFileSize: Math.floor(this.inputFile.size / 1000), // Input File Size (in kB)
+            outputFileSize: Math.floor(this.result.size / 1000), // Output File Size (in kB)
+            imageWidth: imageWidth, // Image Width (in px)
+            imageHeight: imageHeight, // Image Height (in px)
+            conversionTime: Math.floor(t1 - t0), // Conversion Time (in ms)
+            outputFileFormat: fileFormatIndex(this.result.type), // Output File Format
+            inputFileFormat: fileFormatIndex(this.inputFile.type) // Input File Format
         });
 
         this.worker.terminate();

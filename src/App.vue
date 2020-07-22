@@ -47,6 +47,18 @@ const supportedHint = `\n\nWe support the following file formats:\n- ${suportedF
 export default class AppVue extends Vue {
     private files: File[] = [];
 
+    private created () {
+        this.$gtag.customMap({
+            metric1: 'inputFileSize', // Input File Size (in kB)
+            metric2: 'outputFileSize', // Output File Size (in kB)
+            metric3: 'imageWidth', // Image Width (in px)
+            metric4: 'imageHeight', // Image Height (in px)
+            metric5: 'conversionTime', // Conversion Time (in ms)
+            metric6: 'outputFileFormat', // Output File Format
+            metric7: 'inputFileFormat' // Input File Format
+        });
+    }
+
     private onOverlayInput (files: FileList) {
         const input = this.$refs.file_input as HTMLInputElement|undefined;
         if (!input) return;
