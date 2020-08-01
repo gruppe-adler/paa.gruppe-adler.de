@@ -12,6 +12,17 @@
             <span>Convert Files</span>
         </button>
         <span>Thanks to BI and the Arma3 Community for being awesome</span>
+        <span>Also check out our PAA plugins for</span>
+        <div>
+            <a href="https://github.com/gruppe-adler/paa-gimp-plugin" target="_blank" rel="noreferrer">
+                <img alt="gimp-logo" src="@/assets/gimp.svg" />
+                <span>Gimp</span>
+            </a>
+            <a href="https://github.com/gruppe-adler/PaaPhotoshopPlugin" target="_blank" rel="noreferrer">
+                <img alt="photoshop-logo" src="@/assets/photoshop.svg" />
+                <span>Photoshop</span>
+            </a>
+        </div>
     </main>
 </template>
 
@@ -32,6 +43,8 @@ export default class HomeVue extends Vue {}
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 2rem 0;
+    box-sizing: border-box;
 
     > * {
         max-width: calc(100vw - 2rem);
@@ -39,8 +52,11 @@ export default class HomeVue extends Vue {}
     }
 
     > img {
-        margin-top: 2rem;
         height: 30vh;
+    }
+
+    > h1 {
+        margin: 1rem 0 0 0;
     }
 
     > section {
@@ -53,10 +69,46 @@ export default class HomeVue extends Vue {}
         letter-spacing: 0.03em;
     }
 
-    > span:last-child {
+    > span {
         opacity: 0.5;
-        margin-bottom: 2rem;
-        margin-top: 3rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+
+        &:first-of-type {
+            margin-top: 3rem;
+        }
+    }
+
+    > div:last-child {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-column-gap: 2rem;
+
+        > a {
+            display: grid;
+            grid-template-rows: auto auto;
+            grid-row-gap: .5rem;
+            align-items: stretch;
+            justify-items: center;
+            opacity: 0.5;
+            transition: opacity 0.05s ease-in-out;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            > img {
+                width: 3rem;
+                opacity: 0.7;
+                filter: invert(100%);
+            }
+
+            @media (prefers-color-scheme: dark) {
+                > img {
+                    filter: unset;
+                }
+            }
+        }
     }
 }
 </style>
