@@ -109,7 +109,7 @@ footer {
     background-color: var(--color-footer);
     color: #FFFFFF;
     display: grid;
-    grid-template-columns: .3fr .4fr .3fr;
+    grid-template-columns: .5fr auto .5fr;
     justify-items: center;
     align-items: center;
     padding: 0 1.5rem;
