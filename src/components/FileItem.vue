@@ -112,7 +112,7 @@ export default class FileItemVue extends Vue {
             if (Math.log2(data.width) % 1 !== 0 || Math.log2(data.width) % 1 !== 0) {
                 this.warning = {
                     displayText: 'Dimensions have to<br/>be powers of two',
-                    description: 'The dimensions (width and height) of PAA Images have to be powers of two. Your image has to fullfill the same conditions, that we can conert it to PAA.'
+                    description: 'The dimensions (width and height) of PAA Images have to be powers of two. Your image has to fullfill the same conditions, that we can convert it to PAA.'
                 };
                 return;
             }
