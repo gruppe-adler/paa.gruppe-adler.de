@@ -8,20 +8,6 @@ export function isSupportedFile (file: File): boolean {
 }
 
 /**
- * Format index (used for google analytics)
- * @param type file mime type
- * @returns {number} format index
- */
-export function fileFormatIndex (type: string): number {
-    return [
-        'application/octet-stream', // PAA
-        'image/png',
-        'image/svg+xml',
-        'image/jpeg'
-    ].indexOf(type);
-}
-
-/**
  * Checks whether given file is supported
  * @param {File} file file
  * @returns {string|undefined} file extension

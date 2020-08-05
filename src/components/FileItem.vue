@@ -46,7 +46,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { imageDataToUrl, imageDataFromFile } from '@/utils/image';
-import { getFileExtension, getFileNameWithoutExtension, dataURItoBlob, download, fileFormatIndex } from '@/utils/file';
+import { getFileExtension, getFileNameWithoutExtension, dataURItoBlob, download } from '@/utils/file';
 
 import ConvertWorker from '@/assets/convert.worker.js';
 
@@ -98,10 +98,6 @@ export default class FileItemVue extends Vue {
             this.worker = new ConvertWorker();
         }
 
-        let imageWidth: number;
-        let imageHeight: number;
-        const t0 = performance.now();
-
         if (this.extension === 'paa') {
             // convert paa to png
             const data = await this.worker.convertPaaToImage(this.inputFile);
@@ -109,8 +105,6 @@ export default class FileItemVue extends Vue {
             const blob = dataURItoBlob(imageDataToUrl(data));
 
             this.result = new File([blob], this.newName);
-            imageWidth = data.width;
-            imageHeight = data.height;
         } else {
             const data = await imageDataFromFile(this.inputFile);
 
@@ -127,26 +121,11 @@ export default class FileItemVue extends Vue {
 
             const file = new File([blob], this.newName);
             this.result = file;
-            imageWidth = data.width;
-            imageHeight = data.height;
         }
 
-        const t1 = performance.now();
-
         // log google analytics
-        this.$gtag.event('conversion', {
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            event_category: 'conversion',
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            non_interaction: true,
-            inputFileSize: Math.floor(this.inputFile.size / 1000), // Input File Size (in kB)
-            outputFileSize: Math.floor(this.result.size / 1000), // Output File Size (in kB)
-            imageWidth: imageWidth, // Image Width (in px)
-            imageHeight: imageHeight, // Image Height (in px)
-            conversionTime: Math.floor(t1 - t0), // Conversion Time (in ms)
-            outputFileFormat: fileFormatIndex(this.result.type), // Output File Format
-            inputFileFormat: fileFormatIndex(this.inputFile.type) // Input File Format
-        });
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        this.$gtag.event('conversion', { event_category: 'conversion', non_interaction: true });
 
         this.worker.terminate();
     }
