@@ -6,7 +6,7 @@
         <section>
             This free image to PAA - PAA to PNG Converter works 100% in the browser.<br/>
             Just drag your image or .paa files into this window or click the button below to start converting files to the corresponding format.<br/>
-            <b>Your files wont be uploaded anywhere. Everything is processed on your machine.</b>
+            <b>Your files wont be uploaded anywhere. Everything is processed on your machine. This site will even work when you're offline.</b>
         </section>
         <button @click="$emit('convert')">
             <i class="material-icons">add</i>
