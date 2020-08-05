@@ -28,7 +28,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import FileItemVue from '@/components/FileItem.vue';
 
 import JSZip from 'jszip';
-import { download } from '@/utils/file';
+import { download, CustomFile } from '@/utils/file';
 
 @Component({
     components: {
@@ -38,7 +38,7 @@ import { download } from '@/utils/file';
 export default class FilesVue extends Vue {
     @Prop({ type: Array, required: true }) private value!: File[];
 
-    private results: Map<File, File> = new Map();
+    private results: Map<File, CustomFile> = new Map();
 
     private remove (file: File) {
         const index = this.value.indexOf(file);
@@ -49,19 +49,19 @@ export default class FilesVue extends Vue {
         this.results.delete(file);
     }
 
-    private setResult (inputFile: File, resultFile: File) {
+    private setResult (inputFile: File, resultFile: CustomFile) {
         this.results.set(inputFile, resultFile);
     }
 
     private async downloadAll () {
         const zip = new JSZip();
         for (const file of Array.from(this.results.values())) {
-            zip.file(file.name, file);
+            zip.file(file.name, file.blob);
         }
 
         const blob = await zip.generateAsync({ type: 'blob' });
 
-        const file = new File([blob], 'grad-paa.zip');
+        const file: CustomFile = { blob, name: 'grad-paa.zip' };
 
         download(file);
     }

@@ -1,4 +1,13 @@
 /**
+ * Why do we not just use File?
+ * Well... because old Edge is shitty af and can't handle the File constructor (see https://stackoverflow.com/a/43241922)
+ */
+export interface CustomFile {
+    blob: Blob;
+    name: string;
+}
+
+/**
  * Checks whether given file is supported
  * @param {File} file file
  * @returns {boolean} File is supported?
@@ -59,8 +68,8 @@ export function dataURItoBlob (dataURI: string): Blob {
  * Download given file
  * @param {File} file File to download
  */
-export function download (file: File) {
-    const url = URL.createObjectURL(file);
+export function download (file: CustomFile) {
+    const url = URL.createObjectURL(file.blob);
 
     const link = document.createElement('a');
     link.download = file.name;
@@ -70,5 +79,6 @@ export function download (file: File) {
     document.body.removeChild(link);
     link.remove();
 
-    URL.revokeObjectURL(url);
+    // we revoke the url only after a delay because old Edge can't handle it otherwise
+    window.setTimeout(() => URL.revokeObjectURL(url), 200);
 }

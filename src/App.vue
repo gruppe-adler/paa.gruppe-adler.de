@@ -19,14 +19,14 @@
                 <span>Having Issues?</span>
             </a>
         </footer>
-        <Overlay @input="onOverlayInput"></Overlay>
+        <Overlay @input="convertFiles"></Overlay>
         <input
             ref="file_input"
             style="display: none"
             type="file"
             multiple
             accept="image/png,image/svg+xml,image/jpeg,.paa"
-            @input="onFileInput"
+            @change="onFileInput"
         />
     </div>
 </template>
@@ -53,40 +53,36 @@ const supportedHint = `\n\nWe support the following file formats:\n- ${suportedF
 export default class AppVue extends Vue {
     private files: File[] = [];
 
-    private onOverlayInput (files: FileList) {
-        const input = this.$refs.file_input as HTMLInputElement|undefined;
-        if (!input) return;
-
-        input.files = files;
-
-        this.onFileInput();
-    }
-
     private onFileInput () {
         const input = this.$refs.file_input as HTMLInputElement|undefined;
         if (!input) return;
 
         if (!input.files) return;
-        if (input.files.length === 0) return;
 
-        const newFiles = Array.from(input.files).filter(isSupportedFile);
+        this.convertFiles(input.files);
+
+        // remove all files from input
+        input.value = '';
+    }
+
+    private convertFiles (files: FileList) {
+        if (files.length === 0) return;
+
+        const newFiles = Array.from(files).filter(isSupportedFile);
 
         if (newFiles.length === 0) {
-            if (input.files.length === 1) {
+            if (files.length === 1) {
                 alert(`The file you uploaded is not in a supported format.${supportedHint}`);
             } else {
                 alert(`None of the files you uploaded are in a supported format.${supportedHint}`);
             }
         }
 
-        if (newFiles.length < input.files.length) {
+        if (newFiles.length < files.length) {
             alert(`Some of the files you uploaded are not in a supported format.${supportedHint}`);
         }
 
         this.files.push(...newFiles);
-
-        // remove all files from input
-        input.value = '';
     }
 
     private get isHomeShown (): boolean {

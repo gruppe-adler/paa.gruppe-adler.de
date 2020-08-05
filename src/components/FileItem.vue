@@ -46,7 +46,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import { imageDataToUrl, imageDataFromFile } from '@/utils/image';
-import { getFileExtension, getFileNameWithoutExtension, dataURItoBlob, download } from '@/utils/file';
+import { getFileExtension, getFileNameWithoutExtension, dataURItoBlob, download, CustomFile } from '@/utils/file';
 
 import ConvertWorker from '@/assets/convert.worker.js';
 
@@ -62,7 +62,7 @@ export default class FileItemVue extends Vue {
     private warning: null|Warning = null;
     private worker: ConvertWorker|null = null;
     private error: unknown|null = null;
-    private result: File|null = null;
+    private result: CustomFile|null = null;
 
     private created () {
         this.convert().catch(e => { console.error(e); this.error = e; });
@@ -104,7 +104,7 @@ export default class FileItemVue extends Vue {
 
             const blob = dataURItoBlob(imageDataToUrl(data));
 
-            this.result = new File([blob], this.newName);
+            this.result = { blob, name: this.newName };
         } else {
             const data = await imageDataFromFile(this.inputFile);
 
@@ -119,8 +119,7 @@ export default class FileItemVue extends Vue {
 
             const blob = await this.worker.convertImageToPaa(data);
 
-            const file = new File([blob], this.newName);
-            this.result = file;
+            this.result = { blob, name: this.newName };
         }
 
         // log google analytics
