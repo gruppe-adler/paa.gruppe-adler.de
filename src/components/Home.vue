@@ -50,6 +50,7 @@ export default class HomeVue extends Vue {}
     > * {
         max-width: calc(100vw - 2rem);
         box-sizing: border-box;
+        flex-shrink: 0;
     }
 
     > img {
@@ -87,7 +88,7 @@ export default class HomeVue extends Vue {}
 
         > a {
             display: grid;
-            grid-template-rows: auto auto;
+            grid-template-rows: 1fr auto;
             grid-row-gap: .5rem;
             align-items: stretch;
             justify-items: center;

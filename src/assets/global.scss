@@ -39,10 +39,8 @@ a {
 }
 
 button {
-    display: grid;
-    grid-auto-flow: column;
+    display: flex;
     align-items: center;
-    grid-column-gap: .25rem;
     padding: .5rem 1rem;
     color: var(--color-primary);
     background-color: var(--color-container);
@@ -53,6 +51,10 @@ button {
     font-weight: 600;
     outline: none;
     user-select: none;
+
+    > i {
+        margin-right: .25rem;
+    }
 
     &:hover {
         color: #FFFFFF;
