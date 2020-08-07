@@ -1,6 +1,6 @@
 <template>
     <main class="grad-home">
-        <img src="@/assets/logo.svg" alt="logo" />
+        <div ref="logo" style="height: 30vh; width: 30vh;"></div>
         <h1>ARMA 3 PAA CONVERTER</h1>
         <span style="color: #d18d1f; opacity: 1; margin: 0 0;">Warning: This is still in early BETA and and currently only online for internal testing.</span>
         <section>
@@ -29,9 +29,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import Lottie from 'lottie-web';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const lottieData = require('@/assets/logo.json');
 
 @Component
-export default class HomeVue extends Vue {}
+export default class HomeVue extends Vue {
+    private mounted () {
+        Lottie.registerAnimation(this.$refs.logo as HTMLDivElement, lottieData);
+    }
+}
 </script>
 
 <style scoped lang="scss">
@@ -51,10 +59,6 @@ export default class HomeVue extends Vue {}
         max-width: calc(100vw - 2rem);
         box-sizing: border-box;
         flex-shrink: 0;
-    }
-
-    > img {
-        height: 30vh;
     }
 
     > h1 {
