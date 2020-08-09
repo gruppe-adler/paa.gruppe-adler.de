@@ -2,7 +2,6 @@
     <main class="grad-home">
         <div ref="logo" style="height: 30vh; width: 30vh;"></div>
         <h1>ARMA 3 PAA CONVERTER</h1>
-        <span style="color: #d18d1f; opacity: 1; margin: 0 0;">Warning: This is still in early BETA and and currently only online for internal testing.</span>
         <section>
             This free image to PAA / PAA to PNG Converter works 100% in the browser.<br/>
             Just drag your image or .paa files into this window or click the button below to start converting files to the corresponding format.<br/>
