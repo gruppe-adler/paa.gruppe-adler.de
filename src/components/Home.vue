@@ -29,15 +29,38 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Lottie from 'lottie-web';
+import Lottie, { AnimationItem as LottieAnimationItem } from 'lottie-web';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const lottieData = require('@/assets/logo.json');
 
 @Component
 export default class HomeVue extends Vue {
+    private lottieAnimation: null|LottieAnimationItem = null;
+    private resizeDebounceTimeout: number | undefined;
+
+    private created () {
+        window.addEventListener('resize', this.handleResize);
+    }
+
+    private beforeDestroy () {
+        window.addEventListener('resize', this.handleResize);
+    }
+
     private mounted () {
-        Lottie.registerAnimation(this.$refs.logo as HTMLDivElement, lottieData);
+        this.lottieAnimation = Lottie.loadAnimation({
+            container: this.$refs.logo as HTMLDivElement,
+            renderer: 'canvas',
+            animationData: lottieData
+        });
+    }
+
+    private handleResize () {
+        if (this.resizeDebounceTimeout !== undefined) window.clearTimeout(this.resizeDebounceTimeout);
+        this.resizeDebounceTimeout = window.setTimeout(() => {
+            if (this.lottieAnimation === null) return;
+            this.lottieAnimation.resize();
+        }, 100);
     }
 }
 </script>
