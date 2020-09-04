@@ -8,10 +8,17 @@
             </span>
             <div
                 v-if="state === 'warning'"
-                v-html="warning.displayText"
                 style="grid-area: message; color: var(--color-warning); text-align: right; cursor: pointer;"
                 @click="showWarning"
-            ></div>
+            >
+                <span v-html="warning.displayText"></span>
+                <i
+                    class="material-icons"
+                    style="font-size: inherit; vertical-align: middle; cursor: pointer; opacity: 0.5; margin-left: .25em;"
+                >
+                    help
+                </i>
+            </div>
             <div v-if="state === 'error'" style="grid-area: message; color: var(--color-error); text-align: right;">
                 An error occurred<br/>Click <span style="text-decoration: underline; cursor: pointer;" @click="showError">here</span> to see the details
             </div>
@@ -112,7 +119,7 @@ export default class FileItemVue extends Vue {
             if (Math.log2(data.width) % 1 !== 0 || Math.log2(data.width) % 1 !== 0) {
                 this.warning = {
                     displayText: 'Dimensions have to<br/>be powers of two',
-                    description: 'The dimensions (width and height) of PAA Images have to be powers of two. Your image has to fulfill the same conditions, that we can convert it to PAA.'
+                    description: 'The dimensions (width and height) of PAA images have to be powers of two (2ⁿ).\nYour image has to fulfill the same conditions in order to convert it to PAA.'
                 };
                 return;
             }
