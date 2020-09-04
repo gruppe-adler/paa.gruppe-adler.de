@@ -14,8 +14,7 @@
                 <i class="material-icons">add</i>
                 <span>Convert more Files</span>
             </button>
-            <!-- TODO: Make button wörk -->
-            <button @click="downloadAll">
+            <button @click="downloadAll" v-if="downloadAllShown">
                 <i class="material-icons">get_app</i>
                 <span>Download all Files</span>
             </button>
@@ -39,6 +38,7 @@ export default class FilesVue extends Vue {
     @Prop({ type: Array, required: true }) private value!: File[];
 
     private results: Map<File, CustomFile> = new Map();
+    private downloadAllShown = false;
 
     private remove (file: File) {
         const index = this.value.indexOf(file);
@@ -47,10 +47,17 @@ export default class FilesVue extends Vue {
 
         // remove from result list
         this.results.delete(file);
+
+        this.updateDownloadAllShown();
     }
 
     private setResult (inputFile: File, resultFile: CustomFile) {
         this.results.set(inputFile, resultFile);
+        this.updateDownloadAllShown();
+    }
+
+    private updateDownloadAllShown () {
+        this.downloadAllShown = this.results.size > 0;
     }
 
     private async downloadAll () {
