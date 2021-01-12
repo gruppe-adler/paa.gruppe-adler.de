@@ -3,9 +3,9 @@
         <div ref="logo" style="height: 30vh; width: 30vh;"></div>
         <h1>ARMA 3 PAA CONVERTER</h1>
         <section>
-            This free image to PAA / PAA to PNG Converter works 100% in the browser.<br/>
-            Just drag your image or .paa files into this window or click the button below to start converting files to the corresponding format.<br/>
-            <b>Your files won't be uploaded anywhere. Everything is processed on your machine. This site will even work when you're offline.</b>
+            <p>This free image to PAA / PAA to PNG Converter works 100% in the browser.</p>
+            <p>Just drag your image or .paa files into this window or click the button below to start converting files to the corresponding format.</p>
+            <p><b>Your files won't be uploaded anywhere. Everything is processed on your machine. This site will even work when you're offline.</b></p>
         </section>
         <button @click="$emit('convert')">
             <i class="material-icons">add</i>
@@ -95,6 +95,18 @@ export default class HomeVue extends Vue {
         width: 37rem;
         line-height: 1.5em;
         letter-spacing: 0.03em;
+
+        > p {
+            margin: .5em 0;
+
+            &:first-child {
+                margin-top: 0;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 
     > span {
