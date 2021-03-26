@@ -116,7 +116,7 @@ export default class FileItemVue extends Vue {
             const data = await imageDataFromFile(this.inputFile);
 
             // check wether both dimensions are powers of two
-            if (Math.log2(data.width) % 1 !== 0 || Math.log2(data.width) % 1 !== 0) {
+            if (Math.log2(data.width) % 1 !== 0 || Math.log2(data.height) % 1 !== 0) {
                 this.warning = {
                     displayText: 'Dimensions have to<br/>be powers of two',
                     description: 'The dimensions (width and height) of PAA images have to be powers of two (2ⁿ).\nYour image has to fulfill the same conditions in order to convert it to PAA.'
