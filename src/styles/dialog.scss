@@ -1,0 +1,119 @@
+.grad-paa-dialog {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    touch-action: none;
+
+    &__backdrop {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(black, 0.5);
+        transition: opacity .2s ease;
+        opacity: 0;
+    }
+
+    &__dialog {
+        display: grid;
+        min-height: 10rem;
+        min-width: 10rem;
+        z-index: 1000;
+        padding: 1rem 1.5rem;
+        border-radius: 1rem;
+        background-color: var(--color-background);
+        transition: transform .2s ease, opacity .2s ease;
+        transform: scale(0.5);
+        opacity: 0;
+        grid-template:
+            "heading" auto
+            "content" 1fr
+            "actions" auto / 1fr;
+        grid-row-gap: .5rem;
+        max-width: calc(100vw - 2rem);
+        box-sizing: border-box;
+
+        &.grad-paa-dialog--close {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+    }
+
+    &__heading {
+        grid-area: heading;
+        margin: 0;
+        margin-bottom: .5rem;
+    }
+
+    &__content {
+        grid-area: content;
+        line-height: 1.5em;
+
+        > p:first-child {
+            margin-top: 0;
+        }
+
+        > p:last-child {
+            margin-bottom: 0;
+        }
+
+        a {
+            color: var(--color-primary);
+            
+            &:hover {
+                color: var(--color-primary);
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__actions {
+        grid-area: actions;
+        display: grid;
+        grid-auto-flow: column;
+        justify-self: flex-end;
+        grid-column-gap: .5rem;
+    }
+
+    &__close {
+        all: unset;
+        position: absolute;
+        top: .125rem;
+        right: .125rem;
+        color: var(--color-text);
+        background-color: transparent;
+        cursor: pointer;
+        opacity: .4;
+        
+        > i {
+            margin-right: 0;
+            font-size: 1.75rem;
+        }
+
+        &:hover {
+            background-color: transparent;
+            color: var(--color-text);
+        }
+    }
+
+    &--shown {
+        pointer-events: initial;
+        touch-action: initial;
+    }
+
+    &--shown &__dialog {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    &--shown &__backdrop {
+        opacity: 1;
+    }
+}

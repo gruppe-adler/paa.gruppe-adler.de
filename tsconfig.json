@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "es6",
+        "resolveJsonModule": true,
+        "moduleResolution": "node",
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        },
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.json"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

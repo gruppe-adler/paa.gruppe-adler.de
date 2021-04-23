@@ -1,0 +1,33 @@
+#grad-paa-ie-hint {
+    padding: 1.5rem 1.5rem;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+    font-size: 1.5rem;
+    gap: 1rem;
+    line-height: 1.5em;
+
+    > img {
+        max-width: calc(100vw - 10rem);
+        width: 512px;
+        flex-shrink: 0;
+
+        @media (max-width: 1000px) {
+            width: 256px;
+        }
+    }
+
+    > span {
+        max-width: 100%;
+    }
+
+
+    @media (max-width: 700px) {
+        flex-direction: column;
+    }
+}

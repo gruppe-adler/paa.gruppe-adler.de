@@ -1,0 +1,19 @@
+[x] Add context menu to FileItems
+[x] Feedback Popup
+[x] Service Worker
+[x] PWA Capabilities
+[x] "ready to work offline"
+[ ] README
+[x] Lottie
+[ ] nomi's Lottie anim fixes
+[ ] Home: Logo bugging out top
+[x] Remove all files
+[x] Download all
+[x] Google Analytics
+[ ] File with same name
+[ ] SVGs don't work at all
+[ ] Multithreading??
+[ ] Fix open TODO comments
+[ ] GZIP everything
+[ ] PWA file associations
+[ ] Add Progress Bar vor "Download-All"
