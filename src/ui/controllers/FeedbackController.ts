@@ -1,4 +1,6 @@
 import { Alert } from '@/ui/Alert';
+import discordImageUrl from '@/assets/img/discord.svg';
+import githubImageUrl from '@/assets/img/github.svg';
 
 /**
  * Controller of drag-drop overlay.
@@ -22,11 +24,11 @@ export default class FeedbackController extends EventTarget {
             <p>Join our discord server to chat directly with us, open an issue on GitHub or shoot us an email:</p>
             <div id="grad-paa-feedback">
                 <a href="https://discord.gg/ZDqp45q" target="_blank" rel="noreferrer">
-                    <img alt="" src="/img/discord.svg" width="48" height="48">
+                    <img alt="" src="${discordImageUrl}" width="48" height="48">
                     <span>Discord<span>
                 </a>
                 <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de/issues/new/choose" target="_blank" rel="noreferrer">
-                    <img alt="" src="/img/github.svg" width="48" height="48">
+                    <img alt="" src="${githubImageUrl}" width="48" height="48">
                     <span>GitHub</span>
                 </a>
                 <a href="mailto:derzade@gruppe-adler.de" target="_blank" rel="noreferrer">

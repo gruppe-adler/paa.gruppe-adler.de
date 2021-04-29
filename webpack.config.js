@@ -14,7 +14,10 @@ module.exports = () => {
         target: 'es6',
         plugins: [
             new ESLintPlugin({ extensions: ['ts', 'js', 'tsx', 'jsx'] }),
-            new MiniCssExtractPlugin(),
+            new MiniCssExtractPlugin({
+                filename: '[name].[contenthash:8].css',
+                chunkFilename: '[id].[contenthash:8].css'
+            }),
             new HtmlWebpackPlugin({ template: './src/index.html', filename: 'index.html' }),
             new CopyWebpackPlugin({ patterns: [
                 { from: 'public', to: '' }
@@ -38,6 +41,10 @@ module.exports = () => {
                     test: /\.(scss|css)$/i,
                     use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
                     exclude: /node_modules/
+                },
+                {
+                    test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
+                    type: 'asset/resource'
                 }
             ]
         },
@@ -53,9 +60,10 @@ module.exports = () => {
             }
         },
         output: {
-            filename: 'index.js',
+            filename: '[name].[contenthash:8].js',
             path: path.resolve(__dirname, 'dist'),
-            libraryTarget: 'umd'
+            libraryTarget: 'umd',
+            assetModuleFilename: 'img/[name].[contenthash:8][ext][query]'
         }
     };
 };

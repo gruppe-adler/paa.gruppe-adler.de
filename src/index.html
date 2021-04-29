@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <link rel="icon" href="favicon.ico">
+        <link rel="icon" href="<%=require('./assets/favicon.ico')%>">
         <title>PAA Converter - Gruppe Adler</title>
 
         <!-- SEO Meta -->
@@ -48,7 +48,7 @@
         <meta property="og:title" content="PAA Converter - Gruppe Adler">
         <meta property="og:type" content="object">
         <meta property="og:url" content="https://paa.gruppe-adler.de">
-        <meta property="og:image" content="https://paa.gruppe-adler.de/img/logo.png">
+        <meta property="og:image" content="https://paa.gruppe-adler.de/<%=require('./assets/img/logo.png')%>">
         <meta property="og:image:type" content="image/png">
         <meta property="og:image:width" content="512">
         <meta property="og:image:height" content="512">
@@ -66,14 +66,14 @@
 
         <!-- Internet Explorer compatibility hint -->
         <main id="grad-paa-ie-hint" style="display: none;">
-            <img src="/img/logo.png" alt="" />
+            <img src="<%=require('./assets/img/logo.png')%>" alt="" />
             <span>We're sorry but paa.gruppe-adler.de doesn't work properly in Internet Explorer.</span>
         </main>
 
         <!-- Home page -->
         <main id="grad-paa-home">
             <div style="height: 30vh; width: 30vh; min-height: 15rem; min-width: 15rem; flex-shrink: 0;" data-grad-paa-lottie>
-                <img src="/img/logo.png" alt="" style="width: 100%; height: 100%;" />
+                <img src="<%=require('./assets/img/logo.png')%>" alt="" style="width: 100%; height: 100%;" />
             </div>
             <h1>ARMA 3 PAA CONVERTER</h1>
             <section>
@@ -99,11 +99,11 @@
             <div id="grad-paa-home-plugins">
                 <span>Also check out our PAA plugins for</span>
                 <a href="https://github.com/gruppe-adler/paa-gimp-plugin" target="_blank" rel="noreferrer">
-                    <img alt="Gimp Logo" src="/img/gimp.svg" width="48" height="48">
+                    <img alt="Gimp Logo" src="<%=require('./assets/img/gimp.svg')%>" width="48" height="48">
                     <span>Gimp</span>
                 </a>
                 <a href="https://github.com/gruppe-adler/PaaPhotoshopPlugin" target="_blank" rel="noreferrer">
-                    <img alt="Adobe Photoshop Logo" src="/img/photoshop.svg" width="48" height="48">
+                    <img alt="Adobe Photoshop Logo" src="<%=require('./assets/img/photoshop.svg')%>" width="48" height="48">
                     <span>Photoshop</span>
                 </a>
             </div>
