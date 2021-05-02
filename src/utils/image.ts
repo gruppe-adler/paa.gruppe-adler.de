@@ -64,17 +64,54 @@ async function blobToImg(blob: Blob): Promise<HTMLImageElement> {
     }
 }
 
+async function drawableFromBlob (blob: Blob): Promise<HTMLImageElement|ImageBitmap> {
+    // Special-case SVG. We need to avoid createImageBitmap because of
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=606319.
+    // Also, we cache the HTMLImageElement so we can perform vector resizing later.
+    if (blob.type.startsWith('image/svg+xml')) {
+        // Firefox throws if you try to draw an SVG to canvas that doesn't have width/height.
+        // In Chrome it loads, but drawImage behaves weirdly.
+        // This function sets width/height if it isn't already set.
+        const parser = new DOMParser();
+        const text = await new Response(blob).text();
+        const doc = parser.parseFromString(text, 'image/svg+xml');
+        const svg = doc.documentElement;
+
+        if (doc.getElementsByTagName('parsererror').length > 0) throw Error('This is not a valid SVG');
+
+        if (svg.hasAttribute('width') && svg.hasAttribute('height')) {
+            return blobToImg(blob);
+        }
+
+        const viewBox = svg.getAttribute('viewBox');
+        if (viewBox === null) throw Error('SVG must have width/height or viewBox');
+
+        const [, , w, h] = viewBox.split(/\s+/);
+        svg.setAttribute('width', w);
+        svg.setAttribute('height', h);
+
+        const serializer = new XMLSerializer();
+        const newSource = serializer.serializeToString(doc);
+
+        return blobToImg(new Blob([newSource], { type: 'image/svg+xml' }));
+    }
+
+    // Prefer createImageBitmap as it's the off-thread option for Firefox.
+    const drawable =
+        'createImageBitmap' in self
+            ? await createImageBitmap(blob)
+            : await blobToImg(blob);
+
+    return drawable;
+}
+
 /**
  * Get ImageData Object from file
  * @param {Blob} blob Blob to get data from
  * @returns {Promise<ImageData>} Promise, which resolves into ImageData object
  */
 export async function imageDataFromBlob (blob: Blob): Promise<ImageData> {
-    // Prefer createImageBitmap as it's the off-thread option for Firefox.
-    const drawable =
-        'createImageBitmap' in self
-            ? await createImageBitmap(blob)
-            : await blobToImg(blob);
+    const drawable = await drawableFromBlob(blob);
 
     const canvas = document.createElement('canvas');
     canvas.width = drawable.width;
