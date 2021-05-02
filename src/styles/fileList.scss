@@ -1,10 +1,6 @@
 #grad-paa-file-list {
-    justify-self: stretch;
-    align-self: stretch;
     overflow-y: auto;
-    max-height: 100%;
     padding: 1rem;
-    box-sizing: border-box;
     display: grid;
     grid-gap: 1rem;
     align-content: flex-start;
@@ -12,7 +8,13 @@
     grid-template: 
         "heading more" auto
         "files files" auto
-        "_ download" auto / auto auto;
+        "delete download" auto / auto auto;
+
+    // see https://webplatform.news/issues/2019-08-07
+    &::after {
+        content: '';
+        padding-bottom: 0.02px;
+    }
 
     > ul {
         grid-area: files;

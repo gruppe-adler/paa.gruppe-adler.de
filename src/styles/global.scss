@@ -124,3 +124,25 @@ button {
         transform: translateY( calc(-100% - .25rem) ) scale(1);
     }
 }
+
+/* This will work on Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-scrollbar) transparent;
+}
+
+/* Targtes on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar);
+    border-radius: 20px;
+    background-clip: content-box;
+    border: 3px solid transparent;
+}
