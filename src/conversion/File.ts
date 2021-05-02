@@ -26,7 +26,11 @@ export default class ConversionFile extends EventTarget {
         super();
         this.inputFile = file;
         this.id = id;
-        this.preChecks().catch(err => { this.error = err; });
+        this.preChecks().catch(err => {
+            this.error = err;
+            // eslint-disable-next-line no-console
+            console.error(err);
+        });
     }
 
     public get state (): 'done'|'warning'|'error'|'loading'|'queued'|'setup' {
@@ -208,6 +212,8 @@ export default class ConversionFile extends EventTarget {
             gtag('event', `${this.extension}2${this.newExtension}`, { event_category: 'conversion', non_interaction: true });
         } catch (err) {
             this.error = err;
+            // eslint-disable-next-line no-console
+            console.error(err);
         } finally {
             if (this.worker) {
                 this.worker.terminate();
