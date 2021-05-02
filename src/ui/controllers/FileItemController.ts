@@ -300,6 +300,11 @@ export default class FileItemController {
      * Remove file item with a fancy animation
      */
     public remove (): void {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            this.element.remove();
+            return;
+        }
+
         const { height } = this.element.getBoundingClientRect();
 
         this.element.style.maxHeight = `${height}px`;

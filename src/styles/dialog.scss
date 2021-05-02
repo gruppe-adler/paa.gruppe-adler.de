@@ -19,6 +19,10 @@
         background-color: rgba(black, 0.5);
         transition: opacity .2s ease;
         opacity: 0;
+
+        @media (prefers-reduced-motion) {
+            transition: none;
+        }
     }
 
     &__dialog {
@@ -30,6 +34,11 @@
         border-radius: 1rem;
         background-color: var(--color-background);
         transition: transform .2s ease, opacity .2s ease;
+        
+        @media (prefers-reduced-motion) {
+            transition: none;
+        }
+
         transform: scale(0.5);
         opacity: 0;
         grid-template:

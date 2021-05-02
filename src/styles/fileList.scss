@@ -97,6 +97,10 @@
                 z-index: -1;
                 transform: scale(0);
                 transition: transform 0.1s ease;
+
+                @media (prefers-reduced-motion) {
+                    transition: none;
+                }
             }
 
             &:hover {
@@ -120,6 +124,10 @@
             transition: transform 0.2s ease;
             transform-origin: top right;
             z-index: 100;
+
+            @media (prefers-reduced-motion) {
+                transition: none;
+            }
 
             > li {
                 padding: 1rem;
