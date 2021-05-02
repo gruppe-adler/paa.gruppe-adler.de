@@ -209,6 +209,7 @@ export default class ConversionFile extends EventTarget {
             }
 
             // log google analytics
+            // TODO: sanitize extensions (jpeg, jpg etc.)
             gtag('event', `${this.extension}2${this.newExtension}`, { event_category: 'conversion', non_interaction: true });
         } catch (err) {
             this.error = err;

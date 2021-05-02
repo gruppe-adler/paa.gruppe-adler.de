@@ -4,7 +4,7 @@ import './styles/global.scss';
 window.addEventListener('DOMContentLoaded', async () => {
     const app = new GradPaaApplication();
 
-    // TODO: remove return
+    // TODO: remove return to enable service worker
     return;
 
     if (!('serviceWorker' in navigator)) return;

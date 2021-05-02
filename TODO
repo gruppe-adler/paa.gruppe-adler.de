@@ -3,17 +3,25 @@
 [x] Service Worker
 [x] PWA Capabilities
 [x] "ready to work offline"
-[ ] README
-[x] Lottie
-[ ] nomi's Lottie anim fixes
-[ ] Home: Logo bugging out top
 [x] Remove all files
+[x] Lottie
 [x] Download all
 [x] Google Analytics
+[x] SVGs don't work at all
+[x] GZIP everything
+[x] Add Progress Indicator vor "Download-All"
+[x] prefers-reduced-motion
+[ ] README
+[ ] nomi's Lottie anim fixes
+[ ] Home: Logo bugging out top
 [ ] File with same name
-[ ] SVGs don't work at all
 [ ] Multithreading??
 [ ] Fix open TODO comments
-[ ] GZIP everything
 [ ] PWA file associations
-[ ] Add Progress Bar vor "Download-All"
+[ ] "strictNullChecks": true
+[ ] "click here to install" (beforeinstallprompt)
+
+Styling:
+[x] custom scrollbar
+[ ] Rounded Material Icons
+[ ] Error color
