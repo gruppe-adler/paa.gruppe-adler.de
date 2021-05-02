@@ -104,4 +104,21 @@ export default class FileListController extends EventTarget {
             this.element.style.display = 'none';
         }
     }
+
+    public toggleDownloadAllSpinner (shown: boolean): void {
+        this.downloadAllBtn.style.pointerEvents = shown ? 'none' : '';
+
+        if (shown) {
+            const loader = document.createElement('div');
+            loader.className = 'grad-paa-loader';
+            const wrapper = document.createElement('div');
+            wrapper.className = 'grad-paa-loader-wrapper';
+            wrapper.appendChild(loader);
+            this.downloadAllBtn.appendChild(wrapper);
+            this.downloadAllBtn.querySelectorAll(':scope > *:not(.grad-paa-loader-wrapper)').forEach((el: HTMLElement) => { el.style.opacity = '0'; });
+        } else {
+            this.downloadAllBtn.querySelector('.grad-paa-loader-wrapper')?.remove();
+            this.downloadAllBtn.querySelectorAll(':scope > *').forEach((el: HTMLElement) => { el.style.opacity = ''; });
+        }
+    }
 }

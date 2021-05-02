@@ -37,6 +37,8 @@ export default class GradPaaApplication {
         this.fileListController = new FileListController(fileListElem);
         this.fileListController.addEventListener('convert-more', () => this.openInput());
         this.fileListController.addEventListener('download-all', async () => {
+            this.fileListController.toggleDownloadAllSpinner(true);
+
             const zip = new JSZip();
             const files = ConversionService.getInstance().entries();
             for (const [, file] of files) {
@@ -47,6 +49,8 @@ export default class GradPaaApplication {
             }
 
             const blob = await zip.generateAsync({ type: 'blob' });
+
+            this.fileListController.toggleDownloadAllSpinner(false);
 
             download({ blob, name: 'gruppe_adler_paa.zip' });
         });

@@ -24,6 +24,19 @@
     > button {
         justify-self: flex-end;
         align-self: center;
+        position: relative;
+
+        > .grad-paa-loader-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            font-size: 2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;;
+        }
     }
 }
 
