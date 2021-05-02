@@ -74,13 +74,17 @@ export default class ConversionFile extends EventTarget {
         return getFileExtension(this.inputFile);
     }
 
+    private get newExtension (): string {
+        return (this.extension === 'paa') ? 'png' : 'paa';
+    }
+
     /**
      * Name of converted file
      */
     public get newName (): string {
         const nameWithoutExtension = getFileNameWithoutExtension(this.inputFile);
 
-        return `${nameWithoutExtension}.${this.extension === 'paa' ? 'png' : 'paa'}`;
+        return `${nameWithoutExtension}.${this.newExtension}`;
     }
 
     /**
@@ -201,14 +205,14 @@ export default class ConversionFile extends EventTarget {
             }
 
             // log google analytics
-            gtag('event', 'conversion', { event_category: 'conversion', non_interaction: true });
-
+            gtag('event', `${this.extension}2${this.newExtension}`, { event_category: 'conversion', non_interaction: true });
+        } catch (err) {
+            this.error = err;
+        } finally {
             if (this.worker) {
                 this.worker.terminate();
                 this.worker = null;
             }
-        } catch (err) {
-            this.error = err;
         }
     }
 
