@@ -174,6 +174,7 @@ export default class ConversionFile extends EventTarget {
                 break;
             default:
                 // INVALID PAA magic number
+                // TODO: Add button "report error", which opens feedback popup instead of asking user to open manually
                 this.warning = {
                     displayText: 'Invalid PAA file',
                     description: `

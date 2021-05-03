@@ -280,6 +280,7 @@ export default class FileItemController {
     private showError () {
         if (this.file.error === null) return;
 
+        // TODO: Add button "report error", which opens feedback popup instead of asking user to open manually
         new Alert(`
             <p>The following error occurred, while trying to convert your file:</p>
             <pre style="padding: .5rem; background-color: rgba(0,0,0,0.1); color: var(--color-error); border-radius: .25rem; white-space: break-spaces;">${this.file.error}</pre>
