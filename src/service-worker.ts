@@ -16,7 +16,7 @@ cleanupOutdatedCaches();
 // This is done by workbox-build-inject.js for the production build
 const assetsToCache = self.__WB_MANIFEST;
 
-precacheAndRoute(assetsToCache);
+precacheAndRoute([...assetsToCache, '/index.html']);
 
 // ------------------------------------------------------------------------------------------
 // Google Fonts
