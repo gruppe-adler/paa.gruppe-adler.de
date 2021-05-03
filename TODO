@@ -19,9 +19,10 @@
 [ ] Fix open TODO comments
 [ ] PWA file associations
 [x] "strictNullChecks": true
-[ ] "click here to install" (beforeinstallprompt)
+[x] "click here to install" (beforeinstallprompt)
 
 Styling:
 [x] custom scrollbar
 [x] Rounded Material Icons
 [x] Error color
+[ ] Preview Images

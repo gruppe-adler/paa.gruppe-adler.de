@@ -4,47 +4,64 @@ import './styles/global.scss';
 window.addEventListener('DOMContentLoaded', async () => {
     const app = new GradPaaApplication();
 
+    installServiceWorker(app);
+
+    showInstallPrompt(app);
+});
+
+async function installServiceWorker(app: GradPaaApplication) {
     if (!('serviceWorker' in navigator)) return;
 
-    const hasController = !!navigator.serviceWorker.controller;
+    const hasController = navigator.serviceWorker.controller !== null;
 
     navigator.serviceWorker.register('/service-worker.js').then(() => {
+        // If we did have a controller, the page was already offline ready
         if (!hasController) app.showSnackbar('Ready to work offline');
     });
 
-    // If we don't have a controller, we don't need to check for updates – we've just loaded from the
-    // network.
-    if (!hasController) return;
+    // If we didn't have a controller, we don't need to check for updates,
+    // because we've just loaded from the network.
+    if (hasController) {
+        checkForUpdate().then(async sw => {
+            if (sw === null) return;
 
-    const reg = await navigator.serviceWorker.getRegistration();
-    // Service worker not registered yet.
-    if (reg === undefined) return;
+            const result = await app.showSnackbar('Update available', { actions: ['reload', 'dismiss'] });
+            if (result === 'reload') sw.postMessage('skip-waiting');
+        });
+    }
+}
 
-    // Look for updates
-    await updateReady(reg);
+async function checkForUpdate(): Promise<ServiceWorker|null> {
+    const registration = await navigator.serviceWorker.getRegistration();
 
-    const result = await app.showSnackbar('Update available', { actions: ['reload', 'dismiss'] });
+    if (registration === undefined) return null;
 
-    if (result === 'reload' && reg.waiting) reg.waiting.postMessage('skip-waiting');
-});
+    if (registration.waiting !== null) return registration.waiting;
 
-/** Wait for an installing worker */
-async function installingWorker(reg: ServiceWorkerRegistration): Promise<ServiceWorker> {
-    if (reg.installing) return reg.installing;
-    return new Promise<ServiceWorker>(resolve => {
-        // If updatefound is fired, it means that there's a new service worker being installed.
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        reg.addEventListener('updatefound', () => resolve(reg.installing!), { once: true });
+    return new Promise(resolve => {
+        registration.addEventListener('updatefound', async () => {
+            // If updatefound is fired, it means that there's a new service worker being installed.
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            registration.installing!.addEventListener('statechange', e => {
+                const sw = e.target as ServiceWorker;
+
+                if (sw.state === 'installed') resolve(registration.waiting);
+            }, { once: true });
+        });
     });
 }
 
-/** Wait a service worker to become waiting */
-async function updateReady(reg: ServiceWorkerRegistration): Promise<void> {
-    if (reg.waiting) return;
-    const installing = await installingWorker(reg);
-    return new Promise<void>(resolve => {
-        installing.addEventListener('statechange', () => {
-            if (installing.state === 'installed') resolve();
-        });
-    });
+function showInstallPrompt(app: GradPaaApplication) {
+    window.addEventListener('beforeinstallprompt', async e => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+
+        // TODO: Give user choice "never show again"
+
+        const result = await app.showSnackbar('You can install this application.', { actions: ['install', 'dismiss'] });
+
+        if (result !== 'install') return;
+
+        e.prompt();
+    }, { once: true });
 }

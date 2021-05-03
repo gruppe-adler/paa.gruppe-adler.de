@@ -9,8 +9,8 @@
     max-width: 30rem;
     background-color: var(--color-container);
     box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.20);
-    display: grid;
-    grid-auto-flow: column;
+    display: flex;
+    flex-direction: row;
     padding: 1rem 1.5rem;
     font-size: 1.2rem;
     border-radius: .5rem;
@@ -19,6 +19,7 @@
     transition: transform .5s ease, opacity .5s ease;
     transform: translateY(0);
     opacity: 1;
+    margin-bottom: .5rem;
 
     @media (prefers-reduced-motion) {
         transition: none;
@@ -26,6 +27,7 @@
 
     > span {
         flex-shrink: 1;
+        flex-grow: 1;
     }
 
     > button {
