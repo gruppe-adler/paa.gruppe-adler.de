@@ -42,7 +42,6 @@
         transform: scale(0.5);
         opacity: 0;
         grid-template:
-            "heading" auto
             "content" 1fr
             "actions" auto / 1fr;
         grid-row-gap: .5rem;
@@ -53,12 +52,6 @@
             padding-top: 2rem;
             padding-bottom: 2rem;
         }
-    }
-
-    &__heading {
-        grid-area: heading;
-        margin: 0;
-        margin-bottom: .5rem;
     }
 
     &__content {

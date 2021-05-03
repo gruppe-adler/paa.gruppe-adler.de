@@ -280,7 +280,7 @@ export default class FileItemController {
     private showError () {
         if (this.file.error === null) return;
 
-        new Alert('', `
+        new Alert(`
             <p>The following error occurred, while trying to convert your file:</p>
             <pre style="padding: .5rem; background-color: rgba(0,0,0,0.1); color: var(--color-error); border-radius: .25rem; white-space: break-spaces;">${this.file.error}</pre>
             <p>Please help us make this tool even better and report the issue, by <b>clicking the "Feedback"-Button</b> in the lower right corner of the page!</p>
@@ -293,7 +293,7 @@ export default class FileItemController {
     private showWarning () {
         if (this.file.warning === null) return;
 
-        new Alert('', this.file.warning.description);
+        new Alert(this.file.warning.description);
     }
 
     /**

@@ -2,7 +2,6 @@ const template = document.createElement('template');
 template.innerHTML = `
     <div class="grad-paa-dialog__backdrop"></div>
     <div class="grad-paa-dialog__dialog">
-        <h2 class="grad-paa-dialog__heading"></h2>
         <button class="grad-paa-dialog__close grad-paa--not-responsive">
             <i class="material-icons-round">cancel</i>
         </button>
@@ -13,7 +12,7 @@ template.innerHTML = `
 export class Dialog {
     protected element: HTMLElement;
 
-    constructor(heading: string, content: HTMLDivElement, options: { close?: boolean, actions?: HTMLElement[] }) {
+    constructor(content: HTMLDivElement, options: { close?: boolean, actions?: HTMLElement[] }) {
         this.element = document.createElement('div');
         this.element.className = 'grad-paa-dialog';
 
@@ -27,12 +26,6 @@ export class Dialog {
                 this.element.classList.add('grad-paa-dialog--shown');
             });
         });
-
-        if (heading.length > 0) {
-            this.element.querySelector('.grad-paa-dialog__heading').textContent = heading;
-        } else {
-            this.element.querySelector('.grad-paa-dialog__heading').remove();
-        }
 
         if (options.close === false) {
             this.element.querySelector('.grad-paa-dialog__close').remove();

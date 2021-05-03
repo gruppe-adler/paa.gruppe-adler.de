@@ -68,7 +68,7 @@ export default class FileListController extends EventTarget {
         okBtn.style.setProperty('--button-color', 'var(--color-error)');
         okBtn.innerHTML = 'Delete All';
 
-        const dialog = new Dialog('', content, { close: false, actions: [cancelBtn, okBtn] });
+        const dialog = new Dialog(content, { close: false, actions: [cancelBtn, okBtn] });
 
         cancelBtn.addEventListener('click', () => dialog.close());
         okBtn.addEventListener('click', () => {
