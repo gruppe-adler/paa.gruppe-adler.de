@@ -32,7 +32,7 @@ export default class FeedbackController extends EventTarget {
                     <span>GitHub</span>
                 </a>
                 <a href="mailto:derzade@gruppe-adler.de" target="_blank" rel="noreferrer">
-                    <i class="material-icons" aria-hidden="true">mail_outline</i>
+                    <i class="material-icons-round" aria-hidden="true">mail_outline</i>
                     <span>Email</span>
                 </a>
             </div>

@@ -31,14 +31,14 @@ export default class FileItemController {
         this.element.classList.add('grad-paa-file-item');
 
         this.element.innerHTML = `
-            <i class="material-icons grad-paa-file-item__icon">insert_photo</i>
+            <i class="material-icons-round grad-paa-file-item__icon">insert_photo</i>
             <span class="grad-paa-file-item__name">
                 <span>${this.file.newName}</span>
                 <span style="opacity: 0.5; margin-left: .5rem;">from ${this.file.name}</span>
             </span>
             <div class="grad-paa-file-item__main-action"></div>
             <div class="grad-paa-file-item__more">
-                <i class="material-icons">more_vert</i>
+                <i class="material-icons-round">more_vert</i>
                 <ul></ul>
             </div>
         `;
@@ -114,7 +114,7 @@ export default class FileItemController {
                 const msg = document.createElement('div');
                 msg.className = 'grad-paa-file-item__message';
                 msg.style.color = 'var(--color-warning)';
-                msg.innerHTML = `<span>${this.file.warning.displayText}</span><i class="material-icons" style="font-size: 0.95em; vertical-align: middle; cursor: pointer; opacity: 0.5; margin-left: .2em;">help</i>`;
+                msg.innerHTML = `<span>${this.file.warning.displayText}</span><i class="material-icons-round" style="font-size: 0.95em; vertical-align: middle; cursor: pointer; opacity: 0.5; margin-left: .2em;">help</i>`;
                 msg.querySelector('i').addEventListener('click', () => this.showWarning());
                 this.element.appendChild(msg);
 
@@ -193,7 +193,7 @@ export default class FileItemController {
     private setMainActionIcon (icon: string, color: string, tooltip = '', callback?: () => void) {
         const i = document.createElement('i');
         i.innerHTML = icon;
-        i.className = 'material-icons';
+        i.className = 'material-icons-round';
         i.setAttribute('aria-label', tooltip);
         i.setAttribute('style', `color: var(--color-${color});`);
 
@@ -241,7 +241,7 @@ export default class FileItemController {
         const li = document.createElement('li');
 
         li.innerHTML = `
-            <i class="material-icons" aria-hidden="true">${icon}</i>
+            <i class="material-icons-round" aria-hidden="true">${icon}</i>
             <span>${displayName}</span>
         `;
 
