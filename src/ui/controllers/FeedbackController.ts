@@ -1,6 +1,7 @@
 import { Alert } from '@/ui/Alert';
 import discordImageUrl from '@/assets/img/discord.svg';
 import githubImageUrl from '@/assets/img/github.svg';
+import mailImageUrl from '@/assets/img/mail.svg';
 
 /**
  * Controller of drag-drop overlay.
@@ -18,9 +19,8 @@ export default class FeedbackController extends EventTarget {
     private showPopup(event: MouseEvent) {
         event.preventDefault();
 
-        new Alert('', `
-            <p>We hope your overall experience was good, but we are open to any criticism you have.</p>
-            <p>We cannot possibly test every PAA edge case so we would appreciate if you report any bugs you encounter while converting from/to PAA.</p>
+        new Alert(`
+            <p>We hope your overall experience was good, but we are open to any criticism you have and would appreciate if you report any bugs you encounter.</p>
             <p>Join our discord server to chat directly with us, open an issue on GitHub or shoot us an email:</p>
             <div id="grad-paa-feedback">
                 <a href="https://discord.gg/ZDqp45q" target="_blank" rel="noreferrer">
@@ -32,7 +32,7 @@ export default class FeedbackController extends EventTarget {
                     <span>GitHub</span>
                 </a>
                 <a href="mailto:derzade@gruppe-adler.de" target="_blank" rel="noreferrer">
-                    <i class="material-icons-round" aria-hidden="true">mail_outline</i>
+                    <img alt="" src="${mailImageUrl}" width="48" height="48">
                     <span>Email</span>
                 </a>
             </div>
