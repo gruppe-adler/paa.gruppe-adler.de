@@ -17,7 +17,6 @@
 [ ] File with same name
 [ ] Multithreading??
 [ ] Fix open TODO comments
-[ ] PWA file associations
 [x] "strictNullChecks": true
 [x] "click here to install" (beforeinstallprompt)
 
