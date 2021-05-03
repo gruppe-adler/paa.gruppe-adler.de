@@ -58,5 +58,6 @@ addEventListener('message', async (event: MessageEvent) => {
 
     const imageData = await convertPaaToImage(file);
 
-    postMessage(imageData, this);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    postMessage(imageData, this!);
 });

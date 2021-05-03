@@ -16,10 +16,14 @@ export function imageDataToBlob (data: ImageData, type = 'image/png', quality = 
 
     ctx.putImageData(data, 0, 0);
 
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         canvas.toBlob(blob => {
             canvas.remove();
-            resolve(blob);
+            if (blob === null) {
+                reject(new Error('Couldn\'t generate blob from canvas.'));
+            } else {
+                resolve(blob);
+            }
         }, type, quality);
     });
 }

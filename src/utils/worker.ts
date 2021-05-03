@@ -16,7 +16,7 @@ export function promisifyWorker<T, R>(worker: Worker, message: T, transfer?: Tra
         worker.addEventListener('message', messageHandler);
         worker.addEventListener('error', errorHandler);
 
-        worker.postMessage(message, transfer);
+        worker.postMessage(message, transfer ?? []);
     });
 
     promise.finally(() => {

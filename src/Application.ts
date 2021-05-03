@@ -45,7 +45,9 @@ export default class GradPaaApplication {
                 if (file.state !== 'done') continue;
                 // TODO: we should tell the user if some files are not "done"
 
-                zip.file(file.newName, file.result?.blob);
+                // result will be present, because we just checked if the file was done
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                zip.file(file.newName, file.result!.blob);
             }
 
             const blob = await zip.generateAsync({ type: 'blob' });

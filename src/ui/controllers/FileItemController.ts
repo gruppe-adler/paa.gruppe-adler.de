@@ -43,8 +43,8 @@ export default class FileItemController {
             </div>
         `;
 
-        this.element.querySelector('.grad-paa-file-item__more > i').addEventListener('click', () => this.toggleMoreMenu(true));
-        this.element.querySelector('.grad-paa-file-item__main-action').addEventListener('click', (e: MouseEvent) => {
+        this.element.querySelector('.grad-paa-file-item__more > i')?.addEventListener('click', () => this.toggleMoreMenu(true));
+        this.element.querySelector('.grad-paa-file-item__main-action')?.addEventListener('click', (e: MouseEvent) => {
             if (this.mainActionCallback === null) return;
             this.mainActionCallback(e);
         });
@@ -84,7 +84,10 @@ export default class FileItemController {
 
                 // add handler only after timeout, to make sure the click event won't trigger the event directly
                 window.setTimeout(
-                    () => window.addEventListener('click', this.moreMenuHandler, { once: true, capture: true }),
+                    () => {
+                        if (this.moreMenuHandler === null) return;
+                        window.addEventListener('click', this.moreMenuHandler, { once: true, capture: true });
+                    },
                     50
                 );
             }
@@ -92,7 +95,7 @@ export default class FileItemController {
             // hide more menu (default transform is "scale(0)")
             ul.style.transform = '';
 
-            window.removeEventListener('click', this.moreMenuHandler);
+            if (this.moreMenuHandler !== null) window.removeEventListener('click', this.moreMenuHandler);
             this.moreMenuHandler = null;
         }
     }
@@ -114,8 +117,8 @@ export default class FileItemController {
                 const msg = document.createElement('div');
                 msg.className = 'grad-paa-file-item__message';
                 msg.style.color = 'var(--color-warning)';
-                msg.innerHTML = `<span>${this.file.warning.displayText}</span><i class="material-icons-round" style="font-size: 0.95em; vertical-align: middle; cursor: pointer; opacity: 0.5; margin-left: .2em;">help</i>`;
-                msg.querySelector('i').addEventListener('click', () => this.showWarning());
+                msg.innerHTML = `<span>${this.file.warning?.displayText}</span><i class="material-icons-round" style="font-size: 0.95em; vertical-align: middle; cursor: pointer; opacity: 0.5; margin-left: .2em;">help</i>`;
+                msg.querySelector('i')?.addEventListener('click', () => this.showWarning());
                 this.element.appendChild(msg);
 
                 moreActions.push(
@@ -132,7 +135,7 @@ export default class FileItemController {
                 msg.className = 'grad-paa-file-item__message';
                 msg.style.color = 'var(--color-error)';
                 msg.innerHTML = 'An error occurred. Click <span style="text-decoration: underline; cursor: pointer;" data-grad-paa>here</span> to see the details.';
-                msg.querySelector('span').addEventListener('click', () => this.showError());
+                msg.querySelector('span')?.addEventListener('click', () => this.showError());
                 this.element.appendChild(msg);
 
                 moreActions.push(

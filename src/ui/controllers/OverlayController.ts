@@ -73,7 +73,9 @@ export default class OverlayController extends EventTarget {
 
         if (!dragEventContainsFiles(event)) return;
 
-        this.dispatchEvent(new OverlayConvertEvent(event.dataTransfer.files));
+        // dragEventContainsFiles checks if there is a dataTransfer containing files
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.dispatchEvent(new OverlayConvertEvent(event.dataTransfer!.files!));
     }
 
     /**

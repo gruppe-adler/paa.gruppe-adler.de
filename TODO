@@ -18,7 +18,7 @@
 [ ] Multithreading??
 [ ] Fix open TODO comments
 [ ] PWA file associations
-[ ] "strictNullChecks": true
+[x] "strictNullChecks": true
 [ ] "click here to install" (beforeinstallprompt)
 
 Styling:

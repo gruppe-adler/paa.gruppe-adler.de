@@ -28,23 +28,23 @@ export class Dialog {
         });
 
         if (options.close === false) {
-            this.element.querySelector('.grad-paa-dialog__close').remove();
+            this.element.querySelector('.grad-paa-dialog__close')?.remove();
         } else {
-            this.element.querySelector('.grad-paa-dialog__close').addEventListener('click', () => this.close());
-            this.element.querySelector('.grad-paa-dialog__dialog').classList.add('grad-paa-dialog--close');
+            this.element.querySelector('.grad-paa-dialog__close')?.addEventListener('click', () => this.close());
+            this.element.querySelector('.grad-paa-dialog__dialog')?.classList.add('grad-paa-dialog--close');
         }
 
         content.classList.add('grad-paa-dialog__content');
 
-        this.element.querySelector('.grad-paa-dialog__dialog').appendChild(content);
+        this.element.querySelector('.grad-paa-dialog__dialog')?.appendChild(content);
 
         const actionsContainer = this.element.querySelector('.grad-paa-dialog__actions');
         for (const el of (options.actions ?? [])) {
-            actionsContainer.appendChild(el);
+            actionsContainer?.appendChild(el);
         }
     }
 
-    protected get dialogElement (): HTMLElement {
+    protected get dialogElement (): HTMLElement|null {
         return this.element.querySelector('.grad-paa-dialog__dialog');
     }
 

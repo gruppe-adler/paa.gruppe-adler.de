@@ -63,5 +63,6 @@ addEventListener('message', async (event: MessageEvent) => {
 
     const blob = await convertImageToPaa(imageDate);
 
-    postMessage(blob, this);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    postMessage(blob, this!);
 });

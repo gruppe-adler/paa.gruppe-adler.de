@@ -13,8 +13,8 @@ export default class FileListController extends EventTarget {
         this.element = fileListElem;
 
         const convertMoreBtn = this.element.querySelector('[data-grad-paa-convert-more]');
-        convertMoreBtn.addEventListener('click', () => { this.dispatchEvent(new Event('convert-more')); });
-        convertMoreBtn.removeAttribute('data-grad-paa-convert-more');
+        convertMoreBtn?.addEventListener('click', () => { this.dispatchEvent(new Event('convert-more')); });
+        convertMoreBtn?.removeAttribute('data-grad-paa-convert-more');
 
         const downloadAllBtn = this.element.querySelector('[data-grad-paa-download-all]') as HTMLButtonElement;
         downloadAllBtn.addEventListener('click', () => { this.dispatchEvent(new Event('download-all')); });
@@ -22,8 +22,8 @@ export default class FileListController extends EventTarget {
         this.downloadAllBtn = downloadAllBtn;
 
         const deleteAllBtn = this.element.querySelector('[data-grad-paa-delete-all]');
-        deleteAllBtn.addEventListener('click', () => this.deleteAll());
-        deleteAllBtn.removeAttribute('data-grad-paa-delete-all');
+        deleteAllBtn?.addEventListener('click', () => this.deleteAll());
+        deleteAllBtn?.removeAttribute('data-grad-paa-delete-all');
 
         ConversionService.getInstance().addEventListener('added', (e: ConversionEvent) => {
             const list = this.element.querySelector('ul') as null|HTMLUListElement;
@@ -40,7 +40,7 @@ export default class FileListController extends EventTarget {
             if (!this.fileControllers.has(id)) return;
 
             const controller = this.fileControllers.get(id);
-            controller.remove();
+            controller?.remove();
 
             this.fileControllers.delete(id);
 

@@ -28,7 +28,7 @@ export class Choice extends Dialog {
         okBtn.addEventListener('click', () => this.resolve(true));
         cancelBtn.addEventListener('click', () => this.resolve(false));
 
-        this.dialogElement.style.width = options?.width ?? '600px';
+        if (this.dialogElement !== null) this.dialogElement.style.width = options?.width ?? '600px';
     }
 
     private static generateButton(options: ChoiceButtonOptions): HTMLButtonElement {

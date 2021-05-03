@@ -7,6 +7,6 @@ export class Alert extends Dialog {
 
         super(contentEl, { actions: [] });
 
-        this.dialogElement.style.width = options?.width ?? '600px';
+        if (this.dialogElement !== null) this.dialogElement.style.width = options?.width ?? '600px';
     }
 }

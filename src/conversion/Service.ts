@@ -108,7 +108,9 @@ export default class ConversionService extends EventTarget {
      */
     private run (): void {
         while (this.queue.size > 0 && this.runningConversions < MAX_RUNNING_CONVERSIONS) {
-            const id = this.queue.dequeue();
+            // dequeue will return an item, because we just checked the size
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const id = this.queue.dequeue()!;
             const file = this.files.get(id);
             if (!file) continue;
 

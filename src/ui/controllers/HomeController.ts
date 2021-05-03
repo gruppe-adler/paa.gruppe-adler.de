@@ -14,7 +14,7 @@ export default class HomeController extends EventTarget {
         this.element = homeElem;
 
         // Handle clicks for "convert files" button
-        this.element.querySelector('button').addEventListener('click', () => { this.dispatchEvent(new Event('convert-files')); });
+        this.element.querySelector('button')?.addEventListener('click', () => { this.dispatchEvent(new Event('convert-files')); });
 
         // find lottie element
         const lottieElem: HTMLDivElement|null = this.element.querySelector('[data-grad-paa-lottie]');

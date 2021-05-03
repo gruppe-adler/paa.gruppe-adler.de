@@ -101,6 +101,8 @@ export default class ConversionFile extends EventTarget {
     public get result (): GradPaaFile|null { return this._result; }
 
     public download (): void {
+        if (this.result === null) return;
+
         download(this.result);
     }
 
@@ -192,6 +194,7 @@ export default class ConversionFile extends EventTarget {
     public async convert (): Promise<void> {
         if (this.warning !== null) throw new Error('Cannot start conversion with warnings.');
         if (!this.preChecksDone) throw new Error('Conversion started before pre-Checks were done.');
+        if (this.imageData === null) throw new Error('Cannot start conversion with no imageData.');
 
         try {
             if (this.extension === 'paa') {

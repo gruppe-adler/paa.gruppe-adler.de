@@ -4,6 +4,7 @@
         "module": "es6",
         "resolveJsonModule": true,
         "moduleResolution": "node",
+        "strictNullChecks": true,
         "paths": {
             "@/*": [
                 "./src/*"

@@ -4,9 +4,6 @@ import './styles/global.scss';
 window.addEventListener('DOMContentLoaded', async () => {
     const app = new GradPaaApplication();
 
-    // TODO: remove return to enable service worker
-    return;
-
     if (!('serviceWorker' in navigator)) return;
 
     const hasController = !!navigator.serviceWorker.controller;
@@ -21,7 +18,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     const reg = await navigator.serviceWorker.getRegistration();
     // Service worker not registered yet.
-    if (!reg) return;
+    if (reg === undefined) return;
 
     // Look for updates
     await updateReady(reg);
@@ -35,7 +32,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 async function installingWorker(reg: ServiceWorkerRegistration): Promise<ServiceWorker> {
     if (reg.installing) return reg.installing;
     return new Promise<ServiceWorker>(resolve => {
-        reg.addEventListener('updatefound', () => resolve(reg.installing), { once: true });
+        // If updatefound is fired, it means that there's a new service worker being installed.
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        reg.addEventListener('updatefound', () => resolve(reg.installing!), { once: true });
     });
 }
 
