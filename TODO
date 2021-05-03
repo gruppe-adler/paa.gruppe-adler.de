@@ -26,3 +26,9 @@ Styling:
 [x] Rounded Material Icons
 [x] Error color
 [ ] Preview Images
+
+Pre-Release-Check-List:
+[ ] robots.txt anpassen
+[ ] cname in GH Action umstellen
+[ ] branch in GH Workflow restriktieren
+[ ] cname in GH Pages Settings umstellen
