@@ -11,12 +11,13 @@
 [x] GZIP everything
 [x] Add Progress Indicator vor "Download-All"
 [x] prefers-reduced-motion
-[ ] README
+[x] README
 [ ] nomi's Lottie anim fixes
 [ ] Home: Logo bugging out top
 [ ] File with same name
 [ ] Multithreading??
 [ ] Fix open TODO comments
+[ ] GitHub Actions
 [x] "strictNullChecks": true
 [x] "click here to install" (beforeinstallprompt)
 
