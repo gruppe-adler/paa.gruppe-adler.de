@@ -194,20 +194,21 @@ export default class ConversionFile extends EventTarget {
     public async convert (): Promise<void> {
         if (this.warning !== null) throw new Error('Cannot start conversion with warnings.');
         if (!this.preChecksDone) throw new Error('Conversion started before pre-Checks were done.');
-        if (this.imageData === null) throw new Error('Cannot start conversion with no imageData.');
 
         try {
             if (this.extension === 'paa') {
                 // convert paa to png
                 this.worker = new Worker(fromPAAWorkerURL);
-                const data = await promisifyWorker<File, ImageData>(this.worker, this.inputFile);
+                this.imageData = await promisifyWorker<File, ImageData>(this.worker, this.inputFile);
 
-                const blob = await imageDataToBlob(data);
+                const blob = await imageDataToBlob(this.imageData);
 
                 this._result = { blob, name: this.newName };
             } else {
                 this.worker = new Worker(toPAAWorkerURL);
-                const blob = await promisifyWorker<ImageData, Blob>(this.worker, this.imageData, [this.imageData.data.buffer]);
+                // If the preChecks are done we're sure that this.imageData is not null
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                const blob = await promisifyWorker<ImageData, Blob>(this.worker, this.imageData!, [this.imageData!.data.buffer]);
 
                 this._result = { blob, name: this.newName };
             }
