@@ -2,7 +2,7 @@ const template = document.createElement('template');
 template.innerHTML = `
     <div class="grad-paa-dialog__backdrop"></div>
     <div class="grad-paa-dialog__dialog">
-        <button class="grad-paa-dialog__close grad-paa--not-responsive">
+        <button class="grad-paa-dialog__close grad-btn-paa--not-responsive">
             <i class="material-icons-round">cancel</i>
         </button>
         <div class="grad-paa-dialog__actions"></div>

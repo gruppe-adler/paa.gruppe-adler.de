@@ -1,6 +1,6 @@
 import ConversionEvent from '@/conversion/Event';
 import ConversionService from '@/conversion/Service';
-import { Dialog } from '../Dialog';
+import { Choice } from '../Choice';
 import FileItemController from './FileItemController';
 
 export default class FileListController extends EventTarget {
@@ -55,24 +55,20 @@ export default class FileListController extends EventTarget {
      * Click callback for "delete all" button
      */
     private async deleteAll() {
-        const content = document.createElement('div');
-        content.innerHTML = `
-            <p>Are you sure you want to delete all files?</p>
-            <p>This will cancel any running / pending conversions and delete the results of all already converted files.</p>
-        `;
+        const choice = new Choice(
+            `
+                <h2 style="font-family: 'Source Sans Pro', sans-serif">Delete all files?</h2>
+                <p>This will cancel any running / pending conversions and delete the results of all already converted files.</p>
+            `,
+            {
+                text: 'Delete All',
+                color: 'var(--color-error)',
+                primary: true
+            }
+        );
 
-        const cancelBtn = document.createElement('button');
-        cancelBtn.innerHTML = 'Cancel';
-
-        const okBtn = document.createElement('button');
-        okBtn.style.setProperty('--button-color', 'var(--color-error)');
-        okBtn.innerHTML = 'Delete All';
-
-        const dialog = new Dialog(content, { close: false, actions: [cancelBtn, okBtn] });
-
-        cancelBtn.addEventListener('click', () => dialog.close());
-        okBtn.addEventListener('click', () => {
-            dialog.close();
+        choice.promise.then(val => {
+            if (!val) return;
             this.dispatchEvent(new Event('delete-all'));
         });
     }

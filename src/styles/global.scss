@@ -63,17 +63,35 @@ button {
     min-height: 1.5rem;
     box-sizing: content-box;
     letter-spacing: 0.02em;
+    position: relative;
 
     > i {
         margin-right: .25rem;
     }
 
     &:hover {
-        color: var(--button-text-color, #FFFFFF);
+        color: var(--button-text-color, var(--color-background));
         background-color: var(--button-color, var(--color-primary));
     }
 
-    &:not(.grad-paa--not-responsive) {
+    &.grad-paa-btn--primary {
+        color: var(--button-text-color, var(--color-background));
+        background-color: var(--button-color, var(--color-primary));
+
+        &:hover::after {
+            content: '';
+            background-color: #FFF;
+            position: absolute;
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            border-radius: inherit;
+        }
+    }
+
+    &:not(.grad-paa-btn--not-responsive) {
         @media (max-width: 500px) {
             padding: .5rem;
     
