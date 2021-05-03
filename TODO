@@ -17,7 +17,7 @@
 [ ] File with same name
 [ ] Multithreading??
 [ ] Fix open TODO comments
-[ ] GitHub Actions
+[x] GitHub Actions
 [x] "strictNullChecks": true
 [x] "click here to install" (beforeinstallprompt)
 
