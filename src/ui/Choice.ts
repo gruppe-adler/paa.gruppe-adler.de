@@ -33,6 +33,15 @@ export class Choice extends Dialog {
 
         super(heading, contentEl, { close: false, actions });
 
+        if (skipOptions !== undefined) {
+            const el: HTMLDivElement|null = this.element.querySelector('.grad-paa-dialog__actions');
+            if (el !== null) {
+                el.style.justifySelf = 'stretch';
+                el.style.gridTemplateColumns = '1fr auto auto';
+                el.style.justifyItems = 'flex-start';
+            }
+        }
+
         this.promise = new Promise<boolean>(resolve => {
             this.resolve = resolve;
         });
