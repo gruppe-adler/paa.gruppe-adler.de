@@ -12,14 +12,16 @@
 [x] Add Progress Indicator vor "Download-All"
 [x] prefers-reduced-motion
 [x] README
-[ ] nomi's Lottie anim fixes
-[ ] Home: Logo bugging out top
-[ ] File with same name
-[ ] Multithreading??
-[ ] Fix open TODO comments
+[x] Home: Logo bugging out top
 [x] GitHub Actions
 [x] "strictNullChecks": true
 [x] "click here to install" (beforeinstallprompt)
+[ ] nomi's Lottie anim fixes
+[ ] File with same name
+[ ] Multithreading??
+[ ] Fix open TODO comments
+[ ] Invalid images as warning?
+[ ] Rework warning texts
 
 Styling:
 [x] custom scrollbar
@@ -32,3 +34,4 @@ Pre-Release-Check-List:
 [ ] cname in GH Action umstellen
 [ ] branch in GH Workflow restriktieren
 [ ] cname in GH Pages Settings umstellen
+[ ] Alle Browser prüfen

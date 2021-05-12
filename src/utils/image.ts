@@ -71,7 +71,6 @@ async function blobToImg(blob: Blob): Promise<HTMLImageElement> {
 async function drawableFromBlob (blob: Blob): Promise<HTMLImageElement|ImageBitmap> {
     // Special-case SVG. We need to avoid createImageBitmap because of
     // https://bugs.chromium.org/p/chromium/issues/detail?id=606319.
-    // Also, we cache the HTMLImageElement so we can perform vector resizing later.
     if (blob.type.startsWith('image/svg+xml')) {
         // Firefox throws if you try to draw an SVG to canvas that doesn't have width/height.
         // In Chrome it loads, but drawImage behaves weirdly.

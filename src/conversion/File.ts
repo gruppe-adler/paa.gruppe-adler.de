@@ -12,6 +12,8 @@ interface ConversionFileWarning {
     description: string;
 }
 
+type ConversionFileState = 'done'|'warning'|'error'|'loading'|'queued'|'setup';
+
 export default class ConversionFile extends EventTarget {
     public readonly inputFile: File;
     public readonly id: string;
@@ -33,7 +35,7 @@ export default class ConversionFile extends EventTarget {
         });
     }
 
-    public get state (): 'done'|'warning'|'error'|'loading'|'queued'|'setup' {
+    public get state (): ConversionFileState {
         if (this.warning !== null) return 'warning';
         if (this.error !== null) return 'error';
         if (this.result !== null) return 'done';
