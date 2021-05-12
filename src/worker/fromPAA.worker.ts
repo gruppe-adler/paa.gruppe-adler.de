@@ -6,9 +6,9 @@ import { readFile } from '@/utils/file';
  * @param {File} file Paa file
  * @returns {Promise<ImageData>} Image Data
  */
-export async function convertPaaToImage (file: File): Promise<ImageData> {
+export async function convertPaaToImage (blob: Blob): Promise<ImageData> {
     const AFF = await setupAFF();
-    const arrayBuffer = await readFile(file);
+    const arrayBuffer = await readFile(blob);
     const uint8array = new Uint8Array(arrayBuffer);
 
     // eslint-disable-next-line new-cap
@@ -54,9 +54,9 @@ export async function convertPaaToImage (file: File): Promise<ImageData> {
 }
 
 addEventListener('message', async (event: MessageEvent) => {
-    const file = event.data as File;
+    const blob = event.data as Blob;
 
-    const imageData = await convertPaaToImage(file);
+    const imageData = await convertPaaToImage(blob);
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     postMessage(imageData, this!);

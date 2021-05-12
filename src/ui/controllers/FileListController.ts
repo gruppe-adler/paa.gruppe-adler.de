@@ -55,7 +55,7 @@ export default class FileListController extends EventTarget {
      * Click callback for "delete all" button
      */
     private async deleteAll() {
-        const choice = new Choice(
+        Choice.new(
             'Delete all files?',
             '<p>This will cancel any running / pending conversions and delete the results of all already converted files.</p>',
             {
@@ -63,9 +63,7 @@ export default class FileListController extends EventTarget {
                 color: 'var(--color-error)',
                 primary: true
             }
-        );
-
-        choice.promise.then(val => {
+        ).then(val => {
             if (!val) return;
             this.dispatchEvent(new Event('delete-all'));
         });

@@ -1,3 +1,5 @@
+import { Choice } from '@/ui/Choice';
+import { getFileExtension, getFileNameWithoutExtension, GradPaaFile } from '@/utils/file';
 import ConversionEvent from './Event';
 import ConversionFile from './File';
 
@@ -57,10 +59,59 @@ export default class ConversionService extends EventTarget {
      * Add new files to convert
      * @param newFiles Files to convert
      */
-    public convertFiles (...newFiles: File[]): void {
+    public async convertFiles (...newFiles: File[]): Promise<void> {
         if (newFiles.length === 0) return;
 
-        for (const file of newFiles) {
+        // takenNames is a map containing file-names as keys and the file-id as value
+        const takenNames = new Map(Array.from(this.files).map(([k, v]) => [v.name, k]));
+
+        for (const f of newFiles) {
+            const file: GradPaaFile = { blob: f, name: f.name };
+
+            if (takenNames.has(file.name)) {
+                const extension = getFileExtension(file.name);
+                const baseName = getFileNameWithoutExtension(file.name);
+
+                // generate name to rename to
+                let num = 2;
+                let newName = `${baseName}_${num}.${extension}`;
+                while (takenNames.has(newName)) {
+                    num++;
+                    newName = `${baseName}_${num}.${extension}`;
+                }
+
+                const result = await Choice.new(
+                    `"${file.name}" already exists`,
+                    `<p>Do you want to replace the existing file or rename the new file "${newName}".</p>`,
+                    {
+                        text: 'Replace',
+                        color: 'var(--color-error)',
+                        primary: true
+                    },
+                    { text: 'Rename' },
+                    { text: 'Skip' }
+                );
+
+                switch (result) {
+                case null:
+                    // Skip
+                    continue;
+                case true:
+                    // Replace
+                    {
+                        // we checked this a few lines above
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        const existingId = takenNames.get(file.name)!;
+                        this.cancelID(existingId);
+                    }
+                    break;
+                case false:
+                    // Rename
+                    file.name = newName;
+                    break;
+                }
+            }
+
             const id = this.generateID();
             const conversionFile = new ConversionFile(file, id);
             this.files.set(id, conversionFile);

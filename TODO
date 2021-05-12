@@ -16,8 +16,8 @@
 [x] GitHub Actions
 [x] "strictNullChecks": true
 [x] "click here to install" (beforeinstallprompt)
+[x] File with same name
 [ ] nomi's Lottie anim fixes
-[ ] File with same name
 [ ] Multithreading??
 [ ] Fix open TODO comments
 [ ] Invalid images as warning?

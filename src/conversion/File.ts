@@ -15,7 +15,7 @@ interface ConversionFileWarning {
 type ConversionFileState = 'done'|'warning'|'error'|'loading'|'queued'|'setup';
 
 export default class ConversionFile extends EventTarget {
-    public readonly inputFile: File;
+    public readonly inputFile: GradPaaFile;
     public readonly id: string;
     private _result: GradPaaFile|null = null;
     private _worker: Worker|null = null;
@@ -24,7 +24,7 @@ export default class ConversionFile extends EventTarget {
     private _error: Error|null = null;
     private imageData: ImageData|null = null;
 
-    constructor(file: File, id: string) {
+    constructor(file: GradPaaFile, id: string) {
         super();
         this.inputFile = file;
         this.id = id;
@@ -77,7 +77,7 @@ export default class ConversionFile extends EventTarget {
      * Extension of file to convert
      */
     private get extension () {
-        return getFileExtension(this.inputFile);
+        return getFileExtension(this.inputFile.name);
     }
 
     private get newExtension (): string {
@@ -88,7 +88,7 @@ export default class ConversionFile extends EventTarget {
      * Name of converted file
      */
     public get newName (): string {
-        const nameWithoutExtension = getFileNameWithoutExtension(this.inputFile);
+        const nameWithoutExtension = getFileNameWithoutExtension(this.inputFile.name);
 
         return `${nameWithoutExtension}.${this.newExtension}`;
     }
@@ -130,7 +130,7 @@ export default class ConversionFile extends EventTarget {
 
         if (this.extension !== 'paa') {
             // file is an image if extension is not a paa. We'll check if the width / height are powers of two
-            this.imageData = await imageDataFromBlob(this.inputFile);
+            this.imageData = await imageDataFromBlob(this.inputFile.blob);
 
             if (Math.log2(this.imageData.width) % 1 !== 0 || Math.log2(this.imageData.height) % 1 !== 0) {
                 this.warning = {
@@ -152,7 +152,7 @@ export default class ConversionFile extends EventTarget {
                 };
             }
         } else {
-            const ab: ArrayBuffer = await readFile(this.inputFile.slice(0, 2));
+            const ab: ArrayBuffer = await readFile(this.inputFile.blob.slice(0, 2));
             const firstTwoBytes = new Uint16Array(ab)[0];
 
             switch (firstTwoBytes) {
@@ -201,7 +201,7 @@ export default class ConversionFile extends EventTarget {
             if (this.extension === 'paa') {
                 // convert paa to png
                 this.worker = new Worker(fromPAAWorkerURL);
-                this.imageData = await promisifyWorker<File, ImageData>(this.worker, this.inputFile);
+                this.imageData = await promisifyWorker<Blob, ImageData>(this.worker, this.inputFile.blob);
 
                 const blob = await imageDataToBlob(this.imageData);
 

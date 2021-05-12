@@ -12,8 +12,8 @@ export interface GradPaaFile {
  * @param {File} file File
  * @returns {boolean} File is supported?
  */
-export function isSupportedFile (file: File): boolean {
-    return (file.type === 'image/png' || file.type === 'image/svg+xml' || file.type === 'image/jpeg' || /\.paa$/i.test(file.name));
+export function isSupportedFile ({ blob, name }: GradPaaFile): boolean {
+    return (blob.type === 'image/png' || blob.type === 'image/svg+xml' || blob.type === 'image/jpeg' || /\.paa$/i.test(name));
 }
 
 /**
@@ -21,8 +21,8 @@ export function isSupportedFile (file: File): boolean {
  * @param {File} file File
  * @returns {string|undefined} file extension
  */
-export function getFileExtension (file: File): string|undefined {
-    const ext: undefined|string = file.name.split('.').pop();
+export function getFileExtension (name: string): string|undefined {
+    const ext: undefined|string = name.split('.').pop();
 
     return ext?.toLowerCase();
 }
@@ -32,8 +32,8 @@ export function getFileExtension (file: File): string|undefined {
  * @param {File} file File
  * @returns {string} file name without extension
  */
-export function getFileNameWithoutExtension (file: File): string {
-    return file.name.split('.').slice(0, -1).join('.');
+export function getFileNameWithoutExtension (name: string): string {
+    return name.split('.').slice(0, -1).join('.');
 }
 
 /**
