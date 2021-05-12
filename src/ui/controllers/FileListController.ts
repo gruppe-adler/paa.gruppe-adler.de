@@ -56,10 +56,8 @@ export default class FileListController extends EventTarget {
      */
     private async deleteAll() {
         const choice = new Choice(
-            `
-                <h2 style="font-family: 'Source Sans Pro', sans-serif">Delete all files?</h2>
-                <p>This will cancel any running / pending conversions and delete the results of all already converted files.</p>
-            `,
+            'Delete all files?',
+            '<p>This will cancel any running / pending conversions and delete the results of all already converted files.</p>',
             {
                 text: 'Delete All',
                 color: 'var(--color-error)',

@@ -30,7 +30,7 @@
         min-height: 10rem;
         min-width: 10rem;
         z-index: 1000;
-        padding: 1rem 1.5rem;
+        padding: 1.5rem;
         border-radius: 1rem;
         background-color: var(--color-background);
         transition: transform .2s ease, opacity .2s ease;
@@ -42,16 +42,18 @@
         transform: scale(0.5);
         opacity: 0;
         grid-template:
-            "content" 1fr
-            "actions" auto / 1fr;
+            "heading close" auto
+            "content content" 1fr
+            "actions actions" auto / 1fr auto;
         grid-row-gap: .5rem;
         max-width: calc(100vw - 2rem);
         box-sizing: border-box;
+    }
 
-        &.grad-paa-dialog--close {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-        }
+    &__heading {
+        font-family: 'Source Sans Pro', sans-serif;
+        grid-area: heading;
+        margin-top: 0;
     }
 
     &__content {
@@ -86,13 +88,13 @@
 
     &__close {
         all: unset;
-        position: absolute;
-        top: .125rem;
-        right: .125rem;
+        grid-area: close;
         color: var(--color-text);
         background-color: transparent;
         cursor: pointer;
         opacity: .4;
+        display: flex;
+        align-self: flex-start;
         
         > i {
             margin-right: 0;

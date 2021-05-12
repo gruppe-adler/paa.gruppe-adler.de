@@ -10,14 +10,14 @@ export class Choice extends Dialog {
     private resolve: (value: boolean | PromiseLike<boolean>) => void;
     public readonly promise: Promise<boolean>;
 
-    constructor(content: string, okOptions: ChoiceButtonOptions, cancelOptions: ChoiceButtonOptions = { text: 'Cancel' }, options?: { width: string }) {
+    constructor(heading: string, content: string, okOptions: ChoiceButtonOptions, cancelOptions: ChoiceButtonOptions = { text: 'Cancel' }, options?: { width: string }) {
         const contentEl = document.createElement('div');
         contentEl.innerHTML = content;
 
         const okBtn = Choice.generateButton(okOptions);
         const cancelBtn = Choice.generateButton(cancelOptions);
 
-        super(contentEl, { close: false, actions: [cancelBtn, okBtn] });
+        super(heading, contentEl, { close: false, actions: [cancelBtn, okBtn] });
 
         this.promise = new Promise<boolean>(resolve => {
             this.resolve = resolve;

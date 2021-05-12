@@ -5,6 +5,10 @@
     align-items: center;
     padding: 2rem;
 
+    > h1 {
+        text-align: center;
+    }
+
     > section {
         padding: 0.25rem 1rem;
         margin: 0 0 1.5rem 0;
@@ -33,6 +37,7 @@
     grid-row-gap: 1rem;
     grid-column-gap: 2rem;
     margin-top: 1.5rem;
+    padding-bottom: 1rem;
     grid-template: 
         "heading heading" auto
         "gimp photoshop" auto / .5fr .5fr;

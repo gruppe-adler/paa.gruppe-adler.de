@@ -19,7 +19,9 @@ export default class FeedbackController extends EventTarget {
     private showPopup(event: MouseEvent) {
         event.preventDefault();
 
-        new Alert(`
+        new Alert(
+            'Any Feedback?',
+            `
             <p>We hope your overall experience was good, but we are open to any criticism you have and would appreciate if you report any bugs you encounter.</p>
             <p>Join our discord server to chat directly with us, open an issue on GitHub or shoot us an email:</p>
             <div id="grad-paa-feedback">
@@ -51,13 +53,13 @@ export default class FeedbackController extends EventTarget {
                     flex-direction: column;
                     align-items: center;
                     color: var(--color-text);
-                    opacity: 0.75;
+                    opacity: 0.5;
                     transition: opacity 0.05s ease-in-out;
                 }
 
                 #grad-paa-feedback a:hover {
                     text-decoration: none;
-                    opacity: 1;
+                    opacity: 0.8;
                 }
                 
                 #grad-paa-feedback a > i {
