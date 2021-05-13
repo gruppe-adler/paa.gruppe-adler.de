@@ -13,7 +13,7 @@ export interface GradPaaFile {
  * @returns {boolean} File is supported?
  */
 export function isSupportedFile ({ blob, name }: GradPaaFile): boolean {
-    return (blob.type === 'image/png' || blob.type === 'image/svg+xml' || blob.type === 'image/jpeg' || /\.paa$/i.test(name));
+    return (['image/png', 'image/svg+xml', 'image/jpeg'].includes(blob.type) || /\.paa$/i.test(name));
 }
 
 /**
