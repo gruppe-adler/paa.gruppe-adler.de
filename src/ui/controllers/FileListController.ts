@@ -30,7 +30,12 @@ export default class FileListController extends EventTarget {
 
             if (list === null) return;
 
-            this.fileControllers.set(e.file.id, new FileItemController(e.file, list));
+            const controller = new FileItemController(e.file, list);
+            this.fileControllers.set(e.file.id, controller);
+
+            // scroll new file into view
+            controller.element.scrollIntoView({ behavior: 'smooth' });
+
             this.checkDownloadAllButton();
         });
 

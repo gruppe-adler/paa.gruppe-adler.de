@@ -45,6 +45,26 @@
     width: 50rem;
     max-width: calc(100vw - 2rem);
     box-sizing: border-box;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: white;
+        pointer-events: none;
+        border-radius: inherit;
+        animation: fadeout 1s ease;
+
+        @keyframes fadeout {
+            from { opacity: 0.1; }
+            to { opacity: 0; }
+        }
+    }
 
     &:last-child {
         margin-bottom: 0;

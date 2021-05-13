@@ -4,7 +4,7 @@ import { Alert } from '@/ui/Alert';
 
 export default class FileItemController {
     private readonly file: ConversionFile;
-    private readonly element: HTMLLIElement;
+    public readonly element: HTMLLIElement;
 
     private moreMenuHandler: null|((this: Window, ev: MouseEvent) => void) = null;
 
