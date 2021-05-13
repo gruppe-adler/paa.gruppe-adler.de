@@ -42,8 +42,6 @@ export default class GradPaaApplication {
             const files = ConversionService.getInstance().entries();
             for (const [, file] of files) {
                 if (file.state !== 'done') continue;
-                // TODO: we should tell the user if some files are not "done"
-
                 // result will be present, because we just checked if the file was done
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 zip.file(file.newName, file.result!.blob);
