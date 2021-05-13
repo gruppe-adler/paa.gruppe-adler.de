@@ -3,7 +3,6 @@ import * as JSZip from 'jszip';
 import OverlayController, { OverlayConvertEvent } from '@/ui/controllers/OverlayController';
 import HomeController from '@/ui/controllers/HomeController';
 import FileListController from '@/ui/controllers/FileListController';
-import FeedbackController from '@/ui/controllers/FeedbackController';
 import ConversionService from '@/conversion/Service';
 import SnackbarController, { SnackbarOptions } from './ui/controllers/SnackbarController';
 import { download } from './utils/file';
@@ -63,9 +62,6 @@ export default class GradPaaApplication {
                 ConversionService.getInstance().cancelID(id);
             }
         });
-
-        // FEEDBACK CONTROLLER
-        new FeedbackController();
 
         this.snackbarController = new SnackbarController();
 

@@ -143,11 +143,42 @@
             <a href="https://gruppe-adler.de" target="_blank" rel="noreferrer" style="opacity: 1; grid-area: homepage;">
                 gruppe-adler.de
             </a>
-            <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de/issues/new/choose" target="_blank" rel="noreferrer">
+            <a href="#feedback">
                 <i aria-hidden="true" class="material-icons-round">feedback</i>
                 <span>Feedback</span>
             </a>
         </footer>
+
+        <!-- Feedback Popup -->
+        <div class="grad-paa-dialog" id="feedback">
+            <div class="grad-paa-dialog__backdrop"></div>
+            <div class="grad-paa-dialog__dialog" style="width: 600px">
+                <h2 class="grad-paa-dialog__heading">Any Feedback?</h2>
+                <a href="#" class="grad-paa-dialog__close">
+                    <button class="grad-paa-dialog__close grad-paa-btn--not-responsive">
+                        <i class="material-icons-round">cancel</i>
+                    </button>
+                </a>
+                <div class="grad-paa-dialog__content">
+                    <p>We hope your overall experience was good, but we are open to any criticism you have and would appreciate if you report any bugs you encounter.</p>
+                    <p>Join our discord server to chat directly with us, open an issue on GitHub or shoot us an email:</p>
+                    <div>
+                        <a href="https://discord.gg/ZDqp45q" target="_blank" rel="noreferrer">
+                            <img alt="" src="<%=require('./assets/img/discord.svg')%>" width="48" height="48">
+                            <span>Discord<span>
+                        </a>
+                        <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de/issues/new/choose" target="_blank" rel="noreferrer">
+                            <img alt="" src="<%=require('./assets/img/github.svg')%>" width="48" height="48">
+                            <span>GitHub</span>
+                        </a>
+                        <a href="mailto:derzade@gruppe-adler.de" target="_blank" rel="noreferrer">
+                            <img alt="" src="<%=require('./assets/img/mail.svg')%>" width="48" height="48">
+                            <span>Email</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script>
             detectIE = function() {
                 const ua = window.navigator.userAgent;

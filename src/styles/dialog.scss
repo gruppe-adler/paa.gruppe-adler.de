@@ -104,17 +104,20 @@
         }
     }
 
-    &--shown {
+    &--shown,
+    &:target {
         pointer-events: initial;
         touch-action: initial;
     }
 
-    &--shown &__dialog {
+    &--shown &__dialog,
+    &:target &__dialog {
         transform: scale(1);
         opacity: 1;
     }
 
-    &--shown &__backdrop {
+    &--shown &__backdrop,
+    &:target &__backdrop {
         opacity: 1;
     }
 }
