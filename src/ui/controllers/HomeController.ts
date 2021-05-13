@@ -28,6 +28,8 @@ export default class HomeController extends EventTarget {
         }
 
         this.setupLottie();
+
+        this.setupInstallButton();
     }
 
     private setupLottie() {
@@ -55,6 +57,22 @@ export default class HomeController extends EventTarget {
 
         this.lottie.animation = null;
         this.lottie.resizeHandler = null;
+    }
+
+    private setupInstallButton () {
+        window.addEventListener('beforeinstallprompt', async e => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+
+            const installBtn: HTMLButtonElement|null = this.element.querySelector('[data-grad-paa-install]');
+
+            if (installBtn === null) return;
+
+            installBtn.removeAttribute('data-grad-paa-install');
+            installBtn.style.opacity = '1';
+
+            installBtn.addEventListener('click', () => e.prompt());
+        }, { once: true });
     }
 
     public toggle (shown: boolean): void {

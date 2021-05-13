@@ -8,8 +8,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     return;
 
     installServiceWorker(app);
-
-    showInstallPrompt(app);
 });
 
 async function installServiceWorker(app: GradPaaApplication) {
@@ -52,19 +50,4 @@ async function checkForUpdate(): Promise<ServiceWorker|null> {
             }, { once: true });
         });
     });
-}
-
-function showInstallPrompt(app: GradPaaApplication) {
-    window.addEventListener('beforeinstallprompt', async e => {
-        // Prevent the mini-infobar from appearing on mobile
-        e.preventDefault();
-
-        // TODO: Give user choice "never show again"
-
-        const result = await app.showSnackbar('You can install this application.', { actions: ['install', 'dismiss'] });
-
-        if (result !== 'install') return;
-
-        e.prompt();
-    }, { once: true });
 }
