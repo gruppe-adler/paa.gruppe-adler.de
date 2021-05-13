@@ -1,10 +1,12 @@
 import ConversionFile from '@/conversion/File';
 import ConversionService from '@/conversion/Service';
 import { Alert } from '@/ui/Alert';
+import { Dialog } from '@/ui/Dialog';
 
 export default class FileItemController {
     private readonly file: ConversionFile;
     public readonly element: HTMLLIElement;
+    private openDialog: null|Dialog = null;
 
     private moreMenuHandler: null|((this: Window, ev: MouseEvent) => void) = null;
 
@@ -283,14 +285,19 @@ export default class FileItemController {
     private showError () {
         if (this.file.error === null) return;
 
-        // TODO: Add button "report error", which opens feedback popup instead of asking user to open manually
-        new Alert(
+        const content = document.createElement('div');
+
+        content.innerHTML = `
+            <p>The following error occurred, while trying to convert your file:</p>
+            <pre style="padding: .5rem; background-color: rgba(0,0,0,0.1); color: var(--color-error); border-radius: .25rem; white-space: break-spaces;">${this.file.error}</pre>
+            <button class="grad-paa-btn--primary" style="float: right;">Report Error</button>
+        `;
+
+        content.querySelector('button')?.addEventListener('click', () => this.openFeedback());
+
+        this.openDialog = new Alert(
             'An Error occurred',
-            `
-                <p>The following error occurred, while trying to convert your file:</p>
-                <pre style="padding: .5rem; background-color: rgba(0,0,0,0.1); color: var(--color-error); border-radius: .25rem; white-space: break-spaces;">${this.file.error}</pre>
-                <p>Please help us make this tool even better and report the issue, by <b>clicking the "Feedback"-Button</b> in the lower right corner of the page!</p>
-            `
+            content
         );
     }
 
@@ -300,7 +307,24 @@ export default class FileItemController {
     private showWarning () {
         if (this.file.warning === null) return;
 
-        new Alert(this.file.warning.displayText, this.file.warning.description);
+        const content = document.createElement('div');
+
+        content.innerHTML = this.file.warning.description;
+
+        content.querySelectorAll('[data-grad-paa-open-feedback]').forEach(el => {
+            el.removeAttribute('data-grad-paa-open-feedback');
+            el.addEventListener('click', () => this.openFeedback());
+        });
+
+        this.openDialog = new Alert(this.file.warning.displayText, content);
+    }
+
+    /**
+     * Close open dialog (if there is one) and open feedback dialog
+     */
+    private openFeedback() {
+        this.openDialog?.close();
+        document.location.hash = 'feedback';
     }
 
     /**

@@ -21,7 +21,7 @@
 [ ] Multithreading??
 [ ] Fix open TODO comments
 [ ] Invalid images as warning?
-[ ] Rework warning texts
+[x] Rework warning texts
 
 Styling:
 [x] custom scrollbar

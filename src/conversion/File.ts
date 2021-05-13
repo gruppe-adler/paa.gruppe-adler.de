@@ -116,7 +116,7 @@ export default class ConversionFile extends EventTarget {
         // check if file is in a supported format
         if (!isSupportedFile(this.inputFile)) {
             this.warning = {
-                displayText: 'Non supported format.',
+                displayText: 'Non supported format',
                 description: `
                     <p>The file you uploaded is not in a supported format.</p>
                     <p>We support the following file formats:</p>
@@ -134,7 +134,7 @@ export default class ConversionFile extends EventTarget {
 
             if (Math.log2(this.imageData.width) % 1 !== 0 || Math.log2(this.imageData.height) % 1 !== 0) {
                 this.warning = {
-                    displayText: 'Dimensions have to be powers of two.',
+                    displayText: 'Dimensions have to be powers of two',
                     description: `
                         <p>The dimensions (width and height) of PAA images have to be powers of two (2ⁿ).</p>
                         <p>Your image has to fulfill the same conditions in order to convert it to PAA.</p>
@@ -178,12 +178,11 @@ export default class ConversionFile extends EventTarget {
                 break;
             default:
                 // INVALID PAA magic number
-                // TODO: Add button "report error", which opens feedback popup instead of asking user to open manually
                 this.warning = {
                     displayText: 'Invalid PAA file',
                     description: `
                         <p>Seems like your file is not a valid PAA file.</p>
-                        <p>If you think this is an error please report it, by <b>clicking the "Feedback"-Button</b> in the lower right corner of the page!</p>
+                        <button class="grad-paa-btn--primary" style="float: right;" data-grad-paa-open-feedback>Report Error</button>
                     `
                 };
                 break;
