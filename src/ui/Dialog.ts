@@ -45,10 +45,11 @@ export class Dialog {
 
         content.classList.add('grad-paa-dialog__content');
 
-        this.element.querySelector('.grad-paa-dialog__dialog')?.appendChild(content);
-
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const actionsContainer = this.element.querySelector('.grad-paa-dialog__actions')!;
+
+        this.element.querySelector('.grad-paa-dialog__dialog')?.insertBefore(content, actionsContainer);
+
         const actions = options?.actions ?? [];
         for (const el of actions) {
             actionsContainer.appendChild(el);
