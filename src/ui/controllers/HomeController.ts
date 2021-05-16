@@ -14,7 +14,14 @@ export default class HomeController extends EventTarget {
         this.element = homeElem;
 
         // Handle clicks for "convert files" button
-        this.element.querySelector('button')?.addEventListener('click', () => { this.dispatchEvent(new Event('convert-files')); });
+        const button: HTMLButtonElement|null = this.element.querySelector('[data-grad-paa-convert]');
+        if (button === null) {
+            // eslint-disable-next-line no-console
+            console.error('Couldn\'t find convert button');
+            return;
+        }
+        button.removeAttribute('data-grad-paa-convert');
+        button.addEventListener('click', () => { this.dispatchEvent(new Event('convert-files')); });
 
         // find lottie element
         const lottieElem: HTMLDivElement|null = this.element.querySelector('[data-grad-paa-lottie]');
