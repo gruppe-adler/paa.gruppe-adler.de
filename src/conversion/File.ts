@@ -264,9 +264,7 @@ export default class ConversionFile extends EventTarget {
                 this._result = { blob, name: this.newName };
             }
 
-            // log google analytics
-            // TODO: sanitize extensions (jpeg, jpg etc.)
-            gtag('event', `${this.extension}2${this.newExtension}`, { event_category: 'conversion', non_interaction: true });
+            ConversionFile.trackConversion(this.inputFile, this._result);
         } catch (err) {
             this.error = err;
             // eslint-disable-next-line no-console
@@ -277,6 +275,19 @@ export default class ConversionFile extends EventTarget {
                 this.worker = null;
             }
         }
+    }
+
+    private static trackConversion (input: GradPaaFile, result: GradPaaFile) {
+        const fileToTypeID = ({ blob, name }: GradPaaFile): string => {
+            if (blob.type === 'image/svg+xml') return 'svg';
+            if (blob.type === 'image/png') return 'png';
+            if (blob.type === 'image/jpeg') return 'jpeg';
+            if (/\.paa$/i.test(name)) return 'paa';
+
+            return getFileExtension(name) || 'unknown';
+        };
+
+        gtag('event', `${fileToTypeID(input)}2${fileToTypeID(result)}`, { event_category: 'conversion', non_interaction: true });
     }
 
     public cancel (): void {
