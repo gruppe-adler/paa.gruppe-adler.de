@@ -26,6 +26,8 @@ async function installServiceWorker(app: GradPaaApplication) {
             const result = await app.showSnackbar('Update available', { actions: ['reload', 'dismiss'] });
             if (result === 'reload') sw.postMessage('skip-waiting');
         });
+
+        navigator.serviceWorker.addEventListener('controllerchange', () => { window.location.reload(); });
     }
 }
 
