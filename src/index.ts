@@ -4,9 +4,6 @@ import './styles/global.scss';
 window.addEventListener('DOMContentLoaded', async () => {
     const app = new GradPaaApplication();
 
-    // TODO: Remove return to enable service worker
-    return;
-
     installServiceWorker(app);
 });
 
