@@ -79,7 +79,7 @@ export default class HomeController extends EventTarget {
             installBtn.style.opacity = '1';
 
             installBtn.addEventListener('click', () => e.prompt());
-        }, { once: true });
+        });
     }
 
     public toggle (shown: boolean): void {
