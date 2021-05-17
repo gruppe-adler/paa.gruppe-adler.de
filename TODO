@@ -17,11 +17,16 @@
 [x] "strictNullChecks": true
 [x] "click here to install" (beforeinstallprompt)
 [x] File with same name
+[x] Fix open TODO comments
+[x] Invalid images as warning?
+[x] Rework warning texts
+[x] Install Button only works once
+[x] ServiceWorker is shit
+[x] Show loader while preChecking
+[ ] Choice: Enter = Main Action
 [ ] nomi's Lottie anim fixes
 [ ] Multithreading??
-[ ] Fix open TODO comments
-[ ] Invalid images as warning?
-[x] Rework warning texts
+[ ] GH Issue #13
 
 Styling:
 [x] custom scrollbar
@@ -29,11 +34,12 @@ Styling:
 [x] Error color
 [x] Highlight new files
 [x] scroll down to new files
-[ ] Preview Images
+[x] Preview Images
 
 Pre-Release-Check-List:
 [ ] robots.txt anpassen
 [ ] cname in GH Action umstellen
+[ ] domain umstellen
 [ ] branch in GH Workflow restriktieren
 [ ] cname in GH Pages Settings umstellen
 [ ] Alle Browser prüfen
