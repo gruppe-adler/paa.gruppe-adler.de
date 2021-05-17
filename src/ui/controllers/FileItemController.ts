@@ -174,6 +174,8 @@ export default class FileItemController {
             );
             break;
         case 'setup':
+            this.setMainActionIcon('rule', 'text', 'Checking Prerequisites');
+
             moreActions.push(
                 this.createAction('Cancel', 'clear', this.cancel)
             );
