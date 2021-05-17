@@ -3,6 +3,7 @@ import * as lottieData from '@/assets/logo.json';
 
 export default class HomeController extends EventTarget {
     private element: HTMLElement;
+    private installEvent: BeforeInstallPromptEvent|null = null;
     private lottie = {
         animation: null as null|LottieAnimationItem,
         elem: null as HTMLDivElement|null,
@@ -71,14 +72,23 @@ export default class HomeController extends EventTarget {
             // Prevent the mini-infobar from appearing on mobile
             e.preventDefault();
 
-            const installBtn: HTMLButtonElement|null = this.element.querySelector('[data-grad-paa-install]');
+            this.installEvent = e;
 
+            const installBtn: HTMLButtonElement|null = this.element.querySelector('[data-grad-paa-install]');
             if (installBtn === null) return;
 
-            installBtn.removeAttribute('data-grad-paa-install');
-            installBtn.style.opacity = '1';
+            if (installBtn.style.opacity === '0') {
+                installBtn.removeAttribute('data-grad-paa-install');
+                installBtn.style.opacity = '1';
+                installBtn.addEventListener('click', () => {
+                    if (this.installEvent === null) return;
+                    this.installEvent.prompt();
 
-            installBtn.addEventListener('click', () => e.prompt());
+                    this.installEvent.userChoice.then(({ outcome }) => {
+                        if (outcome === 'accepted') installBtn.style.opacity = '0';
+                    });
+                });
+            }
         });
     }
 
