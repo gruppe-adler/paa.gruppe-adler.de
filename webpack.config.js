@@ -53,7 +53,11 @@ module.exports = () => {
             contentBase: path.join(__dirname, 'dist')
         },
         resolve: {
-            fallback: { stream: false },
+            fallback: {
+                stream: false,
+                util: false,
+                buffer: false
+            },
             extensions: ['.tsx', '.ts', '.js', '.scss'],
             alias: {
                 '@': path.resolve(__dirname, 'src/')
