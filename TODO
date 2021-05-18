@@ -23,7 +23,7 @@
 [x] Install Button only works once
 [x] ServiceWorker is shit
 [x] Show loader while preChecking
-[ ] Choice: Enter = Main Action
+[x] Choice: Enter = Main Action
 [ ] nomi's Lottie anim fixes
 [ ] Multithreading??
 [ ] GH Issue #13

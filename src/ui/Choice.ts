@@ -8,6 +8,7 @@ interface ChoiceButtonOptions {
 
 export class Choice extends Dialog {
     private resolve: (value: boolean|null | PromiseLike<boolean|null>) => void;
+    private keyUpEventHandler: (e: KeyboardEvent) => void;
     public readonly promise: Promise<boolean|null>;
 
     constructor(
@@ -46,7 +47,13 @@ export class Choice extends Dialog {
             this.resolve = resolve;
         });
 
-        this.promise.finally(() => this.close());
+        this.keyUpEventHandler = e => {
+            if (e.key !== 'Enter') return;
+            this.resolve(true);
+        };
+        window.addEventListener('keyup', this.keyUpEventHandler);
+
+        this.promise.finally(() => { window.removeEventListener('keyup', this.keyUpEventHandler); this.close(); });
 
         okBtn.addEventListener('click', () => this.resolve(true));
         cancelBtn.addEventListener('click', () => this.resolve(false));
