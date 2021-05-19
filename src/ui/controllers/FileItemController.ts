@@ -340,25 +340,17 @@ export default class FileItemController {
 
         const { height } = this.element.getBoundingClientRect();
 
-        this.element.style.maxHeight = `${height}px`;
-        this.element.style.transition = 'all .2s ease';
         this.element.style.overflowY = 'hidden';
         this.element.style.minHeight = 'initial';
+        this.element.style.maxHeight = `${height}px`;
 
-        // double RAF to make sure the styles are only applied
-        // after the ones above are applied
-        window.requestAnimationFrame(() => {
-            window.requestAnimationFrame(() => {
-                this.element.style.maxHeight = '0px';
-                this.element.style.paddingBottom = '0px';
-                this.element.style.paddingTop = '0px';
-                this.element.style.marginBottom = '0px';
-                this.element.style.opacity = '0';
+        const anim = this.element.animate(
+            { maxHeight: 0, paddingBottom: 0, paddingTop: 0, marginBottom: 0, marginTop: 0, opacity: 0 },
+            { duration: 300, easing: 'ease', fill: 'forwards' }
+        );
 
-                window.setTimeout(() => {
-                    this.element.remove();
-                }, 300);
-            });
+        anim.finished.then(() => {
+            this.element.remove();
         });
     }
 }
