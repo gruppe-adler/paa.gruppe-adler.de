@@ -1,4 +1,5 @@
 import setupAFF from '@/utils/aff';
+import { PAA_MIME_TYPE } from '@/utils/file';
 
 /**
  * Generate a paa from an ImageData object
@@ -55,7 +56,7 @@ async function convertImageToPaa (data: ImageData): Promise<Blob> {
     paa.delete();
     mipMaps.delete();
     paaData.delete();
-    return new Blob([uint8array.buffer], { type: 'application/octet-stream' });
+    return new Blob([uint8array.buffer], { type: PAA_MIME_TYPE });
 }
 
 addEventListener('message', async (event: MessageEvent) => {

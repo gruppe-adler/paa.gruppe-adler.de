@@ -7,13 +7,15 @@ export interface GradPaaFile {
     name: string;
 }
 
+export const PAA_MIME_TYPE = 'image/vnd.paa';
+
 /**
  * Checks whether given file is supported
  * @param {File} file File
  * @returns {boolean} File is supported?
  */
 export function isSupportedFile ({ blob, name }: GradPaaFile): boolean {
-    return (['image/png', 'image/svg+xml', 'image/jpeg'].includes(blob.type) || /\.paa$/i.test(name));
+    return (['image/png', 'image/svg+xml', 'image/jpeg', PAA_MIME_TYPE].includes(blob.type) || /\.paa$/i.test(name));
 }
 
 /**
