@@ -264,7 +264,7 @@ export default class ConversionFile extends EventTarget {
                 this._result = { blob, name: this.newName };
             }
 
-            ConversionFile.trackConversion(this.inputFile, this._result);
+            this.trackConversion();
         } catch (err) {
             this.error = err;
             // eslint-disable-next-line no-console
@@ -277,17 +277,20 @@ export default class ConversionFile extends EventTarget {
         }
     }
 
-    private static trackConversion (input: GradPaaFile, result: GradPaaFile) {
-        const fileToTypeID = ({ blob, name }: GradPaaFile): string => {
-            if (blob.type === 'image/svg+xml') return 'svg';
-            if (blob.type === 'image/png') return 'png';
-            if (blob.type === 'image/jpeg') return 'jpeg';
-            if (/\.paa$/i.test(name)) return 'paa';
+    private trackConversion () {
+        if (this.result === null) return;
 
-            return getFileExtension(name) || 'unknown';
-        };
+        let action: string;
+        let label: string;
+        if (this.newExtension === 'paa') {
+            action = 'toPAA';
+            label = this.inputFile.blob.type;
+        } else {
+            action = 'fromPAA';
+            label = this.result.blob.type;
+        }
 
-        gtag('event', `${fileToTypeID(input)}2${fileToTypeID(result)}`, { event_category: 'conversion', non_interaction: true });
+        gtag('event', action, { event_category: 'conversion', non_interaction: true, event_label: label });
     }
 
     public cancel (): void {
