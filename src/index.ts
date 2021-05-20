@@ -4,8 +4,23 @@ import './styles/global.scss';
 window.addEventListener('DOMContentLoaded', async () => {
     const app = new GradPaaApplication();
 
+    handleFiles(app);
+
     installServiceWorker(app);
 });
+
+function handleFiles(app: GradPaaApplication) {
+    if (!('launchQueue' in window)) return;
+
+    window.launchQueue.setConsumer(async launchParams => {
+        // Nothing to do when the queue is empty.
+        if (!launchParams.files.length) return;
+
+        const files = await Promise.all(launchParams.files.map(handle => handle.getFile()));
+
+        app.convertFiles(...files);
+    });
+}
 
 async function installServiceWorker(app: GradPaaApplication) {
     if (!('serviceWorker' in navigator)) return;

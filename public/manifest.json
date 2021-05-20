@@ -28,5 +28,16 @@
     ],
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#000000"
+    "background_color": "#000000",
+    "file_handlers": [
+        {
+            "action": "/",
+            "accept": {
+                "image/vnd.paa": [".paa"],
+                "image/png": [".png"],
+                "image/svg+xml": [".svg"],
+                "image/jpeg": [".jpeg", ".jpg"]
+            }
+        }
+    ]
 }

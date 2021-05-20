@@ -110,4 +110,8 @@ export default class GradPaaApplication {
     public async showSnackbar (msg: string, options?: SnackbarOptions): Promise<string> {
         return this.snackbarController.showSnackbar(msg, options);
     }
+
+    public convertFiles (...files: File[]): void {
+        ConversionService.getInstance().convertFiles(...files);
+    }
 }
