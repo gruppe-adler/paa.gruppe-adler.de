@@ -13,7 +13,7 @@ jobs:
     - name: Build
       run: npm run-script build
     - name: Deploy
-      # if: ${{ github.ref == 'refs/heads/master' }}
+      if: ${{ github.ref == 'refs/heads/rewrite' }}
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
