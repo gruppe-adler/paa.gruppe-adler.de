@@ -62,8 +62,14 @@ async function convertImageToPaa (data: ImageData): Promise<Blob> {
 addEventListener('message', async (event: MessageEvent) => {
     const imageDate = event.data as ImageData;
 
-    const blob = await convertImageToPaa(imageDate);
+    let msg: { type: 'data'|'error', data: unknown };
+    try {
+        const blob = await convertImageToPaa(imageDate);
+        msg = { type: 'data', data: blob };
+    } catch (err) {
+        msg = { type: 'error', data: err };
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    postMessage(blob, this!);
+    postMessage(msg, this!);
 });
