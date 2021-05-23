@@ -13,14 +13,19 @@ export class Choice extends Dialog {
 
     constructor(
         heading: string,
-        content: string,
+        content: string|HTMLDivElement,
         okOptions: ChoiceButtonOptions,
         cancelOptions: ChoiceButtonOptions = { text: 'Cancel' },
         skipOptions?: ChoiceButtonOptions,
         options?: { width?: string }
     ) {
-        const contentEl = document.createElement('div');
-        contentEl.innerHTML = content;
+        let contentEl: HTMLDivElement;
+        if (typeof content === 'string') {
+            contentEl = document.createElement('div');
+            contentEl.innerHTML = content;
+        } else {
+            contentEl = content;
+        }
 
         const okBtn = Choice.generateButton(okOptions);
         const cancelBtn = Choice.generateButton(cancelOptions);
@@ -67,7 +72,7 @@ export class Choice extends Dialog {
      */
     public static new (
         heading: string,
-        content: string,
+        content: string|HTMLDivElement,
         okOptions: ChoiceButtonOptions,
         cancelOptions: ChoiceButtonOptions = { text: 'Cancel' },
         skipOptions?: ChoiceButtonOptions,

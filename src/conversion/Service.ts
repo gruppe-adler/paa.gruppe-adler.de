@@ -64,11 +64,14 @@ export default class ConversionService extends EventTarget {
 
         // takenNames is a map containing file-names as keys and the file-id as value
         const takenNames = new Map(Array.from(this.files).map(([k, v]) => [v.name, k]));
+        let remainingFilesWithTakenNames = newFiles.filter(({ name }) => takenNames.has(name)).length;
+        let resultForAll: null|boolean|undefined;
 
         for (const f of newFiles) {
             const file: GradPaaFile = { blob: f, name: f.name };
 
             if (takenNames.has(file.name)) {
+                remainingFilesWithTakenNames--;
                 const extension = getFileExtension(file.name);
                 const baseName = getFileNameWithoutExtension(file.name);
 
@@ -80,17 +83,36 @@ export default class ConversionService extends EventTarget {
                     newName = `${baseName}_${num}.${extension}`;
                 }
 
-                const result = await Choice.new(
-                    `"${file.name}" already exists`,
-                    `<p>Do you want to replace the existing file or rename the new file "${newName}".</p>`,
-                    {
-                        text: 'Replace',
-                        color: 'var(--color-error)',
-                        primary: true
-                    },
-                    { text: 'Rename' },
-                    { text: 'Skip' }
-                );
+                let result: boolean|null;
+                if (resultForAll === undefined) {
+                    const el = document.createElement('div');
+                    let applyForAll = false;
+
+                    el.innerHTML = `<p>Do you want to replace the existing file or rename the new file "${newName}".</p>`;
+
+                    if (remainingFilesWithTakenNames > 0) {
+                        el.innerHTML = el.innerHTML + `
+                            <p style="display: flex; align-items: center; margin-top: .5rem; margin-bottom: -1rem;">
+                                <input type="checkbox" style="margin-left: 0;" />
+                                <label>Do this for all current items</label>
+                            </p>`;
+
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        el.querySelector('input')!.addEventListener('change', e => { applyForAll = (e.target as HTMLInputElement).checked; });
+                    }
+
+                    result = await Choice.new(
+                        `"${file.name}" already exists`,
+                        el,
+                        { text: 'Replace', color: 'var(--color-error)', primary: true },
+                        { text: 'Rename' },
+                        { text: 'Skip' }
+                    );
+
+                    if (applyForAll) resultForAll = result;
+                } else {
+                    result = resultForAll;
+                }
 
                 switch (result) {
                 case null:

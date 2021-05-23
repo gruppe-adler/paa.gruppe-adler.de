@@ -134,6 +134,69 @@ button {
     }
 }
 
+input[type="checkbox"] {
+    appearance: none;
+    font-size: 1.75rem;
+    width: 1em;
+    height: 1em;
+    margin: .25em;
+    color: var(--color-text);
+    cursor: pointer;
+    position: relative;
+
+    // hover indicator (circle around checkbox)
+    &::before {
+        position: absolute;
+        top: -.25em;
+        left: -.25em;
+        font-size: inherit;
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 50%;
+        content: "";
+        background-color: currentColor;
+        opacity: 0.1;
+        z-index: -1;
+        transform: scale(0);
+        transition: transform 0.1s ease;
+    
+        @media (prefers-reduced-motion) {
+            transition: none;
+        }
+    }
+    &:hover::before {
+        transform: scale(1);
+    }
+    
+    // actual icon
+    &::after {
+        content: 'check_box_outline_blank';
+        font-family: 'Material Icons Round';
+        font-weight: normal;
+        font-style: normal;
+        font-size: inherit;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        font-feature-settings: 'liga';
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+        color: inherit;
+    }
+    
+    &:checked {
+        color: var(--color-primary);
+
+        &::after {
+            content: 'check_box';
+        }
+    }
+}
+
 .grad-paa-tooltip {
     position: relative;
     display: flex;
