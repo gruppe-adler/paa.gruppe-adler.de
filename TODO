@@ -25,8 +25,9 @@
 [x] Show loader while preChecking
 [x] Choice: Enter = Main Action
 [x] nomi's Lottie anim fixes
+[x] GH Issue #13
+[x] WASM Exceptions
 [ ] Multithreading??
-[ ] GH Issue #13
 
 Styling:
 [x] custom scrollbar
@@ -43,3 +44,4 @@ Pre-Release-Check-List:
 [ ] branch in GH Workflow restriktieren
 [ ] cname in GH Pages Settings umstellen
 [ ] Alle Browser prüfen
+[ ] Discord Link anpassen

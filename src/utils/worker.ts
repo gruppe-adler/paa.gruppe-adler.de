@@ -6,7 +6,7 @@
  * @returns Promise which resolves in the data received by the worker
  */
 export function promisifyWorker<T, R>(worker: Worker, message: T, transfer?: Transferable[]): Promise<R> {
-    let messageHandler: (e: MessageEvent<{ type: 'data', data: R }|{ type: 'error', data: unknown }>) => void;
+    let messageHandler: (e: MessageEvent<{ type: 'data', data: R }|{ type: 'error', data: Error }>) => void;
     let errorHandler: (e: ErrorEvent) => void;
 
     const promise = new Promise<R>((resolve, reject) => {
@@ -17,7 +17,7 @@ export function promisifyWorker<T, R>(worker: Worker, message: T, transfer?: Tra
                 reject(e.data.data);
             }
         };
-        errorHandler = e => reject(new Error(e.message));
+        errorHandler = e => reject(e);
 
         worker.addEventListener('message', messageHandler);
         worker.addEventListener('error', errorHandler);
