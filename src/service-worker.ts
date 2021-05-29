@@ -1,6 +1,8 @@
 import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
+import { ExpirationPlugin } from 'workbox-expiration';
 import * as googleAnalytics from 'workbox-google-analytics';
 
 declare const self: ServiceWorkerGlobalScope;
@@ -29,7 +31,18 @@ registerRoute(
 // Cache the underlying font files with a cache-first strategy for 1 year.
 registerRoute(
     ({ url }) => url.origin === 'https://fonts.gstatic.com',
-    new CacheFirst({ cacheName: 'google-fonts-web-fonts' })
+    new CacheFirst({
+        cacheName: 'google-fonts-web-fonts',
+        plugins: [
+            new CacheableResponsePlugin({
+                statuses: [0, 200]
+            }),
+            new ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+                maxEntries: 30
+            })
+        ]
+    })
 );
 
 // ------------------------------------------------------------------------------------------
