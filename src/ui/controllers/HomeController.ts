@@ -23,6 +23,7 @@ export default class HomeController extends EventTarget {
             console.error('Couldn\'t find convert button');
             return;
         }
+        button.classList.remove('grad-paa-btn--loader');
         button.removeAttribute('data-grad-paa-convert');
         button.addEventListener('click', () => { this.dispatchEvent(new Event('convert-files')); });
 
