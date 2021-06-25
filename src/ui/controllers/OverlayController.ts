@@ -1,3 +1,5 @@
+import EventTarget from '@ungap/event-target'; // Polyfill for Safari 13
+
 /**
  * OverlayConvertEvent is an event the OverlayController emits, when files are dropped onto the overlay.
  * The event includes the dropped files.

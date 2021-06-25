@@ -12,6 +12,7 @@
   "author": "Gruppe Adler",
   "license": "MIT",
   "dependencies": {
+    "@ungap/event-target": "^0.2.2",
     "jszip": "^3.6.0",
     "lottie-web": "^5.7.8",
     "workbox-cacheable-response": "^6.1.5",

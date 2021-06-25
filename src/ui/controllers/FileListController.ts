@@ -1,3 +1,5 @@
+import EventTarget from '@ungap/event-target'; // Polyfill for Safari 13
+
 import ConversionEvent from '@/conversion/Event';
 import ConversionService from '@/conversion/Service';
 import { Choice } from '../Choice';

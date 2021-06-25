@@ -1,3 +1,5 @@
+import EventTarget from '@ungap/event-target'; // Polyfill for Safari 13
+
 import { Choice } from '@/ui/Choice';
 import { getFileExtension, getFileNameWithoutExtension, GradPaaFile } from '@/utils/file';
 import ConversionEvent from './Event';

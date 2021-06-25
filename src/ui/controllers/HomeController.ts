@@ -1,3 +1,5 @@
+import EventTarget from '@ungap/event-target'; // Polyfill for Safari 13
+
 import Lottie, { AnimationItem as LottieAnimationItem } from 'lottie-web';
 import * as lottieData from '@/assets/logo.json';
 

@@ -1,3 +1,4 @@
+import EventTarget from '@ungap/event-target'; // Polyfill for Safari 13
 
 import { download, getFileExtension, getFileNameWithoutExtension, GradPaaFile, isSupportedFile, readFile } from '@/utils/file';
 import { blobToImg, imageDataFromBlob, imageDataFromDrawable, imageDataToBlob } from '@/utils/image';
