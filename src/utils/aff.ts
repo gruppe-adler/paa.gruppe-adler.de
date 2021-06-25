@@ -44,6 +44,17 @@ export class AFFExceptionError extends Error {
     }
 }
 
+// Safari still can't handle WebAssembly.instantiateStreaming...
+async function instantiateWA(response: Response | PromiseLike<Response>, importObject?: WebAssembly.Imports): Promise<WebAssembly.Instance> {
+    if (WebAssembly.instantiateStreaming !== undefined) {
+        const { instance } = await WebAssembly.instantiateStreaming(response, importObject);
+        return instance;
+    }
+
+    const bytes = (await response).arrayBuffer();
+    return WebAssembly.instantiate(bytes, importObject);
+}
+
 export class AFF {
     private dataView: DataView;
     private instance: WebAssembly.Instance|null = null;
@@ -58,7 +69,7 @@ export class AFF {
         this.memory = new WebAssembly.Memory({ initial: 256, maximum: 32768 });
         this.dataView = new DataView(this.memory.buffer);
 
-        this.ready = WebAssembly.instantiateStreaming(
+        this.ready = instantiateWA(
             input,
             {
                 env: {
@@ -157,7 +168,7 @@ export class AFF {
                     }
                 }
             }
-        ).then(({ instance }) => {
+        ).then(instance => {
             this.instance = instance;
             this.updateViews();
         });
