@@ -10,7 +10,6 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 module.exports = () => {
     return {
         entry: './src/index.ts',
-        devtool: 'inline-source-map',
         mode: 'production',
         target: 'es6',
         plugins: [
