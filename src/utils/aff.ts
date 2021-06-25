@@ -51,8 +51,9 @@ async function instantiateWA(response: Response | PromiseLike<Response>, importO
         return instance;
     }
 
-    const bytes = (await response).arrayBuffer();
-    return WebAssembly.instantiate(bytes, importObject);
+    const bytes = await (await response).arrayBuffer();
+    const source = await WebAssembly.instantiate(bytes, importObject);
+    return source.instance;
 }
 
 export class AFF {
