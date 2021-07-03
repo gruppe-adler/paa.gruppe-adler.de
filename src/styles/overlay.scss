@@ -1,0 +1,67 @@
+#grad-paa-overlay {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 2rem;
+    pointer-events: none;
+    touch-action: none;
+
+    &::before {
+        background-color: var(--color-background);
+        content: "";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        transition: opacity .1s ease;
+        
+        @media (prefers-reduced-motion) {
+            transition: none;
+        }
+    }
+
+    &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: 'DROP FILES HERE';
+        border: 4px dashed var(--color-text);
+        border-radius: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        letter-spacing: 0.1em;
+        font-size: 2em;
+        font-family: "Oswald", sans-serif;
+        font-weight: bold;
+        transform: scale(0.95);
+        transition: transform .1s ease, opacity .1s ease;
+        opacity: 0;
+
+        @media (prefers-reduced-motion) {
+            transition: none;
+        }
+    }
+
+    &.grad-paa-overlay--shown {
+        pointer-events: initial;
+        touch-action: initial;
+
+        &::before {
+            opacity: 0.9;
+        }
+
+        &::after {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+}

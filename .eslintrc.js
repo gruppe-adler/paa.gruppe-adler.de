@@ -1,20 +1,40 @@
 module.exports = {
     root: true,
-    env: {
-        node: true
-    },
     extends: [
-        'plugin:vue/essential',
-        '@vue/standard',
-        '@vue/typescript/recommended'
+        'standard',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:import/errors',
+        'plugin:import/warnings',
+        'plugin:import/typescript'
     ],
-    parserOptions: {
-        ecmaVersion: 2020
-    },
+    plugins: ['@typescript-eslint', 'import'],
     rules: {
         indent: ['error', 4],
-        semi: ['error', 'always'],
-        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
-    }
+        semi: 'off',
+        '@typescript-eslint/semi': ['error'],
+        'no-extra-semi': 'off',
+        'space-before-function-paren': 'off',
+        'no-dupe-class-members': 'off',
+        'no-console': 'error',
+        'no-debugger': 'off',
+        'linebreak-style': 'off',
+        'comma-dangle': ['warn', 'never'],
+        'arrow-parens': ['warn', 'as-needed'],
+        'lines-between-class-members': [
+            'warn',
+            'always',
+            { exceptAfterSingleLine: true }
+        ],
+        'object-curly-newline': 'off',
+        'no-continue': 'off',
+        'import/extensions': 'off',
+        'import/no-cycle': 'off',
+        'func-names': ['warn', 'as-needed'],
+        'no-loop-func': 'off',
+        'no-new': 'off'
+    },
+    settings: {
+        'import/resolver': 'webpack'
+    },
+    parser: '@typescript-eslint/parser'
 };

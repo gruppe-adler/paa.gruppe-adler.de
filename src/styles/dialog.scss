@@ -1,0 +1,126 @@
+.grad-paa-dialog {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    touch-action: none;
+
+    &__backdrop {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(black, 0.5);
+        transition: opacity .2s ease;
+        opacity: 0;
+
+        @media (prefers-reduced-motion) {
+            transition: none;
+        }
+    }
+
+    &__dialog {
+        display: grid;
+        min-height: 10rem;
+        min-width: 10rem;
+        z-index: 1000;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        background-color: var(--color-background);
+        transition: transform .2s ease, opacity .2s ease;
+        
+        @media (prefers-reduced-motion) {
+            transition: none;
+        }
+
+        transform: scale(0.5);
+        opacity: 0;
+        grid-template-columns: 1fr auto;
+        grid-row-gap: 1rem;
+        max-width: calc(100vw - 2rem);
+        box-sizing: border-box;
+    }
+
+    &__heading {
+        font-family: 'Source Sans Pro', sans-serif;
+        margin: 0;
+    }
+
+    &__content {
+        grid-area: content;
+        line-height: 1.5em;
+        grid-column: 1 / 3;
+
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+
+        > p:first-child {
+            margin-top: 0;
+        }
+
+        > p:last-child {
+            margin-bottom: 0;
+        }
+
+        a {
+            color: var(--color-primary);
+            
+            &:hover {
+                color: var(--color-primary);
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__actions {
+        grid-column: 1 / 3;
+        display: grid;
+        grid-auto-flow: column;
+        justify-self: flex-end;
+        grid-column-gap: .5rem;
+    }
+
+    &__close {
+        all: unset;
+        color: var(--color-text);
+        background-color: transparent;
+        cursor: pointer;
+        opacity: .4;
+        display: flex;
+        align-self: flex-start;
+        
+        > i {
+            margin-right: 0;
+            font-size: 1.75rem;
+        }
+
+        &:hover {
+            background-color: transparent;
+            color: var(--color-text);
+        }
+    }
+
+    &--shown,
+    &:target {
+        pointer-events: initial;
+        touch-action: initial;
+    }
+
+    &--shown &__dialog,
+    &:target &__dialog {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    &--shown &__backdrop,
+    &:target &__backdrop {
+        opacity: 1;
+    }
+}

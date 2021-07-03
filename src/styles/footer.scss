@@ -1,0 +1,39 @@
+body > footer {
+    background-color: var(--color-footer);
+    color: #FFFFFF;
+    display: grid;
+    grid-template: "privacy homepage issues" 3rem / .5fr auto .5fr;
+
+    @media (max-width: 650px) {
+        grid-template:
+            "homepage homepage" 2.5rem
+            "privacy issues" 3rem / auto 1fr;
+    }
+
+    justify-items: center;
+    align-items: center;
+    padding: 0 1.5rem;
+
+    > * {
+        display: flex;
+        grid-column-gap: .25rem;
+        align-items: center;
+        opacity: 0.5;
+
+        &:first-child {
+            justify-self: flex-start;
+        }
+
+        &:last-child {
+            justify-self: flex-end;
+        }
+    }
+    
+    a:hover {
+        text-decoration: underline;
+
+        > i {
+            text-decoration: initial;
+        }
+    }
+}
