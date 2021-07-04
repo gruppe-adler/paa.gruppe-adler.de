@@ -1,6 +1,7 @@
 We do not collect any personal information from our visitors, **but** we use Google Analytics to record the following:
 - [Basic visit data](https://support.google.com/analytics/answer/6004245?ref_topic=2919631)
 - The amount of file-conversions
+- Input / Output file type for each conversion
 
 Images conversion is handled 100% locally; no additional data is sent to the server.
 
