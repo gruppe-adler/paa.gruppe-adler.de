@@ -1,5 +1,5 @@
 # Gruppe Adler Online PAA Converter
-[paa.gruppe-adler.de](https://paa.gruppe-adler.de) is a Converter for Arma 3's PAA format that **works 100% in the browser**. Can be used to convert a single or multiple files in bulk and supports paa to png, png to paa, jpg to paa and more.    
+[paa.gruppe-adler.de](https://paa.gruppe-adler.de) is a converter for Arma 3's PAA format that **works 100% in the browser**. Can be used to convert a single or multiple files in bulk and supports paa to png, png to paa, jpg to paa and more.    
 It is a offline-capable Progressive Web App (PWA) powered by [grad_aff_wasm](https://github.com/gruppe-adler/grad_aff_wasm), which is the WebAssembly version of [grad_aff](https://github.com/gruppe-adler/grad_aff) an Arma File Format C++ library by Gruppe Adler.
 
 ## Building locally
