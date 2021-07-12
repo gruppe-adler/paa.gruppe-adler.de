@@ -19,10 +19,14 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-58235044-5"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
-            function gtag(){ dataLayer.push(arguments); }
-            gtag('js', new Date());
-
-            gtag('config', 'UA-58235044-5');
+            
+            if (window.location.host === 'paa.gruppe-adler.de') {
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-58235044-5');
+            } else {
+                function gtag(){ }
+            }
         </script>
         
         <!-- PWA -->
