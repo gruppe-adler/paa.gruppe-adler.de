@@ -3,6 +3,8 @@ import EventTarget from '@ungap/event-target'; // Polyfill for Safari 13
 import { download, getFileExtension, getFileNameWithoutExtension, GradPaaFile, isSupportedFile, readFile } from '@/utils/file';
 import { blobToImg, imageDataFromBlob, imageDataFromDrawable, imageDataToBlob } from '@/utils/image';
 import { promisifyWorker } from '@/utils/worker';
+import { supportedNames } from '@/utils/mime';
+
 /* eslint-disable import/no-webpack-loader-syntax, import/default */
 import fromPAAWorkerURL from 'worker-plugin/loader!@/worker/fromPAA.worker';
 import toPAAWorkerURL from 'worker-plugin/loader!@/worker/toPAA.worker';
@@ -115,16 +117,15 @@ export default class ConversionFile extends EventTarget {
      */
     private async preChecks () {
         // check if file is in a supported format
-        if (!isSupportedFile(this.inputFile)) {
+        if (!(await isSupportedFile(this.inputFile))) {
             this.warning = {
                 displayText: 'Non supported format',
                 description: `
                     <p>The file you uploaded is not in a supported format.</p>
                     <p>We support the following file formats:</p>
-                    <ul>
-                        ${['.png', '.jpg / .jpeg', '.svg', '.paa'].map(x => `<li style="margin: .5rem 0;"><code>${x}</code></li>`).join('')}
-                    </ul>
-                `
+                    <p style="line-height: 2.5em; font-weight: bold;">${(await supportedNames()).map(x => `<code style="background-color: var(--color-container); padding: 0.5em 0.75em; border-radius: 1000px;">${x}</code>`).join(' ')}</p>
+                    <p><i>Different web browsers may support more / less formats.</i></p>
+                    `
             };
             this.preChecksDone = true;
             return;

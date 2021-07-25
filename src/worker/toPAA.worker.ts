@@ -1,5 +1,5 @@
 import init from '@/utils/aff';
-import { PAA_MIME_TYPE } from '@/utils/file';
+import { PAA_MIME_TYPE } from '@/utils/mime';
 
 /**
  * Generate a paa from an ImageData object

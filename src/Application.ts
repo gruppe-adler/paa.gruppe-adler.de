@@ -6,6 +6,7 @@ import FileListController from '@/ui/controllers/FileListController';
 import ConversionService from '@/conversion/Service';
 import SnackbarController, { SnackbarOptions } from './ui/controllers/SnackbarController';
 import { download } from './utils/file';
+import { acceptField } from './utils/mime';
 
 export default class GradPaaApplication {
     private overlayController: OverlayController;
@@ -83,7 +84,7 @@ export default class GradPaaApplication {
     private setupInput (): HTMLInputElement {
         const input = document.createElement('input');
         input.type = 'file';
-        input.accept = 'image/png,image/svg+xml,image/jpeg,.paa';
+        acceptField().then(accept => { input.accept = accept; });
         input.multiple = true;
         input.style.display = 'none';
 
@@ -96,6 +97,7 @@ export default class GradPaaApplication {
             // remove all files from input
             input.value = '';
         });
+        document.body.append(input);
 
         return input;
     }

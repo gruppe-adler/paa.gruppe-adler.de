@@ -1,3 +1,5 @@
+import { isSupported } from './mime';
+
 /**
  * Why do we not just use File?
  * Well... because old Edge is shitty af and can't handle the File constructor (see https://stackoverflow.com/a/43241922)
@@ -7,15 +9,13 @@ export interface GradPaaFile {
     name: string;
 }
 
-export const PAA_MIME_TYPE = 'image/vnd.paa';
-
 /**
  * Checks whether given file is supported
  * @param {File} file File
  * @returns {boolean} File is supported?
  */
-export function isSupportedFile ({ blob, name }: GradPaaFile): boolean {
-    return (['image/png', 'image/svg+xml', 'image/jpeg', PAA_MIME_TYPE].includes(blob.type) || /\.paa$/i.test(name));
+export async function isSupportedFile ({ blob, name }: GradPaaFile): Promise<boolean> {
+    return isSupported(blob.type, name);
 }
 
 /**

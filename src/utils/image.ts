@@ -33,7 +33,7 @@ export function imageDataToBlob (data: ImageData, type = 'image/png', quality = 
  * @param {string} url Image URL
  * @returns {Promise<HTMLImageElement>} Promise, which resolves into HTMLImageElement
  */
-async function loadImage (url: string): Promise<HTMLImageElement> {
+export async function loadImage (url: string): Promise<HTMLImageElement> {
     const img = new Image();
     img.decoding = 'async';
     img.src = url;
