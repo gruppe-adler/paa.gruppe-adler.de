@@ -12,6 +12,7 @@
 body, html {
     width: 100vw;
     height: 100vh;
+    height: -webkit-fill-available; /* mobile viewport bug fix */
     margin: 0;
     padding: 0;
     font-size: 16px;
