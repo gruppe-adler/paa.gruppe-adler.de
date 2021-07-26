@@ -1,5 +1,8 @@
 import init from '@/utils/aff';
 import { PAA_MIME_TYPE } from '@/utils/mime';
+import webAssemblyURL from '@/assets/grad_aff_paa.wasm';
+
+const AFF_PROMISE = init(webAssemblyURL);
 
 /**
  * Generate a paa from an ImageData object
@@ -7,7 +10,7 @@ import { PAA_MIME_TYPE } from '@/utils/mime';
  * @returns {Promise<Blob>} the paa as a blob
  */
 async function convertImageToPaa (data: ImageData): Promise<Blob> {
-    const aff = await init();
+    const aff = await AFF_PROMISE;
 
     const uint8array = aff.encode(data);
 
