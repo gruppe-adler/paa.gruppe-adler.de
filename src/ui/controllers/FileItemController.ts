@@ -292,7 +292,7 @@ export default class FileItemController {
         content.innerHTML = `
             <p>The following error occurred, while trying to convert your file:</p>
             <pre style="padding: .5rem; background-color: rgba(0,0,0,0.1); color: var(--color-error); border-radius: .25rem; white-space: break-spaces;">${this.file.error}</pre>
-            <button class="grad-paa-btn--primary grad-paa-btn--not-responsive" style="float: right;">Report Error</button>
+            <button class="grad-paa-btn--primary grad-paa-btn--not-responsive" style="float: right;" type="button">Report Error</button>
         `;
 
         content.querySelector('button')?.addEventListener('click', () => this.openFeedback());

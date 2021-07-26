@@ -3,7 +3,7 @@ template.innerHTML = `
     <div class="grad-paa-dialog__backdrop"></div>
     <div class="grad-paa-dialog__dialog">
         <h2 class="grad-paa-dialog__heading"></h2>
-        <button class="grad-paa-dialog__close grad-paa-btn--not-responsive">
+        <button class="grad-paa-dialog__close grad-paa-btn--not-responsive" type="button">
             <i class="material-icons-round">cancel</i>
         </button>
         <div class="grad-paa-dialog__actions"></div>

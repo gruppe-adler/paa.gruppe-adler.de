@@ -153,7 +153,7 @@ export default class ConversionFile extends EventTarget {
                     this.warning = {
                         displayText: 'Unsupported PAA type',
                         description: `
-                            <p>PAA files come in different types, which you can read more about <a target="_blank" rel="noreferrer" href="https://community.bistudio.com/wiki?title=PAA_File_Format#TypeOfPaX_.28optional.29">here</a>.</p>
+                            <p>PAA files come in different types, which you can read more about <a target="_blank" rel="noreferrer noopener" href="https://community.bistudio.com/wiki?title=PAA_File_Format#TypeOfPaX_.28optional.29">here</a>.</p>
                             <p>To reduce complexity we only support the most common types DXT1 and DXT5. All other types are either old or barely used.</p>
                         `
                     };
@@ -164,7 +164,7 @@ export default class ConversionFile extends EventTarget {
                         displayText: 'Invalid PAA file',
                         description: `
                             <p>Seems like your file is not a valid PAA file.</p>
-                            <button class="grad-paa-btn--primary grad-paa-btn--not-responsive" style="float: right;" data-grad-paa-open-feedback>Report Error</button>
+                            <button class="grad-paa-btn--primary grad-paa-btn--not-responsive" style="float: right;" data-grad-paa-open-feedback type="button">Report Error</button>
                         `
                     };
                     break;
@@ -186,7 +186,7 @@ export default class ConversionFile extends EventTarget {
                         displayText: 'Invalid SVG image',
                         description: `
                             <p>Seems like your file is not a valid SVG image.</p>
-                            <button class="grad-paa-btn--primary grad-paa-btn--not-responsive" style="float: right;" data-grad-paa-open-feedback>Report Error</button>
+                            <button class="grad-paa-btn--primary grad-paa-btn--not-responsive" style="float: right;" data-grad-paa-open-feedback type="button">Report Error</button>
                         `
                     };
                     break;

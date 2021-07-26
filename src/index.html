@@ -3,7 +3,6 @@
     <head>
         <!-- Basic Meta -->
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="icon" href="<%=require('./assets/favicon.ico')%>">
         <title><%= htmlWebpackPlugin.options.title %></title>
@@ -16,7 +15,7 @@
         <meta itemprop="description" content="<%= htmlWebpackPlugin.options.description %>">
 
         <!-- Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-58235044-5"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-58235044-5" crossorigin="anonymous"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             
@@ -30,7 +29,7 @@
         </script>
         
         <!-- PWA -->
-        <link rel="manifest" href="manifest.json">
+        <link rel="manifest" href="manifest.webmanifest">
         <meta name="theme-color" content="#000000">
         <meta name="apple-mobile-web-app-capable" content="no">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -72,7 +71,7 @@
 
         <!-- Home page -->
         <main id="grad-paa-home">
-            <button class="grad-paa-btn--not-responsive" style="align-self: flex-end; opacity: 0; transition: .5s opacity linear;" data-grad-paa-install>
+            <button class="grad-paa-btn--not-responsive" style="align-self: flex-end; opacity: 0; transition: .5s opacity linear;" data-grad-paa-install type="button">
                 <i class="material-icons-round" aria-hidden="true">get_app</i>
                 <span>Install</span>
             </button>
@@ -95,18 +94,18 @@
                 </p>
             </section>
             <noscript style="display:none;"><!-- This is just to hide the next sibling (convert button) --></noscript>
-            <button class="grad-paa-btn--not-responsive grad-paa-btn--primary grad-paa-btn--loader" data-grad-paa-convert>
+            <button class="grad-paa-btn--not-responsive grad-paa-btn--primary grad-paa-btn--loader" data-grad-paa-convert type="button">
                 <i class="material-icons-round" aria-hidden="true">add</i>
                 <span>Convert Files</span>
             </button>
             <span>Thanks to BI and the Arma 3 Community for being awesome</span>
             <div id="grad-paa-home-plugins">
                 <span>Also check out our PAA plugins for</span>
-                <a href="https://github.com/gruppe-adler/paa-gimp-plugin" target="_blank" rel="noreferrer">
+                <a href="https://github.com/gruppe-adler/paa-gimp-plugin" target="_blank" rel="noreferrer noopener">
                     <img alt="Gimp Logo" src="<%=require('./assets/img/gimp.svg')%>" width="48" height="48">
                     <span>Gimp</span>
                 </a>
-                <a href="https://github.com/gruppe-adler/PaaPhotoshopPlugin" target="_blank" rel="noreferrer">
+                <a href="https://github.com/gruppe-adler/PaaPhotoshopPlugin" target="_blank" rel="noreferrer noopener">
                     <img alt="Adobe Photoshop Logo" src="<%=require('./assets/img/photoshop.svg')%>" width="48" height="48">
                     <span>Photoshop</span>
                 </a>
@@ -116,17 +115,17 @@
         <!-- File list -->
         <main id="grad-paa-file-list" style="display: none;">
             <h1 style="margin: 0;">PAA CONVERTER</h1>
-            <button data-grad-paa-convert-more>
+            <button data-grad-paa-convert-more type="button">
                 <i aria-hidden="true" class="material-icons-round">add</i>
                 <span>Convert more</span>
             </button>
             <ul>
             </ul>
-            <button data-grad-paa-delete-all style="justify-self: flex-start">
+            <button data-grad-paa-delete-all style="justify-self: flex-start" type="button">
                 <i aria-hidden="true" class="material-icons-round">delete_sweep</i>
                 <span>Delete all files</span>
             </button>
-            <button data-grad-paa-download-all class="grad-paa-btn--not-responsive grad-paa-btn--primary">
+            <button data-grad-paa-download-all class="grad-paa-btn--not-responsive grad-paa-btn--primary" type="button">
                 <i aria-hidden="true" class="material-icons-round">get_app</i>
                 <span>Download all</span>
             </button>
@@ -136,15 +135,15 @@
         <footer>
             <div>
                 <i aria-hidden="true" class="material-icons-round">privacy_tip</i>
-                <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de#privacy" target="_blank" rel="noreferrer">
+                <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de#privacy" target="_blank" rel="noreferrer noopener">
                     Privacy
                 </a>
                 <span aria-hidden="true">|</span>
-                <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de#impressum" target="_blank" rel="noreferrer">
+                <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de#impressum" target="_blank" rel="noreferrer noopener">
                     Impressum
                 </a>
             </div>
-            <a href="https://gruppe-adler.de" target="_blank" rel="noreferrer" style="opacity: 1; grid-area: homepage;">
+            <a href="https://gruppe-adler.de" target="_blank" rel="noreferrer noopener" style="opacity: 1; grid-area: homepage;">
                 gruppe-adler.de
             </a>
             <a href="#feedback">
@@ -159,7 +158,7 @@
             <div class="grad-paa-dialog__dialog" style="width: 600px">
                 <h2 class="grad-paa-dialog__heading">Any Feedback?</h2>
                 <a href="#" class="grad-paa-dialog__close">
-                    <button class="grad-paa-dialog__close grad-paa-btn--not-responsive">
+                    <button class="grad-paa-dialog__close grad-paa-btn--not-responsive" type="button">
                         <i class="material-icons-round">cancel</i>
                     </button>
                 </a>
@@ -167,15 +166,15 @@
                     <p>We hope your overall experience was good, but we are open to any criticism you have and would appreciate if you report any bugs you encounter.</p>
                     <p>Join our discord server to chat directly with us, open an issue on GitHub or shoot us an email:</p>
                     <div>
-                        <a href="https://discord.gg/MNg82zdau9" target="_blank" rel="noreferrer">
+                        <a href="https://discord.gg/MNg82zdau9" target="_blank" rel="noreferrer noopener">
                             <img alt="" src="<%=require('./assets/img/discord.svg')%>" width="48" height="48">
                             <span>Discord<span>
                         </a>
-                        <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de/issues/new/choose" target="_blank" rel="noreferrer">
+                        <a href="https://github.com/gruppe-adler/paa.gruppe-adler.de/issues/new/choose" target="_blank" rel="noreferrer noopener">
                             <img alt="" src="<%=require('./assets/img/github.svg')%>" width="48" height="48">
                             <span>GitHub</span>
                         </a>
-                        <a href="mailto:derzade@gruppe-adler.de" target="_blank" rel="noreferrer">
+                        <a href="mailto:derzade@gruppe-adler.de" target="_blank" rel="noreferrer noopener">
                             <img alt="" src="<%=require('./assets/img/mail.svg')%>" width="48" height="48">
                             <span>Email</span>
                         </a>
