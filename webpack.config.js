@@ -18,7 +18,12 @@ module.exports = () => {
                 filename: '[name].[contenthash:8].css',
                 chunkFilename: '[id].[contenthash:8].css'
             }),
-            new HtmlWebpackPlugin({ template: './src/index.html', filename: 'index.html' }),
+            new HtmlWebpackPlugin({
+                template: './src/index.html',
+                filename: 'index.html',
+                title: 'PAA Converter - Gruppe Adler',
+                description: 'Online converter for Arma 3\'s PAA format. Can be used to convert a single or multiple files in bulk and supports paa to png, png to paa, jpg to paa and more.'
+            }),
             new CopyWebpackPlugin({ patterns: [
                 { from: 'public', to: '' }
             ] }),

@@ -6,14 +6,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="icon" href="<%=require('./assets/favicon.ico')%>">
-        <title>Online PAA Converter - Gruppe Adler</title>
+        <title><%= htmlWebpackPlugin.options.title %></title>
 
         <!-- SEO Meta -->
-        <meta name="description" content="Online converter for Arma 3's PAA format. Can be used to convert a single or multiple files in bulk and supports paa to png, png to paa, jpg to paa and more.">
+        <meta name="description" content="<%= htmlWebpackPlugin.options.description %>">
         <meta name="keywords" content="arma 3, paa, png, jpg, jpeg, image, converter">
         <meta name="robots" content="index, follow" />
-        <meta itemprop="name" content="Online PAA Converter - Gruppe Adler">
-        <meta itemprop="description" content="Online converter for Arma 3's PAA format. Can be used to convert a single or multiple files in bulk and supports paa to png, png to paa, jpg to paa and more.">
+        <meta itemprop="name" content="<%= htmlWebpackPlugin.options.title %>">
+        <meta itemprop="description" content="<%= htmlWebpackPlugin.options.description %>">
 
         <!-- Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-58235044-5"></script>
@@ -34,7 +34,7 @@
         <meta name="theme-color" content="#000000">
         <meta name="apple-mobile-web-app-capable" content="no">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
-        <meta name="apple-mobile-web-app-title" content="Online PAA Converter - Gruppe Adler">
+        <meta name="apple-mobile-web-app-title" content="<%= htmlWebpackPlugin.options.title %>">
         <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon-152x152.png">
         <link rel="mask-icon" href="/img/icons/safari-pinned-tab.svg" color="#000000">
         <meta name="msapplication-TileImage" content="/img/icons/msapplication-icon-144x144.png">
@@ -45,7 +45,7 @@
         <meta name="twitter:site" content="@gruppe_adler">
 
         <!-- Open Graph -->
-        <meta property="og:title" content="Online PAA Converter - Gruppe Adler">
+        <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>">
         <meta property="og:type" content="object">
         <meta property="og:url" content="https://paa.gruppe-adler.de">
         <meta property="og:image" content="https://paa.gruppe-adler.de/<%=require('./assets/img/logo.png')%>">
@@ -53,7 +53,7 @@
         <meta property="og:image:width" content="512">
         <meta property="og:image:height" content="512">
         <meta property="og:site_name" content="Gruppe Adler">
-        <meta property="og:description" content="Online converter for Arma 3's PAA format. Can be used to convert a single or multiple files in bulk and supports paa to png, png to paa, jpg to paa and more.">
+        <meta property="og:description" content="<%= htmlWebpackPlugin.options.description %>">
     </head>
     <body>
         <noscript style="display: none;">
