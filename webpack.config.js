@@ -6,6 +6,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WorkerPlugin = require('worker-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+
+const TITLE = 'PAA Converter - Gruppe Adler';
+const DESCRIPTION = 'Online converter for Arma 3\'s PAA format. Can be used to convert a single or multiple files in bulk and supports paa to png, png to paa, jpg to paa and more.';
 
 module.exports = () => {
     return {
@@ -21,8 +25,32 @@ module.exports = () => {
             new HtmlWebpackPlugin({
                 template: './src/index.html',
                 filename: 'index.html',
-                title: 'PAA Converter - Gruppe Adler',
-                description: 'Online converter for Arma 3\'s PAA format. Can be used to convert a single or multiple files in bulk and supports paa to png, png to paa, jpg to paa and more.'
+                title: TITLE,
+                description: DESCRIPTION
+            }),
+            new WebpackPwaManifest({
+                name: TITLE,
+                short_name: 'GRAD PAA',
+                description: DESCRIPTION,
+                theme_color: '#000000',
+                display: 'standalone',
+                start_url: '.',
+                background_color: '#000000',
+                ios: true,
+                filename: 'manifest.[hash:8].webmanifest',
+                icons: [
+                    {
+                        src: path.resolve('src/assets/img/icons/android-chrome.png'),
+                        destination: path.join('assets'),
+                        sizes: [192, 512]
+                    },
+                    {
+                        src: path.resolve('src/assets/img/icons/android-chrome-maskable.png'),
+                        destination: path.join('assets'),
+                        sizes: [192, 512],
+                        purpose: 'maskable'
+                    }
+                ]
             }),
             new CopyWebpackPlugin({ patterns: [
                 { from: 'public', to: '' }
@@ -74,7 +102,7 @@ module.exports = () => {
             filename: '[name].[contenthash:8].js',
             path: path.resolve(__dirname, 'dist'),
             libraryTarget: 'umd',
-            assetModuleFilename: 'img/[name].[contenthash:8][ext][query]'
+            assetModuleFilename: 'assets/[name].[contenthash:8][ext][query]'
         }
     };
 };
