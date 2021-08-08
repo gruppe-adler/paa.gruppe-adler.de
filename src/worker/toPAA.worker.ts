@@ -25,7 +25,11 @@ addEventListener('message', async (event: MessageEvent) => {
         const blob = await convertImageToPaa(imageDate);
         msg = { type: 'data', data: blob };
     } catch (err) {
-        msg = { type: 'error', data: err };
+        if (err instanceof Error) {
+            msg = { type: 'error', data: err.toString() }; // Errors cannot be cloned.
+        } else {
+            msg = { type: 'error', data: err };
+        }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
