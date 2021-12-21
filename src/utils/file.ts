@@ -64,5 +64,5 @@ export function download ({ blob, name }: GradPaaFile): void {
  */
 export function readFile (file: Blob): Promise<ArrayBuffer> {
     // Blob.arrayBuffer not supported for Safari 13 :(
-    return new Response(blob).arrayBuffer();
+    return new Response(file).arrayBuffer();
 }
