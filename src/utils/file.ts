@@ -19,8 +19,8 @@ export async function isSupportedFile ({ blob, name }: GradPaaFile): Promise<boo
 }
 
 /**
- * Checks whether given file is supported
- * @param {File} file File
+ * Get file's extension
+ * @param {string} name File name
  * @returns {string|undefined} file extension
  */
 export function getFileExtension (name: string): string|undefined {
@@ -31,7 +31,7 @@ export function getFileExtension (name: string): string|undefined {
 
 /**
  * Get file's name without extension
- * @param {File} file File
+ * @param {string} name File name
  * @returns {string} file name without extension
  */
 export function getFileNameWithoutExtension (name: string): string {
@@ -42,11 +42,11 @@ export function getFileNameWithoutExtension (name: string): string {
  * Download given file
  * @param {File} file File to download
  */
-export function download (file: GradPaaFile): void {
-    const url = URL.createObjectURL(file.blob);
+export function download ({ blob, name }: GradPaaFile): void {
+    const url = URL.createObjectURL(blob);
 
     const link = document.createElement('a');
-    link.download = file.name;
+    link.download = name;
     link.href = url;
     document.body.appendChild(link);
     link.click();
@@ -63,10 +63,6 @@ export function download (file: GradPaaFile): void {
  * @returns {Promise<ArrayBuffer>}
  */
 export function readFile (file: Blob): Promise<ArrayBuffer> {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as ArrayBuffer);
-        reader.onerror = reject;
-        reader.readAsArrayBuffer(file);
-    });
+    // Blob.arrayBuffer not supported for Safari 13 :(
+    return new Response(blob).arrayBuffer();
 }
