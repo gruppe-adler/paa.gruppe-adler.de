@@ -1,8 +1,8 @@
 # Impressum
 ## Angaben gemäß § 5 TMG
 Jonas Schade  
-Flachsfeldstaße 14  
-83507 Holzkirchen
+Flachsfeldstraße 14  
+83607 Holzkirchen
 
 **Kontakt:** [admin@gruppe-adler.de](mailto:admin@gruppe-adler.de)
 
