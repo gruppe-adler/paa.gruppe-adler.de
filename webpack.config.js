@@ -83,7 +83,7 @@ module.exports = () => {
         },
         devServer: {
             port: 3000,
-            contentBase: path.join(__dirname, 'dist'),
+            static: path.join(__dirname, 'dist'),
             host: '0.0.0.0'
         },
         resolve: {
