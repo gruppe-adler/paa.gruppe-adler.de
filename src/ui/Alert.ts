@@ -1,7 +1,7 @@
 import { Dialog } from './Dialog';
 
 export class Alert extends Dialog {
-    constructor(heading: string, content: string|HTMLDivElement, options?: { width: string }) {
+    constructor (heading: string, content: string | HTMLDivElement, options?: { width: string }) {
         let contentEl: HTMLDivElement;
 
         if (typeof content === 'string') {

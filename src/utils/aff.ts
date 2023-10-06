@@ -2,23 +2,23 @@
 const NULL_POINTER = 0;
 
 interface AFFExports extends WebAssembly.Exports {
-    encode: (width: number, height: number, data: number, size: number) => number;
-    free_encoded_data: (ptr: number) => 0|1;
-    decode: (data: number, dataSize: number, width: number, height: number, size: number) => number;
-    get_last_aff_exception: () => number;
-    free: (ptr: number) => number;
-    malloc: (size: number) => number;
-    __errno_location: () => number;
+    encode: (width: number, height: number, data: number, size: number) => number
+    free_encoded_data: (ptr: number) => 0 | 1
+    decode: (data: number, dataSize: number, width: number, height: number, size: number) => number
+    get_last_aff_exception: () => number
+    free: (ptr: number) => number
+    malloc: (size: number) => number
+    __errno_location: () => number
 }
 
 interface AFFOptions {
-    exit?: (exitCode: number) => unknown;
+    exit?: (exitCode: number) => unknown
 }
 
 export class AFFNotReadyError extends Error {
     public readonly name = 'AFFNotReadyError';
 
-    constructor() {
+    constructor () {
         super('AFF not ready yet. Remember awaiting the "aff.ready" promise, before accessing any methods or properties.');
     }
 }
@@ -35,7 +35,7 @@ const AFF_EXCEPTION_MSGS = new Map<number, string>([
 ]);
 
 export class AFFExceptionError extends Error {
-    constructor(code: number) {
+    constructor (code: number) {
         const message = AFF_EXCEPTION_MSGS.get(code) ?? 'Unknown Error Code';
 
         super(`${message} (Code: ${code})`);
@@ -45,7 +45,7 @@ export class AFFExceptionError extends Error {
 }
 
 // Safari still can't handle WebAssembly.instantiateStreaming...
-async function instantiateWA(response: Response | PromiseLike<Response>, importObject?: WebAssembly.Imports): Promise<WebAssembly.Instance> {
+async function instantiateWA (response: Response | PromiseLike<Response>, importObject?: WebAssembly.Imports): Promise<WebAssembly.Instance> {
     if (WebAssembly.instantiateStreaming !== undefined) {
         const { instance } = await WebAssembly.instantiateStreaming(response, importObject);
         return instance;
@@ -58,15 +58,15 @@ async function instantiateWA(response: Response | PromiseLike<Response>, importO
 
 export class AFF {
     private dataView: DataView;
-    private instance: WebAssembly.Instance|null = null;
-    private memory: WebAssembly.Memory;
+    private instance: WebAssembly.Instance | null = null;
+    private readonly memory: WebAssembly.Memory;
     public readonly ready: Promise<void>;
 
     /**
      * @param {Response|PromiseLike<Response>} input (Promise that resolves to) Response, which includes WASM Module
      * @param {AFFOptions} options Options
      */
-    constructor(input: Response|PromiseLike<Response>, options?: AFFOptions) {
+    constructor (input: Response | PromiseLike<Response>, options?: AFFOptions) {
         this.memory = new WebAssembly.Memory({ initial: 256, maximum: 32768 });
         this.dataView = new DataView(this.memory.buffer);
 
@@ -81,7 +81,7 @@ export class AFF {
                      * @param {number} bufferPtr A pointer to a buffer where the function can store the information (struct stat64 *)
                      * @returns {0|-1} 0 = Success / -1 = An error occurred (errno is set).
                      */
-                    __sys_stat64: (pathPtr: number, bufferPtr: number): 0|-1 => {
+                    __sys_stat64: (pathPtr: number, bufferPtr: number): 0 | -1 => {
                         this.setErrNo(5); // EIO: Input/output error
                         return -1;
                     },
@@ -92,7 +92,7 @@ export class AFF {
                      * runs. See [this wasi discussion](https://github.com/WebAssembly/WASI/issues/82).
                      * @param {number} index Which memory has grown
                      */
-                    emscripten_notify_memory_growth: (index: number) => this.updateViews()
+                    emscripten_notify_memory_growth: (index: number) => { this.updateViews(); }
                 },
                 wasi_snapshot_preview1: {
                     /**
@@ -103,7 +103,7 @@ export class AFF {
                      * @param {number} pnum
                      * @returns {0|-1} 0 = Success / -1 = An error occurred (errno is set).
                      */
-                    fd_read: (fd: number, iov: number, iovCount: number, pnum: number): 0|-1 => {
+                    fd_read: (fd: number, iov: number, iovCount: number, pnum: number): 0 | -1 => {
                         this.setErrNo(5); // EIO: Input/output error
                         return -1;
                     },
@@ -113,7 +113,7 @@ export class AFF {
                      * @param {number} fd File descriptor
                      * @returns {0|-1} 0 = Success / -1 = An error occurred (errno is set).
                      */
-                    fd_close: (fd: number): 0|-1 => {
+                    fd_close: (fd: number): 0 | -1 => {
                         this.setErrNo(5); // EIO: Input/output error
                         return -1;
                     },
@@ -127,7 +127,7 @@ export class AFF {
                      * @param {number} newOffset
                      * @returns {0|-1} 0 = Success / -1 = An error occurred (errno is set).
                      */
-                    fd_seek: (fd: number, offsetLow: number, offsetHigh: number, whence: number, newOffset: number): 0|-1 => {
+                    fd_seek: (fd: number, offsetLow: number, offsetHigh: number, whence: number, newOffset: number): 0 | -1 => {
                         this.setErrNo(5); // EIO: Input/output error
                         return -1;
                     },
@@ -140,7 +140,7 @@ export class AFF {
                      * @param {number} pnum
                      * @returns {0|-1} 0 = Success / -1 = An error occurred (errno is set).
                      */
-                    fd_write: (fd: number, iov: number, iovCount: number, pnum: number): 0|-1 => {
+                    fd_write: (fd: number, iov: number, iovCount: number, pnum: number): 0 | -1 => {
                         this.setErrNo(5); // EIO: Input/output error
                         return -1;
                     },
@@ -151,7 +151,7 @@ export class AFF {
                      * @param {number} penvironBufferSize (Output pointer) The size of the argument string data.
                      * @returns {0}
                      */
-                    environ_sizes_get: (penvironCountPtr: number, penvironBufferSizePtr: number): 0|-1 => {
+                    environ_sizes_get: (penvironCountPtr: number, penvironBufferSizePtr: number): 0 | -1 => {
                         this.dataView.setInt32(penvironCountPtr, 0, true);
                         this.dataView.setInt32(penvironBufferSizePtr, 0, true);
                         return 0;
@@ -175,7 +175,7 @@ export class AFF {
         });
     }
 
-    private get exports(): AFFExports|null {
+    private get exports (): AFFExports | null {
         return this.instance?.exports as AFFExports;
     }
 
@@ -184,7 +184,7 @@ export class AFF {
      * and every time memory grows / shrinks and therefore the underlying memory
      * buffer changes.
      */
-    private updateViews() {
+    private updateViews () {
         this.dataView = new DataView(this.memory.buffer);
     }
 
@@ -193,7 +193,7 @@ export class AFF {
      * @param {number} size Size of the memory block, in bytes.
      * @returns {number} This function returns a pointer to the allocated memory.
      */
-    private malloc(size: number): number {
+    private malloc (size: number): number {
         if (this.exports === null) throw new AFFNotReadyError();
 
         const ptr = this.exports.malloc(size);
@@ -206,7 +206,7 @@ export class AFF {
      * Deallocate memory previously allocated
      * @param {number} ptr This is the pointer to a memory block previously allocated
      */
-    private free(ptr: number): void {
+    private free (ptr: number): void {
         if (this.exports === null) throw new AFFNotReadyError();
 
         this.exports.free(ptr);
@@ -218,7 +218,7 @@ export class AFF {
      * @param {ArrayBufferLike} buffer
      * @returns {number} Pointer to the allocated memory.
      */
-    private writeBufferToMemory(buffer: ArrayBufferLike): number {
+    private writeBufferToMemory (buffer: ArrayBufferLike): number {
         const ptr = this.malloc(buffer.byteLength);
 
         const arr = new Uint8Array(buffer);
@@ -236,7 +236,7 @@ export class AFF {
      * @param {number} size Size
      * @returns {Uint8Array}
      */
-    private getBytesFromMemory(ptr: number, size: number): Uint8Array {
+    private getBytesFromMemory (ptr: number, size: number): Uint8Array {
         return new Uint8Array(this.memory.buffer).slice(ptr, ptr + size);
     }
 
@@ -244,7 +244,7 @@ export class AFF {
      * Set errno
      * @param errno errno
      */
-    private setErrNo(errno: number) {
+    private setErrNo (errno: number) {
         if (this.exports === null) throw new AFFNotReadyError();
 
         this.dataView.setInt32(this.exports.__errno_location(), errno);
@@ -254,7 +254,7 @@ export class AFF {
      * Return error, which corresponds to last thrown grad_aff exception
      * @returns Error according to last exception
      */
-    private getLastAFFException(): AFFExceptionError {
+    private getLastAFFException (): AFFExceptionError {
         if (this.exports === null) throw new AFFNotReadyError();
 
         const num = this.exports.get_last_aff_exception();
@@ -273,7 +273,7 @@ export class AFF {
      * @throws {@link AFFExceptionError}
      * Thrown if grad_aff implementation throws any exceptions.
      */
-    public encode(imageData: ImageData): Uint8Array {
+    public encode (imageData: ImageData): Uint8Array {
         if (this.exports === null) throw new AFFNotReadyError();
 
         const sizePtr = this.malloc(4);
@@ -304,7 +304,7 @@ export class AFF {
      * @throws {@link AFFExceptionError}
      * Thrown if grad_aff implementation throws any exceptions.
      */
-    public decode(data: Uint8Array): ImageData {
+    public decode (data: Uint8Array): ImageData {
         if (this.exports === null) throw new AFFNotReadyError();
 
         const outputSizePtr = this.malloc(4);
@@ -334,7 +334,7 @@ export class AFF {
 /**
  * @param {Request|RequestInfo|URL|Response|Promise<Response>} input
  */
-export default async function init(input: Request|RequestInfo|URL|Response|Promise<Response> = '/grad_aff_paa.wasm', options?: AFFOptions): Promise<AFF> {
+export default async function init (input: Request | RequestInfo | URL | Response | Promise<Response> = '/grad_aff_paa.wasm', options?: AFFOptions): Promise<AFF> {
     if (typeof input === 'string' || input instanceof Request || input instanceof URL) {
         if (input instanceof URL) input = input.toString();
 

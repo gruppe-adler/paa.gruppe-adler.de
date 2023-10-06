@@ -1,21 +1,21 @@
 import * as JSZip from 'jszip';
 
-import OverlayController, { OverlayConvertEvent } from '@/ui/controllers/OverlayController';
+import OverlayController, { type OverlayConvertEvent } from '@/ui/controllers/OverlayController';
 import HomeController from '@/ui/controllers/HomeController';
 import FileListController from '@/ui/controllers/FileListController';
 import ConversionService from '@/conversion/Service';
-import SnackbarController, { SnackbarOptions } from './ui/controllers/SnackbarController';
+import SnackbarController, { type SnackbarOptions } from './ui/controllers/SnackbarController';
 import { download } from './utils/file';
 import { acceptField } from './utils/mime';
 
 export default class GradPaaApplication {
-    private overlayController: OverlayController;
-    private homeController: HomeController;
-    private fileListController: FileListController;
-    private snackbarController: SnackbarController;
-    private inputElement: HTMLInputElement;
+    private readonly overlayController: OverlayController;
+    private readonly homeController: HomeController;
+    private readonly fileListController: FileListController;
+    private readonly snackbarController: SnackbarController;
+    private readonly inputElement: HTMLInputElement;
 
-    constructor() {
+    constructor () {
         // OVERLAY CONTROLLER
         this.overlayController = new OverlayController();
         this.overlayController.addEventListener('convert', (e: OverlayConvertEvent) => {
@@ -26,7 +26,7 @@ export default class GradPaaApplication {
         const homeElem = document.getElementById('grad-paa-home');
         if (homeElem === null) throw new Error('Couldn\'t find home element.');
         this.homeController = new HomeController(homeElem);
-        this.homeController.addEventListener('convert-files', () => this.openInput());
+        this.homeController.addEventListener('convert-files', () => { this.openInput(); });
 
         // INPUT
         this.inputElement = this.setupInput();
@@ -35,7 +35,7 @@ export default class GradPaaApplication {
         const fileListElem = document.getElementById('grad-paa-file-list');
         if (fileListElem === null) throw new Error('Couldn\'t find file list element.');
         this.fileListController = new FileListController(fileListElem);
-        this.fileListController.addEventListener('convert-more', () => this.openInput());
+        this.fileListController.addEventListener('convert-more', () => { this.openInput(); });
         this.fileListController.addEventListener('download-all', async () => {
             this.fileListController.toggleDownloadAllSpinner(true);
 
@@ -110,6 +110,6 @@ export default class GradPaaApplication {
     }
 
     public async showSnackbar (msg: string, options?: SnackbarOptions): Promise<string> {
-        return this.snackbarController.showSnackbar(msg, options);
+        return await this.snackbarController.showSnackbar(msg, options);
     }
 }

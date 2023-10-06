@@ -13,7 +13,7 @@ template.innerHTML = `
 export class Dialog {
     protected element: HTMLElement;
 
-    constructor(heading: string, content: HTMLDivElement, options?: { close?: boolean, actions?: HTMLElement[] }) {
+    constructor (heading: string, content: HTMLDivElement, options?: { close?: boolean, actions?: HTMLElement[] }) {
         this.element = document.createElement('div');
         this.element.className = 'grad-paa-dialog';
 
@@ -39,8 +39,8 @@ export class Dialog {
         if (options?.close === false) {
             this.element.querySelector('.grad-paa-dialog__close')?.remove();
         } else {
-            this.element.querySelector('.grad-paa-dialog__close')?.addEventListener('click', () => this.close());
-            this.element.querySelector('.grad-paa-dialog__backdrop')?.addEventListener('click', () => this.close());
+            this.element.querySelector('.grad-paa-dialog__close')?.addEventListener('click', () => { this.close(); });
+            this.element.querySelector('.grad-paa-dialog__backdrop')?.addEventListener('click', () => { this.close(); });
         }
 
         content.classList.add('grad-paa-dialog__content');
@@ -59,11 +59,11 @@ export class Dialog {
         }
     }
 
-    protected get dialogElement (): HTMLElement|null {
+    protected get dialogElement (): HTMLElement | null {
         return this.element.querySelector('.grad-paa-dialog__dialog');
     }
 
-    public close(): void {
+    public close (): void {
         this.element.classList.remove('grad-paa-dialog--shown');
 
         window.setTimeout(() => {

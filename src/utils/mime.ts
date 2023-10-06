@@ -42,7 +42,7 @@ const EXTENSIONS_REGEXP = new RegExp(`\\.(${ADDITIONAL_SUPPORTED_EXTENSIONS.join
  * @param name File Name
  * @returns is supported
  */
-export async function isSupported(type: string, name: string): Promise<boolean> {
+export async function isSupported (type: string, name: string): Promise<boolean> {
     return (await SUPPORTED_MIME_TYPES).has(type) || EXTENSIONS_REGEXP.test(name);
 }
 
@@ -52,7 +52,7 @@ export async function isSupported(type: string, name: string): Promise<boolean> 
  * @param name File Name
  * @returns is supported
  */
-export async function acceptField(): Promise<string> {
+export async function acceptField (): Promise<string> {
     const mimeTypes = (await SUPPORTED_MIME_TYPES).keys();
 
     return [...mimeTypes, ...ADDITIONAL_SUPPORTED_EXTENSIONS.map(e => `.${e}`)].join(',');
@@ -62,11 +62,11 @@ export async function acceptField(): Promise<string> {
  * Generate list of display names of supported formats
  * @returns Names of supported formats
  */
-export async function supportedNames(): Promise<string[]> {
+export async function supportedNames (): Promise<string[]> {
     return Array.from((await SUPPORTED_MIME_TYPES).values());
 }
 
-async function checkSupport (entry: [string, string], url: string): Promise<[string, string]|undefined> {
+async function checkSupport (entry: [string, string], url: string): Promise<[string, string] | undefined> {
     try {
         await loadImage(url);
     } catch (err) {

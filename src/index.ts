@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     installServiceWorker(app);
 });
 
-async function installServiceWorker(app: GradPaaApplication) {
+async function installServiceWorker (app: GradPaaApplication) {
     if (!('serviceWorker' in navigator)) return;
 
     const hasController = navigator.serviceWorker.controller !== null;
@@ -31,14 +31,14 @@ async function installServiceWorker(app: GradPaaApplication) {
     }
 }
 
-async function checkForUpdate(): Promise<ServiceWorker|null> {
+async function checkForUpdate (): Promise<ServiceWorker | null> {
     const registration = await navigator.serviceWorker.getRegistration();
 
     if (registration === undefined) return null;
 
     if (registration.waiting !== null) return registration.waiting;
 
-    return new Promise(resolve => {
+    return await new Promise(resolve => {
         registration.addEventListener('updatefound', async () => {
             // If updatefound is fired, it means that there's a new service worker being installed.
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

@@ -5,8 +5,8 @@ import { isSupported } from './mime';
  * Well... because old Edge is shitty af and can't handle the File constructor (see https://stackoverflow.com/a/43241922)
  */
 export interface GradPaaFile {
-    blob: Blob;
-    name: string;
+    blob: Blob
+    name: string
 }
 
 /**
@@ -15,7 +15,7 @@ export interface GradPaaFile {
  * @returns {boolean} File is supported?
  */
 export async function isSupportedFile ({ blob, name }: GradPaaFile): Promise<boolean> {
-    return isSupported(blob.type, name);
+    return await isSupported(blob.type, name);
 }
 
 /**
@@ -23,8 +23,8 @@ export async function isSupportedFile ({ blob, name }: GradPaaFile): Promise<boo
  * @param {string} name File name
  * @returns {string|undefined} file extension
  */
-export function getFileExtension (name: string): string|undefined {
-    const ext: undefined|string = name.split('.').pop();
+export function getFileExtension (name: string): string | undefined {
+    const ext: undefined | string = name.split('.').pop();
 
     return ext?.toLowerCase();
 }
@@ -54,7 +54,7 @@ export function download ({ blob, name }: GradPaaFile): void {
     link.remove();
 
     // we revoke the url only after a delay because old Edge can't handle it otherwise
-    window.setTimeout(() => URL.revokeObjectURL(url), 200);
+    window.setTimeout(() => { URL.revokeObjectURL(url); }, 200);
 }
 
 /**
@@ -62,7 +62,7 @@ export function download ({ blob, name }: GradPaaFile): void {
  * @param {File} file File to read
  * @returns {Promise<ArrayBuffer>}
  */
-export function readFile (file: Blob): Promise<ArrayBuffer> {
+export async function readFile (file: Blob): Promise<ArrayBuffer> {
     // Blob.arrayBuffer not supported for Safari 13 :(
-    return new Response(file).arrayBuffer();
+    return await new Response(file).arrayBuffer();
 }

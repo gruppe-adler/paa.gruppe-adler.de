@@ -15,24 +15,24 @@ declare global {
          * for example, "web" or "play" which would allow the user to chose between a web version or
          * an Android version.
          */
-        readonly platforms: Array<string>;
+        readonly platforms: string[]
 
         /**
          * Returns a Promise that resolves to a DOMString containing either "accepted" or "dismissed".
          */
         readonly userChoice: Promise<{
-            outcome: 'accepted' | 'dismissed',
+            outcome: 'accepted' | 'dismissed'
             platform: string
-        }>;
+        }>
 
         /**
          * Allows a developer to show the install prompt at a time of their own choosing.
          * This method returns a Promise.
          */
-        prompt(): Promise<void>;
+        prompt(): Promise<void>
     }
 
     interface WindowEventMap {
-        beforeinstallprompt: BeforeInstallPromptEvent;
+        beforeinstallprompt: BeforeInstallPromptEvent
     }
 }

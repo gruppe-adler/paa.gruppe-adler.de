@@ -23,10 +23,10 @@ googleAnalytics.initialize();
 
 addEventListener('message', event => {
     switch (event.data) {
-    case 'skip-waiting':
+        case 'skip-waiting':
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        skipWaiting();
-        break;
+        // @ts-expect-error
+            skipWaiting();
+            break;
     }
 });
