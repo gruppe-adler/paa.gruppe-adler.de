@@ -1,6 +1,6 @@
 import EventTarget from '@ungap/event-target'; // Polyfill for Safari 13
 
-import { download, getFileExtension, getFileNameWithoutExtension, GradPaaFile, isSupportedFile, readFile } from '@/utils/file';
+import { download, getFileExtension, getFileNameWithoutExtension, type GradPaaFile, isSupportedFile, readFile } from '@/utils/file';
 import { blobToImg, imageDataFromBlob, imageDataFromDrawable, imageDataToBlob } from '@/utils/image';
 import { promisifyWorker } from '@/utils/worker';
 import { supportedNames } from '@/utils/mime';
@@ -11,23 +11,23 @@ import toPAAWorkerURL from 'worker-plugin/loader!@/worker/toPAA.worker';
 /* eslint-enable import/no-webpack-loader-syntax, import/default */
 
 interface ConversionFileWarning {
-    displayText: string;
-    description: string;
+    displayText: string
+    description: string
 }
 
-type ConversionFileState = 'done'|'warning'|'error'|'loading'|'queued'|'setup';
+type ConversionFileState = 'done' | 'warning' | 'error' | 'loading' | 'queued' | 'setup';
 
 export default class ConversionFile extends EventTarget {
     public readonly inputFile: GradPaaFile;
     public readonly id: string;
-    private _result: GradPaaFile|null = null;
-    private _worker: Worker|null = null;
+    private _result: GradPaaFile | null = null;
+    private _worker: Worker | null = null;
     private _preChecksDone = false;
-    private _warning: null|ConversionFileWarning = null;
-    private _error: Error|null = null;
-    private imageData: ImageData|null = null;
+    private _warning: null | ConversionFileWarning = null;
+    private _error: Error | null = null;
+    private imageData: ImageData | null = null;
 
-    constructor(file: GradPaaFile, id: string) {
+    constructor (file: GradPaaFile, id: string) {
         super();
         this.inputFile = file;
         this.id = id;
@@ -49,22 +49,22 @@ export default class ConversionFile extends EventTarget {
         return 'queued';
     }
 
-    public get worker (): Worker|null { return this._worker; }
-    public set worker (val: Worker|null) {
+    public get worker (): Worker | null { return this._worker; }
+    public set worker (val: Worker | null) {
         if (!this._preChecksDone) throw new Error('Cannot set worker for ConversionFile, because pre-checks aren\'t done yet.');
 
         this._worker = val;
         this.dispatchEvent(new Event('update'));
     }
 
-    public get warning (): null|ConversionFileWarning { return this._warning; }
-    public set warning (val: null|ConversionFileWarning) {
+    public get warning (): null | ConversionFileWarning { return this._warning; }
+    public set warning (val: null | ConversionFileWarning) {
         this._warning = val;
         this.dispatchEvent(new Event('update'));
     }
 
-    public get error (): null|Error { return this._error; }
-    public set error (val: null|Error) {
+    public get error (): null | Error { return this._error; }
+    public set error (val: null | Error) {
         this._error = val;
         this.dispatchEvent(new Event('update'));
     }
@@ -103,7 +103,7 @@ export default class ConversionFile extends EventTarget {
         return this.inputFile.name;
     }
 
-    public get result (): GradPaaFile|null { return this._result; }
+    public get result (): GradPaaFile | null { return this._result; }
 
     public download (): void {
         if (this.result === null) return;
@@ -132,93 +132,93 @@ export default class ConversionFile extends EventTarget {
         }
 
         switch (this.extension) {
-        case 'paa':
-            {
-                const ab: ArrayBuffer = await readFile(this.inputFile.blob.slice(0, 2));
-                const firstTwoBytes = new Uint16Array(ab)[0];
+            case 'paa':
+                {
+                    const ab: ArrayBuffer = await readFile(this.inputFile.blob.slice(0, 2));
+                    const firstTwoBytes = new Uint16Array(ab)[0];
 
-                switch (firstTwoBytes) {
-                case 0xFF01:
-                case 0xFF05:
-                    // Valid PAA magic number
-                    break;
-                case 0xFF02:
-                case 0xFF03:
-                case 0xFF04:
-                case 0x4444:
-                case 0x1555:
-                case 0x8888:
-                case 0x8080:
-                    // Valid PAA magic number, but type is not supported by grad_aff
-                    this.warning = {
-                        displayText: 'Unsupported PAA type',
-                        description: `
+                    switch (firstTwoBytes) {
+                        case 0xFF01:
+                        case 0xFF05:
+                            // Valid PAA magic number
+                            break;
+                        case 0xFF02:
+                        case 0xFF03:
+                        case 0xFF04:
+                        case 0x4444:
+                        case 0x1555:
+                        case 0x8888:
+                        case 0x8080:
+                            // Valid PAA magic number, but type is not supported by grad_aff
+                            this.warning = {
+                                displayText: 'Unsupported PAA type',
+                                description: `
                             <p>PAA files come in different types, which you can read more about <a target="_blank" rel="noreferrer noopener" href="https://community.bistudio.com/wiki?title=PAA_File_Format#TypeOfPaX_.28optional.29">here</a>.</p>
                             <p>To reduce complexity we only support the most common types DXT1 and DXT5. All other types are either old or barely used.</p>
                         `
-                    };
-                    break;
-                default:
-                    // INVALID PAA magic number
-                    this.warning = {
-                        displayText: 'Invalid PAA file',
-                        description: `
+                            };
+                            break;
+                        default:
+                            // INVALID PAA magic number
+                            this.warning = {
+                                displayText: 'Invalid PAA file',
+                                description: `
                             <p>Seems like your file is not a valid PAA file.</p>
                             <button class="grad-paa-btn--primary grad-paa-btn--not-responsive" style="float: right;" data-grad-paa-open-feedback type="button">Report Error</button>
                         `
-                    };
-                    break;
+                            };
+                            break;
+                    }
                 }
-            }
-            break;
-        case 'svg':
-            {
+                break;
+            case 'svg':
+                {
                 // Firefox throws if you try to draw an SVG to canvas that doesn't have width/height.
                 // In Chrome it loads, but drawImage behaves weirdly.
                 // This function sets width/height if it isn't already set.
-                const parser = new DOMParser();
-                const text = await new Response(this.inputFile.blob).text();
-                const doc = parser.parseFromString(text, 'image/svg+xml');
-                const svg = doc.documentElement;
+                    const parser = new DOMParser();
+                    const text = await new Response(this.inputFile.blob).text();
+                    const doc = parser.parseFromString(text, 'image/svg+xml');
+                    const svg = doc.documentElement;
 
-                if (doc.getElementsByTagName('parsererror').length > 0) {
-                    this.warning = {
-                        displayText: 'Invalid SVG image',
-                        description: `
+                    if (doc.getElementsByTagName('parsererror').length > 0) {
+                        this.warning = {
+                            displayText: 'Invalid SVG image',
+                            description: `
                             <p>Seems like your file is not a valid SVG image.</p>
                             <button class="grad-paa-btn--primary grad-paa-btn--not-responsive" style="float: right;" data-grad-paa-open-feedback type="button">Report Error</button>
                         `
-                    };
-                    break;
+                        };
+                        break;
+                    }
+
+                    if (svg.hasAttribute('width') && svg.hasAttribute('height')) {
+                        this.imageData = await blobToImg(this.inputFile.blob).then(imageDataFromDrawable);
+                        break;
+                    }
+
+                    const viewBox = svg.getAttribute('viewBox');
+                    if (viewBox === null) {
+                        this.warning = {
+                            displayText: 'SVGs must have width/height or viewBox',
+                            description: 'SVGs must have either <code>width</code> and <code>height</code> attributes or a valid <code>viewBox</code> attribute, in order to be decoded.'
+                        };
+                        break;
+                    }
+
+                    const [, , w, h] = viewBox.split(/\s+/);
+                    svg.setAttribute('width', w);
+                    svg.setAttribute('height', h);
+
+                    const serializer = new XMLSerializer();
+                    const newSource = serializer.serializeToString(doc);
+
+                    this.imageData = await blobToImg(new Blob([newSource], { type: 'image/svg+xml' })).then(imageDataFromDrawable);
                 }
-
-                if (svg.hasAttribute('width') && svg.hasAttribute('height')) {
-                    this.imageData = await blobToImg(this.inputFile.blob).then(imageDataFromDrawable);
-                    break;
-                }
-
-                const viewBox = svg.getAttribute('viewBox');
-                if (viewBox === null) {
-                    this.warning = {
-                        displayText: 'SVGs must have width/height or viewBox',
-                        description: 'SVGs must have either <code>width</code> and <code>height</code> attributes or a valid <code>viewBox</code> attribute, in order to be decoded.'
-                    };
-                    break;
-                }
-
-                const [, , w, h] = viewBox.split(/\s+/);
-                svg.setAttribute('width', w);
-                svg.setAttribute('height', h);
-
-                const serializer = new XMLSerializer();
-                const newSource = serializer.serializeToString(doc);
-
-                this.imageData = await blobToImg(new Blob([newSource], { type: 'image/svg+xml' })).then(imageDataFromDrawable);
-            }
-            break;
-        default:
-            this.imageData = await imageDataFromBlob(this.inputFile.blob);
-            break;
+                break;
+            default:
+                this.imageData = await imageDataFromBlob(this.inputFile.blob);
+                break;
         }
 
         if (this.imageData && (Math.log2(this.imageData.width) % 1 !== 0 || Math.log2(this.imageData.height) % 1 !== 0)) {
@@ -298,6 +298,6 @@ export default class ConversionFile extends EventTarget {
     }
 
     public cancel (): void {
-        if (this.worker) return this.worker.terminate();
+        if (this.worker) { this.worker.terminate(); }
     }
 }

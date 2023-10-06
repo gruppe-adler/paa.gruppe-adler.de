@@ -1,19 +1,19 @@
 import { Dialog } from './Dialog';
 
 interface ChoiceButtonOptions {
-    text: string;
-    color?: string;
-    primary?: true;
+    text: string
+    color?: string
+    primary?: true
 }
 
 export class Choice extends Dialog {
-    private resolve: (value: boolean|null | PromiseLike<boolean|null>) => void;
-    private keyUpEventHandler: (e: KeyboardEvent) => void;
-    public readonly promise: Promise<boolean|null>;
+    private resolve: (value: boolean | null | PromiseLike<boolean | null>) => void;
+    private readonly keyUpEventHandler: (e: KeyboardEvent) => void;
+    public readonly promise: Promise<boolean | null>;
 
-    constructor(
+    constructor (
         heading: string,
-        content: string|HTMLDivElement,
+        content: string | HTMLDivElement,
         okOptions: ChoiceButtonOptions,
         cancelOptions: ChoiceButtonOptions = { text: 'Cancel' },
         skipOptions?: ChoiceButtonOptions,
@@ -33,14 +33,14 @@ export class Choice extends Dialog {
 
         if (skipOptions !== undefined) {
             const skipButton = Choice.generateButton(skipOptions);
-            skipButton.addEventListener('click', () => this.resolve(null));
+            skipButton.addEventListener('click', () => { this.resolve(null); });
             actions.unshift(skipButton);
         }
 
         super(heading, contentEl, { close: false, actions });
 
         if (skipOptions !== undefined) {
-            const el: HTMLDivElement|null = this.element.querySelector('.grad-paa-dialog__actions');
+            const el: HTMLDivElement | null = this.element.querySelector('.grad-paa-dialog__actions');
             if (el !== null) {
                 el.style.justifySelf = 'stretch';
                 el.style.gridTemplateColumns = '1fr auto auto';
@@ -60,8 +60,8 @@ export class Choice extends Dialog {
 
         this.promise.finally(() => { window.removeEventListener('keyup', this.keyUpEventHandler); this.close(); });
 
-        okBtn.addEventListener('click', () => this.resolve(true));
-        cancelBtn.addEventListener('click', () => this.resolve(false));
+        okBtn.addEventListener('click', () => { this.resolve(true); });
+        cancelBtn.addEventListener('click', () => { this.resolve(false); });
 
         if (this.dialogElement !== null) this.dialogElement.style.width = options?.width ?? '600px';
     }
@@ -70,20 +70,20 @@ export class Choice extends Dialog {
      * Most of the time we don't need the actual Choice instance, but only the promise.
      * This is basically a constructor, but instead of the instance the pending promise is returned.
      */
-    public static new (
+    public static async new (
         heading: string,
-        content: string|HTMLDivElement,
+        content: string | HTMLDivElement,
         okOptions: ChoiceButtonOptions,
         cancelOptions: ChoiceButtonOptions = { text: 'Cancel' },
         skipOptions?: ChoiceButtonOptions,
         options?: { width: string }
-    ): Promise<boolean|null> {
+    ): Promise<boolean | null> {
         const choice = new Choice(heading, content, okOptions, cancelOptions, skipOptions, options);
 
-        return choice.promise;
+        return await choice.promise;
     }
 
-    private static generateButton(options: ChoiceButtonOptions): HTMLButtonElement {
+    private static generateButton (options: ChoiceButtonOptions): HTMLButtonElement {
         const btn = document.createElement('button');
 
         btn.innerHTML = options.text;

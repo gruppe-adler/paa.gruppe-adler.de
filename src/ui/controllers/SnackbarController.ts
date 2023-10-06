@@ -1,13 +1,13 @@
 export interface SnackbarOptions {
-    timeout?: number;
-    actions?: string|[string, string];
-    color?: string;
+    timeout?: number
+    actions?: string | [string, string]
+    color?: string
 }
 
 export default class SnackbarController {
-    private wrapper: HTMLDivElement;
+    private readonly wrapper: HTMLDivElement;
 
-    constructor() {
+    constructor () {
         this.wrapper = document.createElement('div');
         this.wrapper.className = 'grad-paa-snackbar-container';
 
@@ -32,10 +32,10 @@ export default class SnackbarController {
             });
         });
 
-        return new Promise<string>(resolve => {
+        return await new Promise<string>(resolve => {
             const close = (val: string) => {
                 el.classList.add('grad-paa-snackbar--enter-leave');
-                window.setTimeout(() => el.remove(), 1000);
+                window.setTimeout(() => { el.remove(); }, 1000);
                 resolve(val);
             };
 
@@ -44,12 +44,12 @@ export default class SnackbarController {
                 btn.innerText = action.toUpperCase();
                 el.appendChild(btn);
 
-                btn.addEventListener('click', () => close(action));
+                btn.addEventListener('click', () => { close(action); });
             }
 
             if (timeout > 0) {
                 window.setTimeout(
-                    () => close('dismiss'),
+                    () => { close('dismiss'); },
                     timeout
                 );
             }

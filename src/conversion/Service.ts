@@ -1,22 +1,22 @@
 import EventTarget from '@ungap/event-target'; // Polyfill for Safari 13
 
 import { Choice } from '@/ui/Choice';
-import { getFileExtension, getFileNameWithoutExtension, GradPaaFile } from '@/utils/file';
+import { getFileExtension, getFileNameWithoutExtension, type GradPaaFile } from '@/utils/file';
 import ConversionEvent from './Event';
 import ConversionFile from './File';
 
 class Queue<T> {
-    private arr: T[] = [];
+    private readonly arr: T[] = [];
 
-    public enqueue(item: T): number {
+    public enqueue (item: T): number {
         return this.arr.push(item);
     }
 
-    public dequeue(): T|null {
+    public dequeue (): T | null {
         return this.arr.shift() || null;
     }
 
-    public remove (item: T): T|null {
+    public remove (item: T): T | null {
         const index = this.arr.indexOf(item);
         if (index > -1) {
             this.arr.splice(index, 1);
@@ -40,9 +40,9 @@ class Queue<T> {
 const MAX_RUNNING_CONVERSIONS = 8;
 
 export default class ConversionService extends EventTarget {
-    private static instance: ConversionService|null = null;
-    private readonly files: Map<string, ConversionFile> = new Map();
-    private readonly takenIds: Set<string> = new Set();
+    private static instance: ConversionService | null = null;
+    private readonly files = new Map<string, ConversionFile>();
+    private readonly takenIds = new Set<string>();
     private readonly queue = new Queue<string>();
     private runningConversions = 0;
 
@@ -67,7 +67,7 @@ export default class ConversionService extends EventTarget {
         // takenNames is a map containing file-names as keys and the file-id as value
         const takenNames = new Map(Array.from(this.files).map(([k, v]) => [v.name, k]));
         let remainingFilesWithTakenNames = newFiles.filter(({ name }) => takenNames.has(name)).length;
-        let resultForAll: null|boolean|undefined;
+        let resultForAll: null | boolean | undefined;
 
         for (const f of newFiles) {
             const file: GradPaaFile = { blob: f, name: f.name };
@@ -85,7 +85,7 @@ export default class ConversionService extends EventTarget {
                     newName = `${baseName}_${num}.${extension}`;
                 }
 
-                let result: boolean|null;
+                let result: boolean | null;
                 if (resultForAll === undefined) {
                     const el = document.createElement('div');
                     let applyForAll = false;
@@ -117,22 +117,22 @@ export default class ConversionService extends EventTarget {
                 }
 
                 switch (result) {
-                case null:
+                    case null:
                     // Skip
-                    continue;
-                case true:
+                        continue;
+                    case true:
                     // Replace
-                    {
+                        {
                         // we checked this a few lines above
                         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        const existingId = takenNames.get(file.name)!;
-                        this.cancelID(existingId);
-                    }
-                    break;
-                case false:
+                            const existingId = takenNames.get(file.name)!;
+                            this.cancelID(existingId);
+                        }
+                        break;
+                    case false:
                     // Rename
-                    file.name = newName;
-                    break;
+                        file.name = newName;
+                        break;
                 }
             }
 
@@ -224,7 +224,7 @@ export default class ConversionService extends EventTarget {
     /**
      * @returns Iterator for all files
      */
-    public entries(): IterableIterator<[string, ConversionFile]> {
+    public entries (): IterableIterator<[string, ConversionFile]> {
         return this.files.entries();
     }
 }

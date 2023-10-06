@@ -7,7 +7,7 @@ import EventTarget from '@ungap/event-target'; // Polyfill for Safari 13
 export class OverlayConvertEvent extends Event {
     public readonly filesToConvert: File[];
 
-    constructor(fileList: FileList, init?: EventInit) {
+    constructor (fileList: FileList, init?: EventInit) {
         super('convert', init);
 
         this.filesToConvert = Array.from(fileList);
@@ -34,10 +34,10 @@ const dragEventContainsFiles = (event: DragEvent): boolean => {
  * Controller of drag-drop overlay.
  */
 export default class OverlayController extends EventTarget {
-    private overlayElement: HTMLElement;
-    private dragTimeOut: number|null = null;
+    private readonly overlayElement: HTMLElement;
+    private dragTimeOut: number | null = null;
 
-    constructor() {
+    constructor () {
         super();
 
         this.overlayElement = document.createElement('div');
@@ -46,10 +46,10 @@ export default class OverlayController extends EventTarget {
 
         this.toggleOverlay(false);
 
-        document.body.addEventListener('dragover', e => this.onDrag(e));
+        document.body.addEventListener('dragover', e => { this.onDrag(e); });
 
-        this.overlayElement.addEventListener('drop', e => this.onDrop(e));
-        this.overlayElement.addEventListener('dragover', e => e.preventDefault());
+        this.overlayElement.addEventListener('drop', e => { this.onDrop(e); });
+        this.overlayElement.addEventListener('dragover', e => { e.preventDefault(); });
     }
 
     /**
@@ -57,7 +57,7 @@ export default class OverlayController extends EventTarget {
      * Show's / hide's overlay while files are dragged over body.
      * @param event Drag event
      */
-    private onDrag(event: DragEvent) {
+    private onDrag (event: DragEvent) {
         if (!dragEventContainsFiles(event)) return;
 
         this.toggleOverlay(true);
@@ -69,7 +69,7 @@ export default class OverlayController extends EventTarget {
      * Drop event listener for overlay element
      * @param event Drag event
      */
-    private onDrop(event: DragEvent) {
+    private onDrop (event: DragEvent) {
         event.preventDefault();
         event.stopPropagation();
 
@@ -77,14 +77,14 @@ export default class OverlayController extends EventTarget {
 
         // dragEventContainsFiles checks if there is a dataTransfer containing files
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this.dispatchEvent(new OverlayConvertEvent(event.dataTransfer!.files!));
+        this.dispatchEvent(new OverlayConvertEvent(event.dataTransfer!.files));
     }
 
     /**
      * Toggle (show / hide) overlay element
      * @param isShown whether to show or hide element
      */
-    private toggleOverlay(isShown: boolean) {
+    private toggleOverlay (isShown: boolean) {
         if (isShown) {
             this.overlayElement.classList.add('grad-paa-overlay--shown');
         } else {

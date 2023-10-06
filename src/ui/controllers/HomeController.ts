@@ -1,23 +1,23 @@
 import EventTarget from '@ungap/event-target'; // Polyfill for Safari 13
 
-import Lottie, { AnimationItem as LottieAnimationItem } from 'lottie-web';
+import Lottie, { type AnimationItem as LottieAnimationItem } from 'lottie-web';
 import * as lottieData from '@/assets/logo.json';
 
 export default class HomeController extends EventTarget {
-    private element: HTMLElement;
-    private installEvent: BeforeInstallPromptEvent|null = null;
-    private lottie = {
-        animation: null as null|LottieAnimationItem,
-        elem: null as HTMLDivElement|null,
-        resizeHandler: null as null|(() => unknown)
+    private readonly element: HTMLElement;
+    private installEvent: BeforeInstallPromptEvent | null = null;
+    private readonly lottie = {
+        animation: null as null | LottieAnimationItem,
+        elem: null as HTMLDivElement | null,
+        resizeHandler: null as null | (() => unknown)
     };
 
-    constructor(homeElem: HTMLElement) {
+    constructor (homeElem: HTMLElement) {
         super();
         this.element = homeElem;
 
         // Handle clicks for "convert files" button
-        const button: HTMLButtonElement|null = this.element.querySelector('[data-grad-paa-convert]');
+        const button: HTMLButtonElement | null = this.element.querySelector('[data-grad-paa-convert]');
         if (button === null) {
             // eslint-disable-next-line no-console
             console.error('Couldn\'t find convert button');
@@ -28,7 +28,7 @@ export default class HomeController extends EventTarget {
         button.addEventListener('click', () => { this.dispatchEvent(new Event('convert-files')); });
 
         // find lottie element
-        const lottieElem: HTMLDivElement|null = this.element.querySelector('[data-grad-paa-lottie]');
+        const lottieElem: HTMLDivElement | null = this.element.querySelector('[data-grad-paa-lottie]');
         if (lottieElem === null) {
             // eslint-disable-next-line no-console
             console.error('Couldn\'t find lottie element');
@@ -43,7 +43,7 @@ export default class HomeController extends EventTarget {
         this.setupInstallButton();
     }
 
-    private setupLottie() {
+    private setupLottie () {
         if (this.lottie.elem === null) return;
 
         // remove placeholder image
@@ -62,7 +62,7 @@ export default class HomeController extends EventTarget {
         window.addEventListener('resize', this.lottie.resizeHandler);
     }
 
-    private removeLottie() {
+    private removeLottie () {
         this.lottie.animation?.destroy();
         if (this.lottie.resizeHandler !== null) window.removeEventListener('resize', this.lottie.resizeHandler);
 
@@ -77,7 +77,7 @@ export default class HomeController extends EventTarget {
 
             this.installEvent = e;
 
-            const installBtn: HTMLButtonElement|null = this.element.querySelector('[data-grad-paa-install]');
+            const installBtn: HTMLButtonElement | null = this.element.querySelector('[data-grad-paa-install]');
             if (installBtn === null) return;
 
             if (installBtn.style.opacity === '0') {

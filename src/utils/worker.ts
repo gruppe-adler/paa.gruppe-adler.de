@@ -5,8 +5,8 @@
  * @param transfer Array of Transferable objects for the postMessage call
  * @returns Promise which resolves in the data received by the worker
  */
-export function promisifyWorker<T, R>(worker: Worker, message: T, transfer?: Transferable[]): Promise<R> {
-    let messageHandler: (e: MessageEvent<{ type: 'data', data: R }|{ type: 'error', data: Error }>) => void;
+export async function promisifyWorker<T, R> (worker: Worker, message: T, transfer?: Transferable[]): Promise<R> {
+    let messageHandler: (e: MessageEvent<{ type: 'data', data: R } | { type: 'error', data: Error }>) => void;
     let errorHandler: (e: ErrorEvent) => void;
 
     const promise = new Promise<R>((resolve, reject) => {
@@ -17,7 +17,7 @@ export function promisifyWorker<T, R>(worker: Worker, message: T, transfer?: Tra
                 reject(e.data.data);
             }
         };
-        errorHandler = e => reject(e);
+        errorHandler = e => { reject(e); };
 
         worker.addEventListener('message', messageHandler);
         worker.addEventListener('error', errorHandler);
@@ -30,5 +30,5 @@ export function promisifyWorker<T, R>(worker: Worker, message: T, transfer?: Tra
         worker.removeEventListener('error', errorHandler);
     });
 
-    return promise;
+    return await promise;
 }

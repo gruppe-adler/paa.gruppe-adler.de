@@ -20,7 +20,7 @@ async function convertImageToPaa (data: ImageData): Promise<Blob> {
 addEventListener('message', async (event: MessageEvent) => {
     const imageDate = event.data as ImageData;
 
-    let msg: { type: 'data'|'error', data: unknown };
+    let msg: { type: 'data' | 'error', data: unknown };
     try {
         const blob = await convertImageToPaa(imageDate);
         msg = { type: 'data', data: blob };

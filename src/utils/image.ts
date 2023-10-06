@@ -6,7 +6,7 @@
  * @param {number} [quality] Number between 0 and 1 indicating the image quality for image formats with lossy compression
  * @returns {Blob}
  */
-export function imageDataToBlob (data: ImageData, type = 'image/png', quality = 1): Promise<Blob> {
+export async function imageDataToBlob (data: ImageData, type = 'image/png', quality = 1): Promise<Blob> {
     const canvas = document.createElement('canvas');
     canvas.width = data.width;
     canvas.height = data.height;
@@ -16,7 +16,7 @@ export function imageDataToBlob (data: ImageData, type = 'image/png', quality = 
 
     ctx.putImageData(data, 0, 0);
 
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
         canvas.toBlob(blob => {
             canvas.remove();
             if (blob === null) {
@@ -38,8 +38,8 @@ export async function loadImage (url: string): Promise<HTMLImageElement> {
     img.decoding = 'async';
     img.src = url;
     const loaded = new Promise<void>((resolve, reject) => {
-        img.onload = () => resolve();
-        img.onerror = () => reject(Error('Image loading error'));
+        img.onload = () => { resolve(); };
+        img.onerror = () => { reject(Error('Image loading error')); };
     });
 
     if (img.decode) {
@@ -59,7 +59,7 @@ export async function loadImage (url: string): Promise<HTMLImageElement> {
  * @param {string} blob Image
  * @returns {Promise<HTMLImageElement>} Promise, which resolves into HTMLImageElement
  */
-export async function blobToImg(blob: Blob): Promise<HTMLImageElement> {
+export async function blobToImg (blob: Blob): Promise<HTMLImageElement> {
     const url = URL.createObjectURL(blob);
     try {
         return await loadImage(url);
@@ -80,7 +80,7 @@ export async function imageDataFromBlob (blob: Blob): Promise<ImageData> {
             ? await createImageBitmap(blob)
             : await blobToImg(blob);
 
-    return imageDataFromDrawable(drawable);
+    return await imageDataFromDrawable(drawable);
 }
 
 /**
@@ -88,7 +88,7 @@ export async function imageDataFromBlob (blob: Blob): Promise<ImageData> {
  * @param {HTMLImageElement|ImageBitmap} drawable Blob to get data from
  * @returns {Promise<ImageData>} Promise, which resolves into ImageData object
  */
-export async function imageDataFromDrawable (drawable: HTMLImageElement|ImageBitmap): Promise<ImageData> {
+export async function imageDataFromDrawable (drawable: HTMLImageElement | ImageBitmap): Promise<ImageData> {
     const canvas = document.createElement('canvas');
     canvas.width = drawable.width;
     canvas.height = drawable.height;
