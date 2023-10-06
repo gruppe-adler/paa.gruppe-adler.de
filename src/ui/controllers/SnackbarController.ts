@@ -33,7 +33,7 @@ export default class SnackbarController {
         });
 
         return await new Promise<string>(resolve => {
-            const close = (val: string) => {
+            const close = (val: string): void => {
                 el.classList.add('grad-paa-snackbar--enter-leave');
                 window.setTimeout(() => { el.remove(); }, 1000);
                 resolve(val);

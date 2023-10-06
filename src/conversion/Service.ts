@@ -13,7 +13,7 @@ class Queue<T> {
     }
 
     public dequeue (): T | null {
-        return this.arr.shift() || null;
+        return this.arr.shift() ?? null;
     }
 
     public remove (item: T): T | null {
@@ -192,7 +192,7 @@ export default class ConversionService extends EventTarget {
             if (file.warning !== null) continue;
 
             this.runningConversions++;
-            file.convert().finally(() => {
+            void file.convert().finally(() => {
                 this.runningConversions--;
                 this.run();
             });

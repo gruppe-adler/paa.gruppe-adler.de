@@ -24,7 +24,7 @@ export default class FileListController extends EventTarget {
         this.downloadAllBtn = downloadAllBtn;
 
         const deleteAllBtn = this.element.querySelector('[data-grad-paa-delete-all]');
-        deleteAllBtn?.addEventListener('click', async () => { await this.deleteAll(); });
+        deleteAllBtn?.addEventListener('click', () => { void this.deleteAll(); });
         deleteAllBtn?.removeAttribute('data-grad-paa-delete-all');
 
         ConversionService.getInstance().addEventListener('added', (e: ConversionEvent) => {
@@ -61,8 +61,8 @@ export default class FileListController extends EventTarget {
     /**
      * Click callback for "delete all" button
      */
-    private async deleteAll () {
-        Choice.new(
+    private async deleteAll (): Promise<void> {
+        await Choice.new(
             'Delete all files?',
             '<p>This will cancel any running / pending conversions and delete the results of all already converted files.</p>',
             {
@@ -79,7 +79,7 @@ export default class FileListController extends EventTarget {
     /**
      * Hide / Show "Download All"-Button depending on if there are any files to download
      */
-    private checkDownloadAllButton () {
+    private checkDownloadAllButton (): void {
         let hasFilesToDownload = false;
         const files = ConversionService.getInstance().entries();
         for (const [, file] of files) {

@@ -18,6 +18,7 @@ export async function convertPaaToImage (blob: Blob): Promise<ImageData> {
     return aff.decode(uint8array);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 addEventListener('message', async (event: MessageEvent) => {
     const blob = event.data as Blob;
 

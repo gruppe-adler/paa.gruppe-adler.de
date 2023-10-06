@@ -25,10 +25,8 @@ export async function promisifyWorker<T, R> (worker: Worker, message: T, transfe
         worker.postMessage(message, transfer ?? []);
     });
 
-    promise.finally(() => {
+    return await promise.finally(() => {
         worker.removeEventListener('message', messageHandler);
         worker.removeEventListener('error', errorHandler);
     });
-
-    return await promise;
 }

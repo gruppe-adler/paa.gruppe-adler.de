@@ -19,7 +19,7 @@ export class OverlayConvertEvent extends Event {
  * @param event Drag event
  */
 const dragEventContainsFiles = (event: DragEvent): boolean => {
-    if (event.dataTransfer && event.dataTransfer.types) {
+    if (event.dataTransfer?.types) {
         for (let i = 0; i < event.dataTransfer.types.length; i++) {
             if (event.dataTransfer.types[i] === 'Files') {
                 return true;
@@ -57,7 +57,7 @@ export default class OverlayController extends EventTarget {
      * Show's / hide's overlay while files are dragged over body.
      * @param event Drag event
      */
-    private onDrag (event: DragEvent) {
+    private onDrag (event: DragEvent): void {
         if (!dragEventContainsFiles(event)) return;
 
         this.toggleOverlay(true);
@@ -69,7 +69,7 @@ export default class OverlayController extends EventTarget {
      * Drop event listener for overlay element
      * @param event Drag event
      */
-    private onDrop (event: DragEvent) {
+    private onDrop (event: DragEvent): void {
         event.preventDefault();
         event.stopPropagation();
 
@@ -84,7 +84,7 @@ export default class OverlayController extends EventTarget {
      * Toggle (show / hide) overlay element
      * @param isShown whether to show or hide element
      */
-    private toggleOverlay (isShown: boolean) {
+    private toggleOverlay (isShown: boolean): void {
         if (isShown) {
             this.overlayElement.classList.add('grad-paa-overlay--shown');
         } else {

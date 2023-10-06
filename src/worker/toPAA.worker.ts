@@ -17,6 +17,7 @@ async function convertImageToPaa (data: ImageData): Promise<Blob> {
     return new Blob([uint8array.buffer], { type: PAA_MIME_TYPE });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 addEventListener('message', async (event: MessageEvent) => {
     const imageDate = event.data as ImageData;
 

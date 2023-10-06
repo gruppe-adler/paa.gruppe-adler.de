@@ -19,7 +19,7 @@ export default class GradPaaApplication {
         // OVERLAY CONTROLLER
         this.overlayController = new OverlayController();
         this.overlayController.addEventListener('convert', (e: OverlayConvertEvent) => {
-            ConversionService.getInstance().convertFiles(...e.filesToConvert);
+            void ConversionService.getInstance().convertFiles(...e.filesToConvert);
         });
 
         // HOME CONTROLLER
@@ -36,7 +36,7 @@ export default class GradPaaApplication {
         if (fileListElem === null) throw new Error('Couldn\'t find file list element.');
         this.fileListController = new FileListController(fileListElem);
         this.fileListController.addEventListener('convert-more', () => { this.openInput(); });
-        this.fileListController.addEventListener('download-all', async () => {
+        this.fileListController.addEventListener('download-all', () => {
             this.fileListController.toggleDownloadAllSpinner(true);
 
             const zip = new JSZip();
@@ -48,11 +48,9 @@ export default class GradPaaApplication {
                 zip.file(file.newName, file.result!.blob);
             }
 
-            const blob = await zip.generateAsync({ type: 'blob' });
-
-            this.fileListController.toggleDownloadAllSpinner(false);
-
-            download({ blob, name: 'gruppe_adler_paa.zip' });
+            void zip.generateAsync({ type: 'blob' })
+                .finally(() => { this.fileListController.toggleDownloadAllSpinner(false); })
+                .then(blob => { download({ blob, name: 'gruppe_adler_paa.zip' }); });
         });
         this.fileListController.addEventListener('delete-all', () => {
             const entries = ConversionService.getInstance().entries();
@@ -67,7 +65,7 @@ export default class GradPaaApplication {
         /**
          * Toggle between home and file list, depending on if the ConversionService has files or not.
          */
-        const toggleBetweenHomeAndFiles = () => {
+        const toggleBetweenHomeAndFiles = (): void => {
             const filesShown = ConversionService.getInstance().length > 0;
             this.homeController.toggle(!filesShown);
             this.fileListController.toggle(filesShown);
@@ -84,7 +82,7 @@ export default class GradPaaApplication {
     private setupInput (): HTMLInputElement {
         const input = document.createElement('input');
         input.type = 'file';
-        acceptField().then(accept => { input.accept = accept; });
+        void acceptField().then(accept => { input.accept = accept; });
         input.multiple = true;
         input.style.display = 'none';
 
@@ -92,7 +90,7 @@ export default class GradPaaApplication {
             if (!input.files) return;
 
             const files = Array.from(input.files);
-            ConversionService.getInstance().convertFiles(...files);
+            void ConversionService.getInstance().convertFiles(...files);
 
             // remove all files from input
             input.value = '';
@@ -105,7 +103,7 @@ export default class GradPaaApplication {
     /**
      * Open main input
      */
-    private openInput () {
+    private openInput (): void {
         this.inputElement.click();
     }
 
