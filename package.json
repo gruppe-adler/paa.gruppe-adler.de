@@ -39,5 +39,10 @@
     "webpack-dev-server": "^4.15.1",
     "webpack-pwa-manifest": "^4.3.0",
     "worker-plugin": "^5.0.1"
+  },
+  "overrides": {
+    "parse-bmfont-xml": {
+      "xml2js": "^0.6.0"
+    }
   }
 }
