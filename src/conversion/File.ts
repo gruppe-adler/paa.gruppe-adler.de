@@ -79,7 +79,7 @@ export default class ConversionFile extends EventTarget {
     /**
      * Extension of file to convert
      */
-    private get extension () {
+    private get extension (): string | undefined {
         return getFileExtension(this.inputFile.name);
     }
 
@@ -115,7 +115,7 @@ export default class ConversionFile extends EventTarget {
      * Pre checks include all checks that run actually before converting the file.
      * E.g. if the file is in a supported format or has valid dimensions.
      */
-    private async preChecks () {
+    private async preChecks (): Promise<void> {
         // check if file is in a supported format
         if (!(await isSupportedFile(this.inputFile))) {
             this.warning = {
@@ -281,7 +281,7 @@ export default class ConversionFile extends EventTarget {
         }
     }
 
-    private trackConversion () {
+    private trackConversion (): void {
         if (this.result === null) return;
 
         let action: string;

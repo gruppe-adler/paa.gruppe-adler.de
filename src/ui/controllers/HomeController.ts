@@ -43,7 +43,7 @@ export default class HomeController extends EventTarget {
         this.setupInstallButton();
     }
 
-    private setupLottie () {
+    private setupLottie (): void {
         if (this.lottie.elem === null) return;
 
         // remove placeholder image
@@ -62,7 +62,7 @@ export default class HomeController extends EventTarget {
         window.addEventListener('resize', this.lottie.resizeHandler);
     }
 
-    private removeLottie () {
+    private removeLottie (): void {
         this.lottie.animation?.destroy();
         if (this.lottie.resizeHandler !== null) window.removeEventListener('resize', this.lottie.resizeHandler);
 
@@ -70,8 +70,8 @@ export default class HomeController extends EventTarget {
         this.lottie.resizeHandler = null;
     }
 
-    private setupInstallButton () {
-        window.addEventListener('beforeinstallprompt', async e => {
+    private setupInstallButton (): void {
+        window.addEventListener('beforeinstallprompt', e => {
             // Prevent the mini-infobar from appearing on mobile
             e.preventDefault();
 
@@ -85,9 +85,9 @@ export default class HomeController extends EventTarget {
                 installBtn.style.opacity = '1';
                 installBtn.addEventListener('click', () => {
                     if (this.installEvent === null) return;
-                    this.installEvent.prompt();
+                    void this.installEvent.prompt();
 
-                    this.installEvent.userChoice.then(({ outcome }) => {
+                    void this.installEvent.userChoice.then(({ outcome }) => {
                         if (outcome === 'accepted') installBtn.style.opacity = '0';
                     });
                 });

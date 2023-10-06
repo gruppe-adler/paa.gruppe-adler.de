@@ -1,26 +1,26 @@
 import GradPaaApplication from './Application';
 import './styles/global.scss';
 
-window.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener('DOMContentLoaded', () => {
     const app = new GradPaaApplication();
 
     installServiceWorker(app);
 });
 
-async function installServiceWorker (app: GradPaaApplication) {
+function installServiceWorker (app: GradPaaApplication): void {
     if (!('serviceWorker' in navigator)) return;
 
     const hasController = navigator.serviceWorker.controller !== null;
 
-    navigator.serviceWorker.register('/service-worker.js').then(() => {
+    void navigator.serviceWorker.register('/service-worker.js').then(() => {
         // If we did have a controller, the page was already offline ready
-        if (!hasController) app.showSnackbar('Ready to work offline');
+        if (!hasController) void app.showSnackbar('Ready to work offline');
     });
 
     // If we didn't have a controller, we don't need to check for updates,
     // because we've just loaded from the network.
     if (hasController) {
-        checkForUpdate().then(async sw => {
+        void checkForUpdate().then(async sw => {
             if (sw === null) return;
 
             const result = await app.showSnackbar('Update available', { actions: ['reload', 'dismiss'] });
@@ -39,7 +39,7 @@ async function checkForUpdate (): Promise<ServiceWorker | null> {
     if (registration.waiting !== null) return registration.waiting;
 
     return await new Promise(resolve => {
-        registration.addEventListener('updatefound', async () => {
+        registration.addEventListener('updatefound', () => {
             // If updatefound is fired, it means that there's a new service worker being installed.
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             registration.installing!.addEventListener('statechange', e => {

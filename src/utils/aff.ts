@@ -184,7 +184,7 @@ export class AFF {
      * and every time memory grows / shrinks and therefore the underlying memory
      * buffer changes.
      */
-    private updateViews () {
+    private updateViews (): void {
         this.dataView = new DataView(this.memory.buffer);
     }
 
@@ -244,7 +244,7 @@ export class AFF {
      * Set errno
      * @param errno errno
      */
-    private setErrNo (errno: number) {
+    private setErrNo (errno: number): void {
         if (this.exports === null) throw new AFFNotReadyError();
 
         this.dataView.setInt32(this.exports.__errno_location(), errno);

@@ -42,6 +42,7 @@ export async function loadImage (url: string): Promise<HTMLImageElement> {
         img.onerror = () => { reject(Error('Image loading error')); };
     });
 
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (img.decode) {
         // Nice off-thread way supported in Safari/Chrome.
         // Safari throws on decode if the source is SVG.

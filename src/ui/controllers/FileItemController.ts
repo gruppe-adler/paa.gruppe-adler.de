@@ -29,7 +29,7 @@ export default class FileItemController {
      * Called only by constructor and handles everything required for initial render, besides actually creating the element.
      * This includes adding the correct css classes, setting up all required click-handlers and adding all "static" innerHTML.
      */
-    private initialRender () {
+    private initialRender (): void {
         this.element.classList.add('grad-paa-file-item');
 
         this.element.innerHTML = `
@@ -58,7 +58,7 @@ export default class FileItemController {
      * Show / hide the more menu, which is the menu hidden behind the three dots
      * @param shown Whether to show or hide the menu
      */
-    private toggleMoreMenu (shown: boolean) {
+    private toggleMoreMenu (shown: boolean): void {
         const ul = this.element.querySelector('.grad-paa-file-item__more > ul');
         if (ul === null) throw new Error('Couldn\'t find list element');
 
@@ -106,7 +106,7 @@ export default class FileItemController {
      * Called by initial render and whenever the file updates.
      * Render everything depending on the file's status.
      */
-    private render () {
+    private render (): void {
         this.element.querySelectorAll('.grad-paa-file-item__message').forEach(x => { x.remove(); });
 
         const moreActions: HTMLLIElement[] = [];
@@ -197,7 +197,7 @@ export default class FileItemController {
      * @param tooltip Main action tooltip
      * @param callback Callback, which is executed on click
      */
-    private setMainActionIcon (icon: string, color: string, tooltip = '', callback?: () => void) {
+    private setMainActionIcon (icon: string, color: string, tooltip = '', callback?: () => void): void {
         const i = document.createElement('i');
         i.innerHTML = icon;
         i.className = 'material-icons-round';
@@ -213,7 +213,7 @@ export default class FileItemController {
      * @param tooltip Main action tooltip
      * @param callback Callback, which is executed on click
      */
-    private setMainAction (el: HTMLElement, tooltip?: string, callback?: () => void) {
+    private setMainAction (el: HTMLElement, tooltip?: string, callback?: () => void): void {
         const container = this.element.querySelector('.grad-paa-file-item__main-action');
         if (!container) return;
 
@@ -227,7 +227,7 @@ export default class FileItemController {
             container.classList.remove('grad-paa-tooltip');
         }
 
-        this.mainActionCallback = callback || null;
+        this.mainActionCallback = callback ?? null;
         if (callback !== undefined) {
             container.style.cursor = 'pointer';
         } else {
@@ -263,28 +263,28 @@ export default class FileItemController {
     /**
      * Download the file
      */
-    private download () {
+    private download (): void {
         this.file.download();
     }
 
     /**
      * Prioritize the file
      */
-    private prioritize () {
+    private prioritize (): void {
         ConversionService.getInstance().prioritizeID(this.file.id);
     }
 
     /**
      * Cancel the file
      */
-    private cancel () {
+    private cancel (): void {
         ConversionService.getInstance().cancelID(this.file.id);
     }
 
     /**
      * Show error to user
      */
-    private showError () {
+    private showError (): void {
         if (this.file.error === null) return;
 
         const content = document.createElement('div');
@@ -306,7 +306,7 @@ export default class FileItemController {
     /**
      * Show warning to user
      */
-    private showWarning () {
+    private showWarning (): void {
         if (this.file.warning === null) return;
 
         const content = document.createElement('div');
@@ -324,7 +324,7 @@ export default class FileItemController {
     /**
      * Close open dialog (if there is one) and open feedback dialog
      */
-    private openFeedback () {
+    private openFeedback (): void {
         this.openDialog?.close();
         document.location.hash = 'feedback';
     }
@@ -349,7 +349,7 @@ export default class FileItemController {
             { duration: 300, easing: 'ease', fill: 'forwards' }
         );
 
-        anim.finished.then(() => {
+        void anim.finished.then(() => {
             this.element.remove();
         });
     }

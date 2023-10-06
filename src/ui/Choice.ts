@@ -58,7 +58,7 @@ export class Choice extends Dialog {
         };
         window.addEventListener('keyup', this.keyUpEventHandler);
 
-        this.promise.finally(() => { window.removeEventListener('keyup', this.keyUpEventHandler); this.close(); });
+        void this.promise.finally(() => { window.removeEventListener('keyup', this.keyUpEventHandler); this.close(); });
 
         okBtn.addEventListener('click', () => { this.resolve(true); });
         cancelBtn.addEventListener('click', () => { this.resolve(false); });
