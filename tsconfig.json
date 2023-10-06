@@ -5,6 +5,7 @@
         "resolveJsonModule": true,
         "moduleResolution": "node",
         "strictNullChecks": true,
+        "skipLibCheck": true,
         "paths": {
             "@/*": [
                 "./src/*"
