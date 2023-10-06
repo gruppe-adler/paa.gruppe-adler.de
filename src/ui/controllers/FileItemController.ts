@@ -59,7 +59,7 @@ export default class FileItemController {
      * @param shown Whether to show or hide the menu
      */
     private toggleMoreMenu (shown: boolean): void {
-        const ul = this.element.querySelector('.grad-paa-file-item__more > ul');
+        const ul = this.element.querySelector<HTMLElement>('.grad-paa-file-item__more > ul');
         if (ul === null) throw new Error('Couldn\'t find list element');
 
         if (shown) {
@@ -214,7 +214,7 @@ export default class FileItemController {
      * @param callback Callback, which is executed on click
      */
     private setMainAction (el: HTMLElement, tooltip?: string, callback?: () => void): void {
-        const container = this.element.querySelector('.grad-paa-file-item__main-action');
+        const container = this.element.querySelector<HTMLElement>('.grad-paa-file-item__main-action');
         if (!container) return;
 
         // clear container
