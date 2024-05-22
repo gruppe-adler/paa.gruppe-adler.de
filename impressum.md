@@ -1,7 +1,7 @@
 # Impressum
 ## Angaben gemäß § 5 TMG
 Jonas Schade  
-Mozartstraße 1
+Mozartstraße 1  
 83024 Rosenheim
 
 **Kontakt:** [admin@gruppe-adler.de](mailto:admin@gruppe-adler.de)
