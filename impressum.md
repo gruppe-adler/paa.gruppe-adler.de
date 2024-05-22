@@ -1,8 +1,8 @@
 # Impressum
 ## Angaben gemäß § 5 TMG
 Jonas Schade  
-Flachsfeldstraße 14  
-83607 Holzkirchen
+Mozartstraße 1
+83024 Rosenheim
 
 **Kontakt:** [admin@gruppe-adler.de](mailto:admin@gruppe-adler.de)
 
